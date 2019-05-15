@@ -1,0 +1,56 @@
+<idea-plugin>
+    <id>de.fraunhofer.iem.icognicrypt</id>
+    <name>ICogniCrypt</name>
+    <version>1.0</version>
+    <vendor email="support@yourcompany.com" url="https://www.iem.fraunhofer.de/">Fraunhofer IEM</vendor>
+
+    <description><![CDATA[
+      <em>ICogniCrypt<em> is an IntelliJ IDEA plugin that supports Java developers in using cryptographic APIs.
+    ]]></description>
+
+    <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="173.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="de.fraunhofer.iem.icognicrypt.results.ErrorLineMarker"/>
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.actions.IcognicryptSettings"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="ICognicrypt"
+                class="de.fraunhofer.iem.icognicrypt.actions.UpdateSettings"
+                icon="PluginIcons.COGNICRYPT"
+                text="Congifure ICogniCrypt">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+
+    <application-components>
+        <!--component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.analysis.FileListener</implementation-class>
+        </component-->
+    </application-components>
+
+
+    <project-components>
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.analysis.CompilationListener</implementation-class>
+        </component>
+    </project-components>
+
+</idea-plugin>

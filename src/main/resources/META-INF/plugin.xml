@@ -15,6 +15,7 @@
     </change-notes>
 
     <depends>com.intellij.modules.java</depends>
+    <depends>org.jetbrains.android</depends>
 
     <idea-version since-build="183"/>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
@@ -42,13 +43,6 @@
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
     </actions>
-
-    <application-components>
-        <!--component>
-            <implementation-class>de.fraunhofer.iem.icognicrypt.analysis.FileListener</implementation-class>
-        </component-->
-    </application-components>
-
 
     <project-components>
         <component>

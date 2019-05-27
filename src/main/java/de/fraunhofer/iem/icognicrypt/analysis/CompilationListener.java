@@ -1,63 +1,146 @@
 package de.fraunhofer.iem.icognicrypt.analysis;
 
+import com.android.tools.idea.gradle.project.build.GradleBuildContext;
+import com.android.tools.idea.gradle.project.build.invoker.GradleInvocationResult;
+import com.android.tools.idea.project.AndroidProjectBuildNotifications;
 import com.intellij.openapi.compiler.CompilationStatusListener;
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.compiler.CompilerTopics;
 import com.intellij.openapi.compiler.ex.CompilerPathsEx;
 import com.intellij.openapi.components.ProjectComponent;
+import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.OrderEnumerator;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
+import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.actions.IcognicryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.SettingsDialog;
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CompilationListener implements ProjectComponent {
 
     private MessageBusConnection connection;
-    private final Project myProject;
+    private final Project project;
+    private static final Logger logger = LoggerFactory.getLogger(CompilationListener.class);
 
     public CompilationListener(Project project) {
-        myProject = project;
+        this.project = project;
     }
-
 
     @Override
     public void initComponent() {
-        System.out.println("Initialized");
-        connection = myProject.getMessageBus().connect();
+
+        /*
+            Listens for Build notifications in Android Studio.
+        */
+        AndroidProjectBuildNotifications.subscribe(project, context -> {
+
+            logger.info("Call Source {} buildComplete");
+
+            if (context instanceof GradleBuildContext) {
+
+                GradleBuildContext gradleBuildContext = (GradleBuildContext) context;
+                GradleInvocationResult build = gradleBuildContext.getBuildResult();
+
+                if (build.isBuildSuccessful()) {
+
+                    for (String buildTask : build.getTasks()) {
+
+                        if (buildTask.equals("clean"))
+                            continue;
+
+                        startAnalyser(Constants.IDE_ANDROID_STUDIO, project);
+                    }
+                }
+            }
+        });
+
+
+        /*
+            Listens for Build notifications in IntelliJ.
+        */
+        connection = project.getMessageBus().connect();
         connection.subscribe(CompilerTopics.COMPILATION_STATUS, new CompilationStatusListener() {
+
             @Override
             public void compilationFinished(boolean aborted, int errors, int warnings, CompileContext compileContext) {
-                System.out.println("Compilation done");
+                logger.info("Call Source {} compilationFinished");
+
                 if (!aborted)
-                    startAnalyser(compileContext.getProject());
+                    startAnalyser(Constants.IDE_INTELLIJ, compileContext.getProject());
             }
 
             @Override
             public void automakeCompilationFinished(int errors, int warnings, CompileContext compileContext) {
 
-                startAnalyser(compileContext.getProject());
+                startAnalyser(Constants.IDE_INTELLIJ, compileContext.getProject());
             }
         });
     }
 
-    private void startAnalyser(Project project) {
+    private void startAnalyser(int IDE, Project project) {
+
+        String modulePath = "";
+        List<String> classpath = new ArrayList<>();
 
         //Get modules that are present for each project
-        for (String moduleCompilePath : CompilerPathsEx.getOutputPaths(ModuleManager.getInstance(project).getModules())) {
+        for (Module module : ModuleManager.getInstance(project).getModules()) {
 
-            //If compile directory exists, start analysis
-            if (Files.isDirectory(Paths.get(moduleCompilePath))) {
+            logger.info("Checking {} module, type={}", module.getName(), module.getModuleTypeName());
 
-                System.out.println("DIR: " + getRulesDirectory());
-                AnalysisScanner analyzer = new AnalysisScanner(moduleCompilePath, getRulesDirectory());
-                analyzer.runAnalysis();
+            //Get output path for IntelliJ project or APK path in Android Studio
+            switch (IDE) {
+                case Constants.IDE_ANDROID_STUDIO:
+
+                    String path = project.getBasePath() + File.separator + module.getName() + Constants.APK_PATH;
+                    logger.info("Evaluating compile path {}", path);
+
+                    File apkDir = new File(path);
+
+                    if (apkDir.exists()) {
+
+                        for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true)) {
+
+                            logger.info("Evaluating file {}", file.getName());
+
+                            if (file.getAbsolutePath().contains("debug")) {
+                                modulePath = file.getAbsolutePath();
+                                logger.info("APK found in {} ", modulePath);
+                            }
+                        }
+                    }
+                    break;
+                case Constants.IDE_INTELLIJ:
+                    modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
+                    logger.info("Module Output Path {} ", modulePath);
+                    break;
+            }
+
+            //Add classpath jars from Java, Android and Gradle to list
+            for (VirtualFile file : OrderEnumerator.orderEntries(module).recursively().getClassesRoots()) {
+                classpath.add(file.getPath());
             }
         }
+
+        //Output all files belonging to classpath
+        logger.info("{} classpath:", project.getName());
+        for (String classpathJar : classpath)
+            logger.info(classpathJar);
+
+        //Get rules directory
+        String rulesDirectory = getRulesDirectory();
+        logger.info("Rules directory: {}", rulesDirectory);
+
+        AnalysisScanner analyzer = new AnalysisScanner(modulePath, rulesDirectory);
+        analyzer.runAnalysis();
     }
 
     private String getRulesDirectory() {

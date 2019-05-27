@@ -4,6 +4,10 @@ plugins {
     id 'maven'
 }
 
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+
 group 'de.fraunhofer'
 version '1.0-SNAPSHOT'
 
@@ -24,8 +28,9 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2018.2.2'
-    alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
+    setPlugins 'android'
+    version '2018.3.4'
+    alternativeIdePath '/Applications/Android Studio.app'
 }
 patchPluginXml {
     changeNotes """

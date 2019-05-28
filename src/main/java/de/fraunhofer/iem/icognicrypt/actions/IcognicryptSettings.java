@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class IcognicryptSettings implements PersistentStateComponent<IcognicryptSettings> {
 
-    public String RULES_DIRECTORY = "./icognicrypt/resources/CrySLRules";
+    public String RULES_DIRECTORY = "./icognicrypt/resources/CrySLRules/JavaCryptographicArchitecture";
 
     IcognicryptSettings() {
     }

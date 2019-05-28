@@ -16,6 +16,9 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
     maven {
+        url "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-snapshot/"
+    }
+    maven {
         url "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-release/"
     }
 }
@@ -24,13 +27,16 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.3'
     compile group: 'ca.mcgill.sable', name: 'soot', version: '3.3.0'
+    compile group: 'de.tud.sse', name: 'soot-infoflow', version: '2.7.1'
+    compile group: 'de.tud.sse', name: 'soot-infoflow-android', version: '2.7.1'
+    compile group: 'de.tud.sse', name: 'soot-infoflow-cmd', version: '2.7.1'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     setPlugins 'android'
     version '2018.3.4'
-    alternativeIdePath '/Applications/Android Studio.app'
+    alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
 }
 patchPluginXml {
     changeNotes """

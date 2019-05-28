@@ -3,6 +3,7 @@ package de.fraunhofer.iem.icognicrypt.analysis;
 import com.android.tools.idea.gradle.project.build.GradleBuildContext;
 import com.android.tools.idea.gradle.project.build.invoker.GradleInvocationResult;
 import com.android.tools.idea.project.AndroidProjectBuildNotifications;
+import com.google.common.base.Joiner;
 import com.intellij.openapi.compiler.CompilationStatusListener;
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.compiler.CompilerTopics;
@@ -96,11 +97,17 @@ public class CompilationListener implements ProjectComponent {
 
             logger.info("Checking {} module, type={}", module.getName(), module.getModuleTypeName());
 
+            //Add classpath jars from Java, Android and Gradle to list
+            for (VirtualFile file : OrderEnumerator.orderEntries(module).recursively().getClassesRoots()) {
+                classpath.add(file.getPath());
+            }
+
+            StaticAnalysis analysis;
             //Get output path for IntelliJ project or APK path in Android Studio
             switch (IDE) {
                 case Constants.IDE_ANDROID_STUDIO:
 
-                    String path = project.getBasePath() + File.separator + module.getName() + Constants.APK_PATH;
+                    String path = project.getBasePath();
                     logger.info("Evaluating compile path {}", path);
 
                     File apkDir = new File(path);
@@ -114,33 +121,28 @@ public class CompilationListener implements ProjectComponent {
                             if (file.getAbsolutePath().contains("debug")) {
                                 modulePath = file.getAbsolutePath();
                                 logger.info("APK found in {} ", modulePath);
+
+                                String android_sdk_root = System.getProperty("ANDROID_SDK_ROOT");
+                                android_sdk_root = "C:\\Android\\sdk\\platforms";
+                                if(android_sdk_root == null || "".equals(android_sdk_root)){
+                                    throw new RuntimeException("Environment variable ANDROID_SDK_ROOT not set!");
+                                }
+                                analysis = new AndroidProjectAnalysis(modulePath, android_sdk_root, getRulesDirectory());
+                                analysis.run();
                             }
                         }
                     }
+
                     break;
                 case Constants.IDE_INTELLIJ:
                     modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
                     logger.info("Module Output Path {} ", modulePath);
+                    analysis = new JavaProjectAnalysis(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
+                    analysis.run();
                     break;
             }
 
-            //Add classpath jars from Java, Android and Gradle to list
-            for (VirtualFile file : OrderEnumerator.orderEntries(module).recursively().getClassesRoots()) {
-                classpath.add(file.getPath());
-            }
         }
-
-        //Output all files belonging to classpath
-        logger.info("{} classpath:", project.getName());
-        for (String classpathJar : classpath)
-            logger.info(classpathJar);
-
-        //Get rules directory
-        String rulesDirectory = getRulesDirectory();
-        logger.info("Rules directory: {}", rulesDirectory);
-
-        AnalysisScanner analyzer = new AnalysisScanner(modulePath, rulesDirectory);
-        analyzer.runAnalysis();
     }
 
     private String getRulesDirectory() {

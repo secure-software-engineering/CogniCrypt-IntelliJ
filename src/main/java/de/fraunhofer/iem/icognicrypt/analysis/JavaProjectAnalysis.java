@@ -3,8 +3,10 @@ package de.fraunhofer.iem.icognicrypt.analysis;
 import crypto.HeadlessCryptoScanner;
 import crypto.analysis.CrySLAnalysisListener;
 import de.fraunhofer.iem.icognicrypt.results.AnalysisListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-class JavaProjectAnalysis implements StaticAnalysis {
+class JavaProjectAnalysis implements Runnable {
 
     protected final String applicationClassPath;
     protected final String wholeClassPath;
@@ -41,7 +43,6 @@ class JavaProjectAnalysis implements StaticAnalysis {
 
             @Override
             protected CrySLAnalysisListener getAdditionalListener() {
-
                 return new AnalysisListener();
             }
 

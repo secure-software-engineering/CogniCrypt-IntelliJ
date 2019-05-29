@@ -4,6 +4,7 @@ import com.android.tools.idea.gradle.project.build.GradleBuildContext;
 import com.android.tools.idea.gradle.project.build.invoker.GradleInvocationResult;
 import com.android.tools.idea.project.AndroidProjectBuildNotifications;
 import com.google.common.base.Joiner;
+import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.compiler.CompilationStatusListener;
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.compiler.CompilerTopics;
@@ -11,6 +12,9 @@ import com.intellij.openapi.compiler.ex.CompilerPathsEx;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
+import com.intellij.openapi.progress.ProcessCanceledException;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -19,6 +23,7 @@ import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.actions.IcognicryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.SettingsDialog;
 import org.apache.commons.io.FileUtils;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,56 +98,157 @@ public class CompilationListener implements ProjectComponent {
         List<String> classpath = new ArrayList<>();
 
         //Get modules that are present for each project
-        for (Module module : ModuleManager.getInstance(project).getModules()) {
+        //Get output path for IntelliJ project or APK path in Android Studio
+        switch (IDE) {
+            case Constants.IDE_ANDROID_STUDIO:
 
-            logger.info("Checking {} module, type={}", module.getName(), module.getModuleTypeName());
+                String path = project.getBasePath();
+                logger.info("Evaluating compile path {}", path);
 
-            //Add classpath jars from Java, Android and Gradle to list
-            for (VirtualFile file : OrderEnumerator.orderEntries(module).recursively().getClassesRoots()) {
-                classpath.add(file.getPath());
-            }
+                File apkDir = new File(path);
 
-            StaticAnalysis analysis;
-            //Get output path for IntelliJ project or APK path in Android Studio
-            switch (IDE) {
-                case Constants.IDE_ANDROID_STUDIO:
+                if (apkDir.exists()) {
 
-                    String path = project.getBasePath();
-                    logger.info("Evaluating compile path {}", path);
+                    for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true)) {
 
-                    File apkDir = new File(path);
+                        logger.info("Evaluating file {}", file.getName());
+                        modulePath = file.getAbsolutePath();
+                        logger.info("APK found in {} ", modulePath);
 
-                    if (apkDir.exists()) {
-
-                        for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true)) {
-
-                            logger.info("Evaluating file {}", file.getName());
-
-                            if (file.getAbsolutePath().contains("debug")) {
-                                modulePath = file.getAbsolutePath();
-                                logger.info("APK found in {} ", modulePath);
-
-                                String android_sdk_root = System.getProperty("ANDROID_SDK_ROOT");
-                                android_sdk_root = "C:\\Android\\sdk\\platforms";
-                                if(android_sdk_root == null || "".equals(android_sdk_root)){
-                                    throw new RuntimeException("Environment variable ANDROID_SDK_ROOT not set!");
-                                }
-                                analysis = new AndroidProjectAnalysis(modulePath, android_sdk_root, getRulesDirectory());
-                                analysis.run();
-                            }
+                        String android_sdk_root = System.getenv("ANDROID_HOME");
+                        if (android_sdk_root == null || "".equals(android_sdk_root)) {
+                            throw new RuntimeException("Environment variable ANDROID_HOME not set!");
                         }
-                    }
+                        Runnable analysis = new AndroidProjectAnalysis(modulePath, android_sdk_root + File.separator+"platforms", getRulesDirectory());
+                        ProgressManager.getInstance().runProcess(analysis, new ProgressIndicator() {
+                            @Override
+                            public void start() {
 
-                    break;
-                case Constants.IDE_INTELLIJ:
+                            }
+
+                            @Override
+                            public void stop() {
+
+                            }
+
+                            @Override
+                            public boolean isRunning() {
+                                return false;
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+
+                            @Override
+                            public boolean isCanceled() {
+                                return false;
+                            }
+
+                            @Override
+                            public void setText(String text) {
+
+                            }
+
+                            @Override
+                            public String getText() {
+                                return null;
+                            }
+
+                            @Override
+                            public void setText2(String text) {
+
+                            }
+
+                            @Override
+                            public String getText2() {
+                                return null;
+                            }
+
+                            @Override
+                            public double getFraction() {
+                                return 0;
+                            }
+
+                            @Override
+                            public void setFraction(double fraction) {
+
+                            }
+
+                            @Override
+                            public void pushState() {
+
+                            }
+
+                            @Override
+                            public void popState() {
+
+                            }
+
+                            @Override
+                            public boolean isModal() {
+                                return false;
+                            }
+
+                            @NotNull
+                            @Override
+                            public ModalityState getModalityState() {
+                                return null;
+                            }
+
+                            @Override
+                            public void setModalityProgress(ProgressIndicator modalityProgress) {
+
+                            }
+
+                            @Override
+                            public boolean isIndeterminate() {
+                                return false;
+                            }
+
+                            @Override
+                            public void setIndeterminate(boolean indeterminate) {
+
+                            }
+
+                            @Override
+                            public void checkCanceled() throws ProcessCanceledException {
+
+                            }
+
+                            @Override
+                            public boolean isPopupWasShown() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean isShowing() {
+                                return false;
+                            }
+                        });
+                    }
+                }
+
+                break;
+            case Constants.IDE_INTELLIJ:
+
+                for (Module module : ModuleManager.getInstance(project).getModules()) {
+
+                    logger.info("Checking {} module, type={}", module.getName(), module.getModuleTypeName());
+
+                    //Add classpath jars from Java, Android and Gradle to list
+                    for (VirtualFile file : OrderEnumerator.orderEntries(module).recursively().getClassesRoots()) {
+                        classpath.add(file.getPath());
+                    }
                     modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
                     logger.info("Module Output Path {} ", modulePath);
-                    analysis = new JavaProjectAnalysis(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
-                    analysis.run();
-                    break;
-            }
-
+                    Runnable analysis = new JavaProjectAnalysis(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
+                    ProgressManager.getInstance().executeNonCancelableSection(analysis);
+                }
+                break;
         }
+
     }
 
     private String getRulesDirectory() {

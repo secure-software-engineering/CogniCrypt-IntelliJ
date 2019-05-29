@@ -118,7 +118,7 @@ public class AnalysisListener extends CrySLAnalysisListener {
 
     @Override
     public void discoveredSeed(IAnalysisSeed iAnalysisSeed) {
-
+        logger.info("CogniCrypt found a seed {}", iAnalysisSeed);
     }
 
     @Override

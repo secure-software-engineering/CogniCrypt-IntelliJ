@@ -1,7 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
-import crypto.analysis.errors.AbstractError;
-
 import java.util.HashMap;
 
 class ErrorProvider {
@@ -22,10 +20,10 @@ class ErrorProvider {
         return errors.containsKey(lineNumber) && !errors.get(lineNumber).isVisible();
     }
 
-    static AbstractError getError(int lineNumber) {
+    static String getError(int lineNumber) {
 
         errors.get(lineNumber).setVisible(true);
 
-        return errors.get(lineNumber).getAbstractError();
+        return errors.get(lineNumber).getErrorMessage();
     }
 }

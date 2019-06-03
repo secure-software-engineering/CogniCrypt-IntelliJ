@@ -4,20 +4,16 @@ import crypto.analysis.errors.AbstractError;
 
 public class CognicrpyptError  {
 
-    private AbstractError abstractError;
+    private String errorMessage;
     private boolean isVisible;
 
-    public CognicrpyptError(AbstractError error) {
-        abstractError = error;
+    public CognicrpyptError(String error) {
+        errorMessage = error;
         isVisible = false;
     }
 
-    public AbstractError getAbstractError() {
-        return abstractError;
-    }
-
-    public void setAbstractError(AbstractError abstractError) {
-        this.abstractError = abstractError;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     public boolean isVisible() {

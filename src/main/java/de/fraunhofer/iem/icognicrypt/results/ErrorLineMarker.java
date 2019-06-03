@@ -36,7 +36,7 @@ public class ErrorLineMarker implements LineMarkerProvider {
                         psiElement.getTextRange(),
                         PluginIcons.ERROR,
                         Pass.UPDATE_ALL,
-                        new TooltipProvider(ErrorProvider.getError(lineNumber).toErrorMarkerString()),
+                        new TooltipProvider(ErrorProvider.getError(lineNumber)),
                         null,
                         GutterIconRenderer.Alignment.LEFT);
             } else

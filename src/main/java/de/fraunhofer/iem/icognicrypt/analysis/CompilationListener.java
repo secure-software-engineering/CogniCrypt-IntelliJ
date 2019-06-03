@@ -44,12 +44,18 @@ public class CompilationListener implements ProjectComponent {
     @Override
     public void initComponent() {
 
+        logger.info("Initializing ICogniCrypt");
+
+        if(!Constants.AUTOMATIC_SCAN_ON_COMPILE){
+            return;
+        }
+
         /*
             Listens for Build notifications in Android Studio.
         */
         AndroidProjectBuildNotifications.subscribe(project, context -> {
 
-            logger.info("Call Source {} buildComplete");
+            logger.info("Call Source {} buildComplete", project);
 
             if (context instanceof GradleBuildContext) {
 
@@ -92,7 +98,7 @@ public class CompilationListener implements ProjectComponent {
         });
     }
 
-    private void startAnalyser(int IDE, Project project) {
+    public static void startAnalyser(int IDE, Project project) {
 
         String modulePath = "";
         List<String> classpath = new ArrayList<>();
@@ -251,7 +257,7 @@ public class CompilationListener implements ProjectComponent {
 
     }
 
-    private String getRulesDirectory() {
+    public static String getRulesDirectory() {
 
         IcognicryptSettings settings = IcognicryptSettings.getInstance();
         File rules = new File(settings.getRulesDirectory());

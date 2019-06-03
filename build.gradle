@@ -34,9 +34,11 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    setPlugins 'android'
-    version '2018.3.4'
-    alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
+    plugins 'android'
+    version '2018.3.6'
+    updateSinceUntilBuild false
+    alternativeIdePath 'C:\\test\\Android Studio'
+    //alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
 }
 patchPluginXml {
     changeNotes """

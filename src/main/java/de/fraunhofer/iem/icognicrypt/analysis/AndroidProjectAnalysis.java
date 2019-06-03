@@ -10,8 +10,7 @@ import crypto.analysis.CryptoScanner;
 import crypto.rules.CryptSLRule;
 import crypto.rules.CryptSLRuleReader;
 import de.fraunhofer.iem.icognicrypt.results.AnalysisListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.intellij.openapi.diagnostic.Logger;
 import soot.MethodOrMethodContext;
 import soot.Scene;
 import soot.SootMethod;
@@ -30,13 +29,15 @@ import java.util.List;
 
 public class AndroidProjectAnalysis extends JavaProjectAnalysis {
 
-    private static final Logger logger = LoggerFactory.getLogger(AndroidProjectAnalysis.class);
+    private static final Logger logger = Logger.getInstance(AndroidProjectAnalysis.class);
     public AndroidProjectAnalysis(String apkFile, String pathToPlatforms, String rulesDir) {
         super(apkFile,pathToPlatforms,rulesDir);
     }
 
     @Override
     public void run() {
+        logger.info("Running static analysis on APK file " + applicationClassPath);
+        logger.info("with Android Platforms dir "+ applicationClassPath);
         InfoflowAndroidConfiguration config = new InfoflowAndroidConfiguration();
         config.getAnalysisFileConfig().setAndroidPlatformDir(wholeClassPath);
         config.getAnalysisFileConfig().setTargetAPKFile(applicationClassPath);
@@ -79,7 +80,7 @@ public class AndroidProjectAnalysis extends JavaProjectAnalysis {
 
         };
         List<CryptSLRule> rules = getRules();
-        logger.info("Loaded {} CrySL rules",rules.size());
+        logger.info("Loaded "+ rules.size() + " CrySL rules\",");
         logger.info("Running CogniCrypt Analysis");
         scanner.scan(rules);
         logger.info("Terminated CogniCrypt Analysis");

@@ -4,9 +4,9 @@ This repository contains an Android Studio Plugin for CogniCrypt.
 
 Requirements:
 
-- Installation of Android Studio (tested with 2018.3.6)
+- Installation of Android Studio (tested with version 2018.3.6)
 
-# Build, Installation 
+# Build 
 
 Run `gradlew assemble` in root directory
 
@@ -19,6 +19,6 @@ Run `gradlew assemble` in root directory
 # Usage
 
 1. Build your `.apk` and make sure it successfully produces an `.apk` file within your project folder.
-2. Go to to `Analyze > Run CogniCrypt`
+2. Go to `Analyze > Run CogniCrypt`
 3. The first time the analysis is launched CogniCrypt asks you to locate the CrySL rules (a popup appears). Download https://github.com/CROSSINGTUD/CryptoAnalysis/releases/download/2.3/CrySL-rulesets.zip and extract it to some folder <CRYSL-RULES>, in the popup specify the folder <CRYSL-RULES>.
 3. Wait till analysis process terminates.

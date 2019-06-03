@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class TriggerAnalysis extends AnAction {
 
     public TriggerAnalysis() {
-        super("Text _Boxes","Item description", IconLoader.getIcon("/icons/cognicrypt.png"));
+        super("CogniCrypt Analysis","Run CogniCrypt Analysis", IconLoader.getIcon("/icons/cognicrypt.png"));
     }
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {

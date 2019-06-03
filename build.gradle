@@ -43,6 +43,7 @@ intellij {
 
 runIde {
     jvmArgs '-Xmx4G'
+    jvmArgs '-Xss100m'
 }
 
 patchPluginXml {

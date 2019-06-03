@@ -16,6 +16,7 @@ import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -130,114 +131,8 @@ public class CompilationListener implements ProjectComponent {
                         else
                             throw new RuntimeException("Environment variable ANDROID_SDK not found!");
 
-                        Runnable analysis = new AndroidProjectAnalysis(modulePath, android_sdk_root + File.separator + "platforms", getRulesDirectory());
-                        ProgressManager.getInstance().runProcess(analysis, new ProgressIndicator() {
-                            @Override
-                            public void start() {
-
-                            }
-
-                            @Override
-                            public void stop() {
-
-                            }
-
-                            @Override
-                            public boolean isRunning() {
-                                return false;
-                            }
-
-                            @Override
-                            public void cancel() {
-
-                            }
-
-                            @Override
-                            public boolean isCanceled() {
-                                return false;
-                            }
-
-                            @Override
-                            public void setText(String text) {
-
-                            }
-
-                            @Override
-                            public String getText() {
-                                return null;
-                            }
-
-                            @Override
-                            public void setText2(String text) {
-
-                            }
-
-                            @Override
-                            public String getText2() {
-                                return null;
-                            }
-
-                            @Override
-                            public double getFraction() {
-                                return 0;
-                            }
-
-                            @Override
-                            public void setFraction(double fraction) {
-
-                            }
-
-                            @Override
-                            public void pushState() {
-
-                            }
-
-                            @Override
-                            public void popState() {
-
-                            }
-
-                            @Override
-                            public boolean isModal() {
-                                return false;
-                            }
-
-                            @NotNull
-                            @Override
-                            public ModalityState getModalityState() {
-                                return null;
-                            }
-
-                            @Override
-                            public void setModalityProgress(ProgressIndicator modalityProgress) {
-
-                            }
-
-                            @Override
-                            public boolean isIndeterminate() {
-                                return false;
-                            }
-
-                            @Override
-                            public void setIndeterminate(boolean indeterminate) {
-
-                            }
-
-                            @Override
-                            public void checkCanceled() throws ProcessCanceledException {
-
-                            }
-
-                            @Override
-                            public boolean isPopupWasShown() {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean isShowing() {
-                                return false;
-                            }
-                        });
+                        Task analysis = new AndroidProjectAnalysis(modulePath, android_sdk_root + File.separator + "platforms", getRulesDirectory());
+                        ProgressManager.getInstance().run(analysis);
                     }
                 }
 
@@ -254,8 +149,8 @@ public class CompilationListener implements ProjectComponent {
                     }
                     modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
                     logger.info("Module Output Path {} ", modulePath);
-                    Runnable analysis = new JavaProjectAnalysis(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
-                    ProgressManager.getInstance().executeNonCancelableSection(analysis);
+                    Task analysis = new JavaProjectAnalysis(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
+                    ProgressManager.getInstance().run(analysis);
                 }
                 break;
         }

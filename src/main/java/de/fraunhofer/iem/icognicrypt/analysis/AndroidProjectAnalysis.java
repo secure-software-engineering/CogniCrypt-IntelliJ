@@ -5,12 +5,14 @@ import boomerang.callgraph.ObservableICFG;
 import boomerang.callgraph.ObservableStaticICFG;
 import boomerang.preanalysis.BoomerangPretransformer;
 import com.google.common.collect.Lists;
+import com.intellij.openapi.progress.ProgressIndicator;
 import crypto.analysis.CrySLResultsReporter;
 import crypto.analysis.CryptoScanner;
 import crypto.rules.CryptSLRule;
 import crypto.rules.CryptSLRuleReader;
 import de.fraunhofer.iem.icognicrypt.results.AnalysisListener;
 import com.intellij.openapi.diagnostic.Logger;
+import org.jetbrains.annotations.NotNull;
 import soot.MethodOrMethodContext;
 import soot.Scene;
 import soot.SootMethod;
@@ -35,10 +37,13 @@ public class AndroidProjectAnalysis extends JavaProjectAnalysis {
     }
 
     @Override
-    public void run() {
+    public void run(@NotNull ProgressIndicator indicator) {
         logger.info("Running static analysis on APK file " + applicationClassPath);
         logger.info("with Android Platforms dir "+ applicationClassPath);
         InfoflowAndroidConfiguration config = new InfoflowAndroidConfiguration();
+        config.setCallgraphAlgorithm(InfoflowConfiguration.CallgraphAlgorithm.CHA);
+        config.getCallbackConfig().setEnableCallbacks(false);
+        config.setCodeEliminationMode(InfoflowConfiguration.CodeEliminationMode.NoCodeElimination);
         config.getAnalysisFileConfig().setAndroidPlatformDir(wholeClassPath);
         config.getAnalysisFileConfig().setTargetAPKFile(applicationClassPath);
         config.setMergeDexFiles(true);

@@ -40,6 +40,11 @@ intellij {
     alternativeIdePath 'C:\\test\\Android Studio'
     //alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
 }
+
+runIde {
+    jvmArgs '-Xmx1G'
+}
+
 patchPluginXml {
     changeNotes """
       Add change notes here.<br>

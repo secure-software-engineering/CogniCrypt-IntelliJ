@@ -3,6 +3,7 @@ package de.fraunhofer.iem.icognicrypt.analysis;
 import com.android.tools.idea.gradle.project.build.GradleBuildContext;
 import com.android.tools.idea.gradle.project.build.invoker.GradleInvocationResult;
 import com.android.tools.idea.project.AndroidProjectBuildNotifications;
+import com.android.tools.idea.sdk.AndroidSdks;
 import com.google.common.base.Joiner;
 import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.compiler.CompilationStatusListener;
@@ -121,11 +122,15 @@ public class CompilationListener implements ProjectComponent {
                         modulePath = file.getAbsolutePath();
                         logger.info("APK found in {} ", modulePath);
 
-                        String android_sdk_root = System.getenv("ANDROID_HOME");
-                        if (android_sdk_root == null || "".equals(android_sdk_root)) {
-                            throw new RuntimeException("Environment variable ANDROID_HOME not set!");
-                        }
-                        Runnable analysis = new AndroidProjectAnalysis(modulePath, android_sdk_root + File.separator+"platforms", getRulesDirectory());
+                        File androidSdkPath = AndroidSdks.getInstance().findPathOfSdkWithoutAddonsFolder(project);
+                        String android_sdk_root;
+
+                        if (androidSdkPath != null)
+                            android_sdk_root = androidSdkPath.getAbsolutePath();
+                        else
+                            throw new RuntimeException("Environment variable ANDROID_SDK not found!");
+
+                        Runnable analysis = new AndroidProjectAnalysis(modulePath, android_sdk_root + File.separator + "platforms", getRulesDirectory());
                         ProgressManager.getInstance().runProcess(analysis, new ProgressIndicator() {
                             @Override
                             public void start() {

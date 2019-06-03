@@ -42,7 +42,7 @@ intellij {
 }
 
 runIde {
-    jvmArgs '-Xmx1G'
+    jvmArgs '-Xmx4G'
 }
 
 patchPluginXml {

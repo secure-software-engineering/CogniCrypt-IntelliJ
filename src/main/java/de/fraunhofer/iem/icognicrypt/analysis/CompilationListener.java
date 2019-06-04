@@ -11,6 +11,7 @@ import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.compiler.CompilerTopics;
 import com.intellij.openapi.compiler.ex.CompilerPathsEx;
 import com.intellij.openapi.components.ProjectComponent;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProcessCanceledException;
@@ -26,10 +27,11 @@ import de.fraunhofer.iem.icognicrypt.actions.IcognicryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.SettingsDialog;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class CompilationListener implements ProjectComponent {
 
     private MessageBusConnection connection;
     private final Project project;
-    private static final Logger logger = LoggerFactory.getLogger(CompilationListener.class);
+    private static final Logger logger = Logger.getInstance(CompilationListener.class);
 
     public CompilationListener(Project project) {
         this.project = project;
@@ -57,7 +59,6 @@ public class CompilationListener implements ProjectComponent {
         */
         AndroidProjectBuildNotifications.subscribe(project, context -> {
 
-            logger.info("Call Source {} buildComplete", project);
 
             if (context instanceof GradleBuildContext) {
 
@@ -86,8 +87,6 @@ public class CompilationListener implements ProjectComponent {
 
             @Override
             public void compilationFinished(boolean aborted, int errors, int warnings, CompileContext compileContext) {
-                logger.info("Call Source {} compilationFinished");
-
                 if (!aborted)
                     startAnalyser(Constants.IDE_INTELLIJ, compileContext.getProject());
             }
@@ -111,7 +110,7 @@ public class CompilationListener implements ProjectComponent {
             case Constants.IDE_ANDROID_STUDIO:
 
                 String path = project.getBasePath();
-                logger.info("Evaluating compile path {}", path);
+                logger.info("Evaluating compile path "+ path);
 
                 File apkDir = new File(path);
 
@@ -119,19 +118,26 @@ public class CompilationListener implements ProjectComponent {
 
                     for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true)) {
 
-                        logger.info("Evaluating file {}", file.getName());
+                        logger.info("Evaluating file "+ file.getName());
                         modulePath = file.getAbsolutePath();
-                        logger.info("APK found in {} ", modulePath);
+                        logger.info("APK found in {} "+ modulePath);
 
                         File androidSdkPath = AndroidSdks.getInstance().findPathOfSdkWithoutAddonsFolder(project);
                         String android_sdk_root;
 
-                        if (androidSdkPath != null)
+                        if (androidSdkPath != null) {
                             android_sdk_root = androidSdkPath.getAbsolutePath();
-                        else
-                            throw new RuntimeException("Environment variable ANDROID_SDK not found!");
+                            logger.info("Choosing android sdk path automatically");
+                        }
+                        else {
+                            android_sdk_root = System.getenv(Constants.ANDROID_SDK);
+                            logger.info("Fallback for android sdk path to environment variable");
+                        }
 
-                        Task analysis = new AndroidProjectAnalysis(modulePath, android_sdk_root + File.separator + "platforms", getRulesDirectory());
+                        if (android_sdk_root == null || "".equals(android_sdk_root))
+                            throw new RuntimeException("Environment variable "+Constants.ANDROID_SDK+" not found!");
+                        Path platforms = Paths.get(android_sdk_root).resolve("platforms");
+                        Task analysis = new AndroidProjectAnalysis(modulePath, platforms.toAbsolutePath().toString(), getRulesDirectory());
                         ProgressManager.getInstance().run(analysis);
                     }
                 }
@@ -141,14 +147,12 @@ public class CompilationListener implements ProjectComponent {
 
                 for (Module module : ModuleManager.getInstance(project).getModules()) {
 
-                    logger.info("Checking {} module, type={}", module.getName(), module.getModuleTypeName());
-
                     //Add classpath jars from Java, Android and Gradle to list
                     for (VirtualFile file : OrderEnumerator.orderEntries(module).recursively().getClassesRoots()) {
                         classpath.add(file.getPath());
                     }
                     modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
-                    logger.info("Module Output Path {} ", modulePath);
+                    logger.info("Module Output Path "+ modulePath);
                     Task analysis = new JavaProjectAnalysis(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
                     ProgressManager.getInstance().run(analysis);
                 }

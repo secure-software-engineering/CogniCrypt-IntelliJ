@@ -33,6 +33,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class CompilationListener implements ProjectComponent {
@@ -117,10 +118,8 @@ public class CompilationListener implements ProjectComponent {
                 if (apkDir.exists()) {
 
                     for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true)) {
-
-                        logger.info("Evaluating file "+ file.getName());
                         modulePath = file.getAbsolutePath();
-                        logger.info("APK found in {} "+ modulePath);
+                        logger.info("APK found in "+ modulePath);
 
                         File androidSdkPath = AndroidSdks.getInstance().findPathOfSdkWithoutAddonsFolder(project);
                         String android_sdk_root;
@@ -137,7 +136,8 @@ public class CompilationListener implements ProjectComponent {
                         if (android_sdk_root == null || "".equals(android_sdk_root))
                             throw new RuntimeException("Environment variable "+Constants.ANDROID_SDK+" not found!");
                         Path platforms = Paths.get(android_sdk_root).resolve("platforms");
-                        Task analysis = new AndroidProjectAnalysis(modulePath, platforms.toAbsolutePath().toString(), getRulesDirectory());
+                        Collection<File> javaSourceFiles = FileUtils.listFiles(apkDir, new String[]{"java"}, true);
+                        Task analysis = new AndroidProjectAnalysis(modulePath, platforms.toAbsolutePath().toString(), getRulesDirectory(),javaSourceFiles );
                         ProgressManager.getInstance().run(analysis);
                     }
                 }

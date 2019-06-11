@@ -5,6 +5,7 @@ import boomerang.callgraph.ObservableICFG;
 import boomerang.callgraph.ObservableStaticICFG;
 import boomerang.preanalysis.BoomerangPretransformer;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.intellij.openapi.progress.ProgressIndicator;
 import crypto.analysis.CrySLResultsReporter;
 import crypto.analysis.CryptoScanner;
@@ -13,10 +14,7 @@ import crypto.rules.CryptSLRuleReader;
 import de.fraunhofer.iem.icognicrypt.results.AnalysisListener;
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
-import soot.MethodOrMethodContext;
-import soot.Scene;
-import soot.SootMethod;
-import soot.Unit;
+import soot.*;
 import soot.jimple.infoflow.InfoflowConfiguration;
 import soot.jimple.infoflow.android.InfoflowAndroidConfiguration;
 import soot.jimple.infoflow.android.SetupApplication;
@@ -26,20 +24,27 @@ import soot.options.Options;
 import soot.util.queue.QueueReader;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
 public class AndroidProjectAnalysis extends JavaProjectAnalysis {
 
     private static final Logger logger = Logger.getInstance(AndroidProjectAnalysis.class);
-    public AndroidProjectAnalysis(String apkFile, String pathToPlatforms, String rulesDir) {
+    private final Set<String> javaSourceClassNames = Sets.newHashSet();
+
+    public AndroidProjectAnalysis(String apkFile, String pathToPlatforms, String rulesDir, Collection<File> javaSourceFiles) {
         super(apkFile,pathToPlatforms,rulesDir);
+        for(File f : javaSourceFiles){
+            this.javaSourceClassNames.add(f.getName().replace(".java",""));
+        }
     }
 
     @Override
     public void run(@NotNull ProgressIndicator indicator) {
         logger.info("Running static analysis on APK file " + applicationClassPath);
-        logger.info("with Android Platforms dir "+ applicationClassPath);
+        logger.info("with Android Platforms dir "+ wholeClassPath);
         InfoflowAndroidConfiguration config = new InfoflowAndroidConfiguration();
         config.setCallgraphAlgorithm(InfoflowConfiguration.CallgraphAlgorithm.CHA);
         config.getCallbackConfig().setEnableCallbacks(false);
@@ -64,8 +69,7 @@ public class AndroidProjectAnalysis extends JavaProjectAnalysis {
     }
 
     private void runCryptoAnalysis() {
-        BoomerangPretransformer.v().reset();
-        BoomerangPretransformer.v().apply();
+        prepareAnalysis();
 
         ObservableStaticICFG icfg = new ObservableStaticICFG(new JimpleBasedInterproceduralCFG(false));
 
@@ -85,10 +89,32 @@ public class AndroidProjectAnalysis extends JavaProjectAnalysis {
 
         };
         List<CryptSLRule> rules = getRules();
-        logger.info("Loaded "+ rules.size() + " CrySL rules\",");
+        logger.info("Loaded "+ rules.size() + " CrySL rules");
         logger.info("Running CogniCrypt Analysis");
         scanner.scan(rules);
         logger.info("Terminated CogniCrypt Analysis");
+        System.gc();
+    }
+
+    private void prepareAnalysis() {
+        BoomerangPretransformer.v().reset();
+        BoomerangPretransformer.v().apply();
+
+        //Setting application classes to be the set of classes where we have found .java files for. Hereby we ignore library classes and reduce the analysis time.
+        for(SootClass c : Scene.v().getClasses()){
+            boolean applicationClass = false;
+            String clsName = c.getShortName();
+            if(javaSourceClassNames.contains(c.isInnerClass() ? clsName.substring(0,clsName.indexOf("$")) : clsName)){
+                applicationClass = true;
+            }
+            if(applicationClass) {
+                c.setApplicationClass();
+            } else{
+                c.setLibraryClass();
+            }
+        }
+        logger.info("Application classes: "+ Scene.v().getApplicationClasses().size());
+        logger.info("Library classes: "+ Scene.v().getLibraryClasses().size());
     }
 
 

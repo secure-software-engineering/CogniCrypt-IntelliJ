@@ -37,8 +37,10 @@ intellij {
     plugins 'android'
     version '2018.3.6'
     updateSinceUntilBuild false
-    alternativeIdePath 'C:\\test\\Android Studio'
-    //alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
+    
+    //TODO: Add your real path here
+    //alternativeIdePath 'C:\\test\\Android Studio'
+    alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
 }
 
 runIde {

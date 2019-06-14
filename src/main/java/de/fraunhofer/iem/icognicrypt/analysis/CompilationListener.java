@@ -5,7 +5,6 @@ import com.android.tools.idea.gradle.project.build.invoker.GradleInvocationResul
 import com.android.tools.idea.project.AndroidProjectBuildNotifications;
 import com.android.tools.idea.sdk.AndroidSdks;
 import com.google.common.base.Joiner;
-import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.compiler.CompilationStatusListener;
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.compiler.CompilerTopics;
@@ -14,8 +13,6 @@ import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.progress.ProcessCanceledException;
-import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
@@ -25,11 +22,11 @@ import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
 import de.fraunhofer.iem.icognicrypt.actions.IcognicryptSettings;
-import de.fraunhofer.iem.icognicrypt.projects.AndroidStudioOutputFinder;
-import de.fraunhofer.iem.icognicrypt.projects.IOutputFinder;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IOutputFinder;
+import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.ui.SettingsDialog;
 import org.apache.commons.io.FileUtils;
-import org.jetbrains.annotations.NotNull;
 
 
 import java.io.File;
@@ -118,6 +115,15 @@ public class CompilationListener implements ProjectComponent {
 
                 //New FileFinder here
                 IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
+                try
+                {
+                    Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()));
+                }
+                catch (CogniCryptException e)
+                {
+                    // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
+                    e.printStackTrace();
+                }
 
                 File apkDir = new File(path);
 

@@ -133,7 +133,7 @@ public class CompilationListener implements ProjectComponent {
                     }
                 }
                 if(queue.isEmpty()){
-                    Notifications.Bus.notify(new Notification("CogniCrypt", "Warning", "No APK file detect. Run Build > Make Project assemble an APK and trigger the analysis again.", NotificationType.WARNING));
+                    Notifications.Bus.notify(new Notification("CogniCrypt", "Warning", "No APK file detected. Run Build > Make Project assemble an APK and trigger the analysis again.", NotificationType.WARNING));
                 } else {
                     ProgressManager.getInstance().run(new AndroidProjectAnalysisQueue(project, queue));
                 }
@@ -181,6 +181,8 @@ public class CompilationListener implements ProjectComponent {
     }
 
     public void disposeComponent() {
-        connection.disconnect();
+        if(connection != null) {
+            connection.disconnect();
+        }
     }
 }

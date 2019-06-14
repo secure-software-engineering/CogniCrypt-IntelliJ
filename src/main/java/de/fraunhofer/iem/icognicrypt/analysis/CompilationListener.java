@@ -29,7 +29,9 @@ import de.fraunhofer.iem.icognicrypt.ui.SettingsDialog;
 import org.apache.commons.io.FileUtils;
 
 
+import javax.naming.OperationNotSupportedException;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -119,9 +121,17 @@ public class CompilationListener implements ProjectComponent {
                 {
                     Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()));
                 }
+                // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
                 catch (CogniCryptException e)
                 {
-                    // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
+                    e.printStackTrace();
+                }
+                catch (OperationNotSupportedException e)
+                {
+                    e.printStackTrace();
+                }
+                catch (IOException e)
+                {
                     e.printStackTrace();
                 }
 

@@ -38,7 +38,7 @@
     <actions>
         <!-- Add your actions here -->
         <action id="ICognicrypt-analysis"
-                class="de.fraunhofer.iem.icognicrypt.actions.TriggerAnalysis"
+                class="de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction"
                 icon="PluginIcons.COGNICRYPT"
                 text="Run CogniCrypt" description="Check for misuses of cryptographic APIs">
             <add-to-group group-id="AnalyzeMenu" anchor="last"  />

@@ -9,6 +9,7 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
+import de.fraunhofer.iem.icognicrypt.results.ErrorProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -28,13 +29,21 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
     @Override
     public void run(@NotNull ProgressIndicator indicator) {
+        //Remove errors before rerunning Cognicrypt
+        ErrorProvider.clearError();
+
         int size = analysisQueue.size();
         int index = 0;  Stopwatch w = Stopwatch.createStarted();
         while(!analysisQueue.isEmpty()){
             index++;
             indicator.setText(String.format("Performing CogniCrypt Analysis (APK %s of %s)", index,size));
             AndroidProjectAnalysis curr = analysisQueue.poll();
-            curr.run();
+            try {
+                curr.run();
+            } catch (Throwable e){
+                Notification notification = new Notification("CogniCrypt", "CogniCrypt", String.format("Crashed on %s", curr), NotificationType.INFORMATION);
+                Notifications.Bus.notify(notification);
+            }
             indicator.setFraction((index / (double)size));
         }
         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", String.format("Analyzed %s APKs in %s", index,w), NotificationType.INFORMATION);

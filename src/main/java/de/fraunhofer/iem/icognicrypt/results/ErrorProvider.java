@@ -2,7 +2,7 @@ package de.fraunhofer.iem.icognicrypt.results;
 
 import java.util.HashMap;
 
-class ErrorProvider {
+public class ErrorProvider {
 
     static private HashMap<Integer, CognicrpyptError> errors = new HashMap<>();
 
@@ -11,7 +11,7 @@ class ErrorProvider {
         errors.put(lineNumber, error);
     }
 
-    static void clearError() {
+    public static void clearError() {
         errors.clear();
     }
 

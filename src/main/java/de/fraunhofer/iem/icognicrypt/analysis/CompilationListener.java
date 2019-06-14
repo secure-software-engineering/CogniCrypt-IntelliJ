@@ -23,6 +23,7 @@ import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
 import de.fraunhofer.iem.icognicrypt.actions.IcognicryptSettings;
 import de.fraunhofer.iem.icognicrypt.projects.AndroidStudioOutputFinder;
 import de.fraunhofer.iem.icognicrypt.projects.IOutputFinder;
@@ -75,7 +76,7 @@ public class CompilationListener implements ProjectComponent {
                         if (buildTask.equals("clean"))
                             continue;
 
-                        startAnalyser(Constants.IDE_ANDROID_STUDIO, project);
+                        startAnalyser(IdeType.AndroidStudio, project);
                     }
                 }
             }
@@ -91,18 +92,17 @@ public class CompilationListener implements ProjectComponent {
             @Override
             public void compilationFinished(boolean aborted, int errors, int warnings, CompileContext compileContext) {
                 if (!aborted)
-                    startAnalyser(Constants.IDE_INTELLIJ, compileContext.getProject());
+                    startAnalyser(IdeType.IntelliJ, compileContext.getProject());
             }
 
             @Override
             public void automakeCompilationFinished(int errors, int warnings, CompileContext compileContext) {
-
-                startAnalyser(Constants.IDE_INTELLIJ, compileContext.getProject());
+                startAnalyser(IdeType.IntelliJ, compileContext.getProject());
             }
         });
     }
 
-    public static void startAnalyser(int IDE, Project project) {
+    public static void startAnalyser(IdeType ide, Project project) {
 
         String modulePath = "";
         List<String> classpath = new ArrayList<>();
@@ -110,8 +110,8 @@ public class CompilationListener implements ProjectComponent {
         //Get modules that are present for each project
         //Get output path for IntelliJ project or APK path in Android Studio
         // TODO: Check if large s/c is required and code can be summarized.
-        switch (IDE) {
-            case Constants.IDE_ANDROID_STUDIO:
+        switch (ide) {
+            case AndroidStudio:
 
                 String path = project.getBasePath();
                 logger.info("Evaluating compile path "+ path);
@@ -149,7 +149,7 @@ public class CompilationListener implements ProjectComponent {
                 }
 
                 break;
-            case Constants.IDE_INTELLIJ:
+            case IntelliJ:
 
                 for (Module module : ModuleManager.getInstance(project).getModules()) {
 

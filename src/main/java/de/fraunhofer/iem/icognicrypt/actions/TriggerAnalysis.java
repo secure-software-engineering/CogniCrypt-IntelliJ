@@ -7,6 +7,7 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.IconLoader;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
 import de.fraunhofer.iem.icognicrypt.analysis.CompilationListener;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +19,6 @@ public class TriggerAnalysis extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         Project p = e.getDataContext().getData(PlatformDataKeys.PROJECT);
-        CompilationListener.startAnalyser(Constants.IDE_ANDROID_STUDIO,p);
+        CompilationListener.startAnalyser(IdeType.AndroidStudio,p);
     }
 }

@@ -29,28 +29,33 @@ import java.util.List;
 import java.util.Set;
 
 
-public class AndroidProjectAnalysis extends JavaProjectAnalysis {
+public class AndroidProjectAnalysis {
 
     private static final Logger logger = Logger.getInstance(AndroidProjectAnalysis.class);
     private final Set<String> javaSourceClassNames = Sets.newHashSet();
+    protected final String apkFile;
+    protected final String platformsDirectory;
+    protected final String rulesDirectory;
 
-    public AndroidProjectAnalysis(String apkFile, String pathToPlatforms, String rulesDir, Collection<File> javaSourceFiles) {
-        super(apkFile,pathToPlatforms,rulesDir);
+
+    public AndroidProjectAnalysis(String apkFile, String platformsDirectory, String rulesDirectory, Collection<File> javaSourceFiles) {
+        this.apkFile = apkFile;
+        this.platformsDirectory = platformsDirectory;
+        this.rulesDirectory = rulesDirectory;
         for(File f : javaSourceFiles){
             this.javaSourceClassNames.add(f.getName().replace(".java",""));
         }
     }
 
-    @Override
-    public void run(@NotNull ProgressIndicator indicator) {
-        logger.info("Running static analysis on APK file " + applicationClassPath);
-        logger.info("with Android Platforms dir "+ wholeClassPath);
+    public void run() {
+        logger.info("Running static analysis on APK file " + apkFile);
+        logger.info("with Android Platforms dir "+ platformsDirectory);
         InfoflowAndroidConfiguration config = new InfoflowAndroidConfiguration();
         config.setCallgraphAlgorithm(InfoflowConfiguration.CallgraphAlgorithm.CHA);
         config.getCallbackConfig().setEnableCallbacks(false);
         config.setCodeEliminationMode(InfoflowConfiguration.CodeEliminationMode.NoCodeElimination);
-        config.getAnalysisFileConfig().setAndroidPlatformDir(wholeClassPath);
-        config.getAnalysisFileConfig().setTargetAPKFile(applicationClassPath);
+        config.getAnalysisFileConfig().setAndroidPlatformDir(platformsDirectory);
+        config.getAnalysisFileConfig().setTargetAPKFile(apkFile);
         config.setMergeDexFiles(true);
         SetupApplication flowDroid = new SetupApplication(config);
         SootConfigForAndroid sootConfigForAndroid =

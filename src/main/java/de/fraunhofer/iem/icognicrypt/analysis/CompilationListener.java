@@ -24,6 +24,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.actions.IcognicryptSettings;
+import de.fraunhofer.iem.icognicrypt.projects.AndroidStudioOutputFinder;
+import de.fraunhofer.iem.icognicrypt.projects.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.ui.SettingsDialog;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
@@ -107,11 +109,15 @@ public class CompilationListener implements ProjectComponent {
 
         //Get modules that are present for each project
         //Get output path for IntelliJ project or APK path in Android Studio
+        // TODO: Check if large s/c is required and code can be summarized.
         switch (IDE) {
             case Constants.IDE_ANDROID_STUDIO:
 
                 String path = project.getBasePath();
                 logger.info("Evaluating compile path "+ path);
+
+                //New FileFinder here
+                IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
 
                 File apkDir = new File(path);
 

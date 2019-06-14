@@ -38,7 +38,7 @@ public abstract class GradleSettingsScript extends Script
 
     public void include(String[] values)
     {
-        HashSet<String> hashSet = new HashSet<String>();
+        HashSet<String> hashSet = new HashSet<>();
         for (String value : values)
             hashSet.add(value);
         _includedPaths = hashSet;

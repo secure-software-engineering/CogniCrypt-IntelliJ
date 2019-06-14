@@ -2,12 +2,9 @@ package de.fraunhofer.iem.icognicrypt.analysis;
 
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
-import crypto.HeadlessCryptoScanner;
 import crypto.analysis.CrySLAnalysisListener;
 import de.fraunhofer.iem.icognicrypt.results.AnalysisListener;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 class JavaProjectAnalysis extends Task.Backgroundable {
 

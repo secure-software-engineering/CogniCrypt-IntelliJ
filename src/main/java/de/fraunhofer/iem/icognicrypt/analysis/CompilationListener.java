@@ -5,6 +5,11 @@ import com.android.tools.idea.gradle.project.build.invoker.GradleInvocationResul
 import com.android.tools.idea.project.AndroidProjectBuildNotifications;
 import com.android.tools.idea.sdk.AndroidSdks;
 import com.google.common.base.Joiner;
+import com.google.common.base.Stopwatch;
+import com.google.common.collect.Lists;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.compiler.CompilationStatusListener;
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.compiler.CompilerTopics;
@@ -20,12 +25,11 @@ import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
-import de.fraunhofer.iem.icognicrypt.actions.IcognicryptSettings;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.ui.SettingsDialog;
 import org.apache.commons.io.FileUtils;
 
 
@@ -36,6 +40,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CompilationListener implements ProjectComponent {
@@ -112,6 +117,8 @@ public class CompilationListener implements ProjectComponent {
         switch (ide) {
             case AndroidStudio:
 
+                Path platforms = getAndroidPlatformsLocation(project);
+
                 String path = project.getBasePath();
                 logger.info("Evaluating compile path "+ path);
 
@@ -136,32 +143,25 @@ public class CompilationListener implements ProjectComponent {
                 }
 
                 File apkDir = new File(path);
-
+                LinkedList<AndroidProjectAnalysis> queue = Lists.newLinkedList();
                 if (apkDir.exists()) {
-
                     for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true)) {
                         modulePath = file.getAbsolutePath();
                         logger.info("APK found in "+ modulePath);
 
-                        File androidSdkPath = AndroidSdks.getInstance().findPathOfSdkWithoutAddonsFolder(project);
-                        String android_sdk_root;
-
-                        if (androidSdkPath != null) {
-                            android_sdk_root = androidSdkPath.getAbsolutePath();
-                            logger.info("Choosing android sdk path automatically");
-                        }
-                        else {
-                            android_sdk_root = System.getenv(Constants.ANDROID_SDK);
-                            logger.info("Fallback for android sdk path to environment variable");
-                        }
-
-                        if (android_sdk_root == null || "".equals(android_sdk_root))
-                            throw new RuntimeException("Environment variable "+Constants.ANDROID_SDK+" not found!");
-                        Path platforms = Paths.get(android_sdk_root).resolve("platforms");
                         Collection<File> javaSourceFiles = FileUtils.listFiles(apkDir, new String[]{"java"}, true);
-                        Task analysis = new AndroidProjectAnalysis(modulePath, platforms.toAbsolutePath().toString(), getRulesDirectory(),javaSourceFiles );
-                        ProgressManager.getInstance().run(analysis);
+                        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
+                        Notifications.Bus.notify(notification);
+                        notification.getBalloon().hide();
+
+                        AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(modulePath, platforms.toAbsolutePath().toString(), getRulesDirectory(),javaSourceFiles );
+                        queue.add(analysis);
                     }
+                }
+                if(queue.isEmpty()){
+                    Notifications.Bus.notify(new Notification("CogniCrypt", "Warning", "No APK file detected. Run Build > Make Project assemble an APK and trigger the analysis again.", NotificationType.WARNING));
+                } else {
+                    ProgressManager.getInstance().run(new AndroidProjectAnalysisQueue(project, queue));
                 }
 
                 break;
@@ -183,26 +183,32 @@ public class CompilationListener implements ProjectComponent {
 
     }
 
-    public static String getRulesDirectory() {
+    private static Path getAndroidPlatformsLocation(Project project) {
+        File androidSdkPath = AndroidSdks.getInstance().findPathOfSdkWithoutAddonsFolder(project);
+        String android_sdk_root;
 
-        IcognicryptSettings settings = IcognicryptSettings.getInstance();
-        File rules = new File(settings.getRulesDirectory());
-
-        //TODO Check if directory contains correct files
-        if (rules.exists())
-            return settings.getRulesDirectory();
-        else {
-            SettingsDialog settingsDialog = new SettingsDialog();
-            settingsDialog.pack();
-            settingsDialog.setSize(550, 150);
-            settingsDialog.setLocationRelativeTo(null);
-            settingsDialog.setVisible(true);
-
-            return settings.getRulesDirectory();
+        if (androidSdkPath != null) {
+            android_sdk_root = androidSdkPath.getAbsolutePath();
+            logger.info("Choosing android sdk path automatically");
         }
+        else {
+            android_sdk_root = System.getenv(Constants.ANDROID_SDK);
+            logger.info("Fallback for android sdk path to environment variable");
+        }
+
+        if (android_sdk_root == null || "".equals(android_sdk_root))
+            throw new RuntimeException("Environment variable "+Constants.ANDROID_SDK+" not found!");
+        return Paths.get(android_sdk_root).resolve("platforms");
+    }
+
+    public static String getRulesDirectory() {
+        CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();
+       return settings.getRulesDirectory();
     }
 
     public void disposeComponent() {
-        connection.disconnect();
+        if(connection != null) {
+            connection.disconnect();
+        }
     }
 }

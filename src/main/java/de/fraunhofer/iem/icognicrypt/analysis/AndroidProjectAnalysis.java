@@ -140,4 +140,9 @@ public class AndroidProjectAnalysis {
                             + rulesDirectory);
         return rules;
     }
+
+    @Override
+    public String toString() {
+        return apkFile;
+    }
 }

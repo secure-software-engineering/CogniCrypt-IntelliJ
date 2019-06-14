@@ -35,8 +35,7 @@ public class AnalysisListener extends CrySLAnalysisListener {
     @Override
     public void beforeAnalysis() {
 
-        //Remove errors before rerunning Cognicrypt
-        ErrorProvider.clearError();
+
     }
 
     @Override

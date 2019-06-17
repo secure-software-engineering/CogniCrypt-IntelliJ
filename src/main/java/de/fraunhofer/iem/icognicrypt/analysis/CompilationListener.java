@@ -25,6 +25,7 @@ import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
 import org.apache.commons.io.FileUtils;
 
@@ -101,9 +102,13 @@ public class CompilationListener implements ProjectComponent {
         });
     }
 
-    public static void startAnalyser(int IDE, Project project) {
 
-        String modulePath = "";
+    public static void startAnalyser(int IDE, Project project) {
+        if(!CogniCryptSettings.isValidCrySLRuleDirectory(getRulesDirectory())){
+            Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "No valid CrySL rules found. Please go to \"File > Settings > Other Settings > CogniCrypt\" and select a valid directory.", NotificationType.INFORMATION);
+            Notifications.Bus.notify(notification);
+            return;
+        }
         List<String> classpath = new ArrayList<>();
 
         //Get modules that are present for each project
@@ -120,15 +125,15 @@ public class CompilationListener implements ProjectComponent {
                 LinkedList<AndroidProjectAnalysis> queue = Lists.newLinkedList();
                 if (apkDir.exists()) {
                     for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true)) {
-                        modulePath = file.getAbsolutePath();
-                        logger.info("APK found in "+ modulePath);
+                        String apkPath = file.getAbsolutePath();
+                        logger.info("APK found in "+ apkPath);
 
                         Collection<File> javaSourceFiles = FileUtils.listFiles(apkDir, new String[]{"java"}, true);
                         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
                         Notifications.Bus.notify(notification);
                         notification.getBalloon().hide();
 
-                        AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(modulePath, platforms.toAbsolutePath().toString(), getRulesDirectory(),javaSourceFiles );
+                        AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(),javaSourceFiles );
                         queue.add(analysis);
                     }
                 }
@@ -147,7 +152,7 @@ public class CompilationListener implements ProjectComponent {
                     for (VirtualFile file : OrderEnumerator.orderEntries(module).recursively().getClassesRoots()) {
                         classpath.add(file.getPath());
                     }
-                    modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
+                    String modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
                     logger.info("Module Output Path "+ modulePath);
                     Task analysis = new JavaProjectAnalysis(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
                     ProgressManager.getInstance().run(analysis);
@@ -176,7 +181,7 @@ public class CompilationListener implements ProjectComponent {
     }
 
     public static String getRulesDirectory() {
-        CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();
+       CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();
        return settings.getRulesDirectory();
     }
 

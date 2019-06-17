@@ -1,10 +1,12 @@
 package de.fraunhofer.iem.icognicrypt.analysis;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Sets;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
@@ -20,6 +22,7 @@ import java.util.Set;
 
 public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
+    private static final Logger logger = Logger.getInstance(AndroidProjectAnalysis.class);
     private Queue<AndroidProjectAnalysis> analysisQueue;
 
     public AndroidProjectAnalysisQueue(Project p, Queue<AndroidProjectAnalysis> analysisQueue){
@@ -43,10 +46,13 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
             } catch (Throwable e){
                 Notification notification = new Notification("CogniCrypt", "CogniCrypt", String.format("Crashed on %s", curr), NotificationType.INFORMATION);
                 Notifications.Bus.notify(notification);
+                logger.error(e);
             }
             indicator.setFraction((index / (double)size));
         }
         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", String.format("Analyzed %s APKs in %s", index,w), NotificationType.INFORMATION);
         Notifications.Bus.notify(notification);
+        Notification errorNotification = new Notification("CogniCrypt", "CogniCrypt Info", String.format("Found %s errors in classes: ", ErrorProvider.getErrorCount()) + Joiner.on("\n").join(ErrorProvider.getErrorClasses()), NotificationType.INFORMATION);
+        Notifications.Bus.notify(errorNotification);
     }
 }

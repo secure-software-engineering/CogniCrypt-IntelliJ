@@ -58,6 +58,10 @@ public class AndroidStudioOutputFinder implements IOutputFinder
             {
                 // Ignore modules that are not found!
             }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         });
 
         return null;

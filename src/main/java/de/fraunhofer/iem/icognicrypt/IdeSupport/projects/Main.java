@@ -1,6 +1,7 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
+import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.nio.file.Paths;
 public class Main
 {
 
-    public static void main(String[] args) throws IOException, OperationNotSupportedException
+    public static void main(String[] args) throws IOException, OperationNotSupportedException, CogniCryptException
     {
         // TODO: Enable
         // System.out.print("Please enter the root path to your Android App project:");
@@ -23,7 +24,9 @@ public class Main
 
         GradleSettings settings = new GradleSettings(Paths.get(tmpPath));
 
-        System.out.println(settings.GetModulePathsAbsolute());
+        IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
+
+        System.out.println(outputFinder.GetOutputFiles(Paths.get(tmpPath), OutputFinderOptions.AnyBuildType));
 
         while (true){
         }

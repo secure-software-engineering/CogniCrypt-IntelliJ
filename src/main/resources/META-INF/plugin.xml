@@ -31,19 +31,14 @@
         <!-- Add your extensions here -->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="de.fraunhofer.iem.icognicrypt.results.ErrorLineMarker"/>
-        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.actions.IcognicryptSettings"/>
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
+        <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"></applicationConfigurable>
     </extensions>
 
     <actions>
         <!-- Add your actions here -->
-        <action id="ICognicrypt-settings"
-                class="de.fraunhofer.iem.icognicrypt.actions.UpdateSettings"
-                icon="PluginIcons.COGNICRYPT"
-                text="Configure CogniCrypt">
-            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-        </action>
         <action id="ICognicrypt-analysis"
-                class="de.fraunhofer.iem.icognicrypt.actions.TriggerAnalysis"
+                class="de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction"
                 icon="PluginIcons.COGNICRYPT"
                 text="Run CogniCrypt" description="Check for misuses of cryptographic APIs">
             <add-to-group group-id="AnalyzeMenu" anchor="last"  />

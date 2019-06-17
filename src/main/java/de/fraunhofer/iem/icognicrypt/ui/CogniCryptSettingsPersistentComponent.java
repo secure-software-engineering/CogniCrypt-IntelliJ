@@ -1,4 +1,4 @@
-package de.fraunhofer.iem.icognicrypt.actions;
+package de.fraunhofer.iem.icognicrypt.ui;
 
 import com.intellij.openapi.components.*;
 import com.intellij.util.xmlb.XmlSerializerUtil;
@@ -10,26 +10,26 @@ import org.jetbrains.annotations.Nullable;
         storages = {@Storage("IcognicryptSettings.xml")})
 
 
-public class IcognicryptSettings implements PersistentStateComponent<IcognicryptSettings> {
+public class CogniCryptSettingsPersistentComponent implements PersistentStateComponent<CogniCryptSettingsPersistentComponent> {
 
     public String RULES_DIRECTORY = "./icognicrypt/resources/CrySLRules/JavaCryptographicArchitecture";
 
-    IcognicryptSettings() {
+    CogniCryptSettingsPersistentComponent() {
     }
 
     @Nullable
     @Override
-    public IcognicryptSettings getState() {
+    public CogniCryptSettingsPersistentComponent getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull IcognicryptSettings icognicryptSettings) {
+    public void loadState(@NotNull CogniCryptSettingsPersistentComponent icognicryptSettings) {
         XmlSerializerUtil.copyBean(icognicryptSettings, this);
     }
 
-    public static IcognicryptSettings getInstance() {
-        return ServiceManager.getService(IcognicryptSettings.class);
+    public static CogniCryptSettingsPersistentComponent getInstance() {
+        return ServiceManager.getService(CogniCryptSettingsPersistentComponent.class);
     }
 
     public String getRulesDirectory() {

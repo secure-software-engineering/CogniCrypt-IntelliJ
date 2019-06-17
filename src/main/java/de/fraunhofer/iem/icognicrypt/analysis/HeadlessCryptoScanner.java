@@ -1,10 +1,12 @@
-package crypto;
+package de.fraunhofer.iem.icognicrypt.analysis;
 
 import boomerang.callgraph.ObservableDynamicICFG;
 import boomerang.callgraph.ObservableICFG;
 import boomerang.preanalysis.BoomerangPretransformer;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
+import crypto.HeadlessCryptoScannerOptions;
+import crypto.Utils;
 import crypto.analysis.CrySLAnalysisListener;
 import crypto.analysis.CrySLResultsReporter;
 import crypto.analysis.CryptoScanner;
@@ -18,8 +20,6 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
 import soot.*;
-import soot.jimple.toolkits.ide.icfg.BiDiInterproceduralCFG;
-import soot.jimple.toolkits.ide.icfg.JimpleBasedInterproceduralCFG;
 import soot.options.Options;
 
 import java.io.File;

@@ -1,8 +1,14 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.gradle;
 
+import com.google.common.collect.Lists;
+import de.fraunhofer.iem.icognicrypt.core.Helpers.StringTrimming;
+import sun.util.locale.StringTokenIterator;
+
 import javax.naming.OperationNotSupportedException;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class GradleSettings
 {
@@ -11,6 +17,8 @@ public class GradleSettings
     private GradleSettingsScript _script;
 
     private Path _projectPath;
+
+    private Iterable<String> _projectModules;
 
     // Creates and returns a singletone instance of the gradle settings
     public static GradleSettings GetInstance()
@@ -32,10 +40,42 @@ public class GradleSettings
         Invalidate();
     }
 
-    public void Invalidate() throws IOException
+    public void Invalidate() throws IOException, OperationNotSupportedException
     {
         _script = GradleSettingsScript.Find(_projectPath);
-        _script.run();
+        _script.RunScript();
+        _projectModules = _script.GetModules();
+    }
+
+    public Iterable<String> GetModulePaths()
+    {
+        return InternalGetModulePaths(false);
+    }
+
+    public Iterable<String> GetModulePathsAbsolute()
+    {
+        return InternalGetModulePaths(true);
+    }
+
+    private Iterable<String> InternalGetModulePaths(boolean absolute)
+    {
+        if (!absolute)
+            return Lists.newArrayList(_projectModules);
+
+        ArrayList<String> paths = new ArrayList<>();
+        for (String module : _projectModules)
+        {
+            String trimmedName = StringTrimming.Trim(module, ':');
+
+            if (!absolute)
+                paths.add(trimmedName);
+            else
+            {
+                Path path = Paths.get(_projectPath.toString(), trimmedName);
+                paths.add(path.toString());
+            }
+        }
+        return paths;
     }
 
 

@@ -23,7 +23,7 @@ public class Main
 
         GradleSettings settings = new GradleSettings(Paths.get(tmpPath));
 
-        System.out.println("Test123");
+        System.out.println(settings.GetModulePathsAbsolute());
 
         while (true){
         }

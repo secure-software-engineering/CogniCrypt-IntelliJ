@@ -46,7 +46,6 @@ public abstract class GradleSettingsScript extends Script
     public void RunScript()
     {
         _modules.clear();
-        System.out.println("runScript");
         run();
     }
 

@@ -23,6 +23,11 @@ public class AndroidStudioOutputFinder implements IOutputFinder
     }
 
 
+    private AndroidStudioOutputFinder()
+    {
+    }
+
+
     public Iterable<File> GetOutputFiles(){
        return GetOutputFiles(OutputFinderOptions.AnyBuildType);
     }
@@ -47,29 +52,39 @@ public class AndroidStudioOutputFinder implements IOutputFinder
 
         GradleSettings settings = new GradleSettings(projectRootPath);
 
-        List<JavaModule> modules = new ArrayList<>();
-        settings.GetModulePathsAbsolute().forEach(path ->
+        List<File> result = new ArrayList<>();
+        for (String modulePath: settings.GetModulePathsAbsolute())
         {
             try
             {
-                modules.add(new JavaModule(path));
+                JavaModule module = new JavaModule(modulePath);
+                if (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)
+                {
+                    String filePath = module.GetDebugOutputPathAbsolute();
+                    if (filePath != null)
+                    {
+                        File file = new File(filePath);
+                        if (file.exists())
+                            result.add(file);
+                    }
+                }
+                if (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)
+                {
+                    String filePath = module.GetReleaseOutputPathAbsolute();
+                    if (filePath != null)
+                    {
+                        File file = new File(filePath);
+                        if (file.exists())
+                            result.add(file);
+                    }
+                }
             }
             catch (JavaModuleNotFoundException e)
             {
-                // Ignore modules that are not found!
+                continue;
             }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        });
-
-        return null;
-    }
-
-    private AndroidStudioOutputFinder()
-    {
-
+        }
+        return result;
     }
 }
 

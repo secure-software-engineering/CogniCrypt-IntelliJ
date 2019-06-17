@@ -4,6 +4,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -26,8 +27,9 @@ public class Main
 
         IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
 
-        System.out.println(outputFinder.GetOutputFiles(Paths.get(tmpPath), OutputFinderOptions.AnyBuildType));
 
+        Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(tmpPath), OutputFinderOptions.AnyBuildType);
+        System.out.println(files);
         while (true){
         }
     }

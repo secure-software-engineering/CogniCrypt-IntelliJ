@@ -2,6 +2,7 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json;
 
 import com.android.ide.common.build.ApkData;
 import com.fasterxml.jackson.annotation.*;
+import sun.util.resources.cldr.pa.CurrencyNames_pa;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,8 @@ public class OutputJson
     private ApkData apkData;
     @JsonProperty("path")
     private String path;
+    @JsonIgnore
+    private String filePath;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -57,5 +60,15 @@ public class OutputJson
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
+    }
+
+
+    public void SetFilePath(String path){
+        filePath = path;
+    }
+
+    public String GetFilePath()
+    {
+        return filePath;
     }
 }

@@ -25,6 +25,7 @@ import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
@@ -126,7 +127,8 @@ public class CompilationListener implements ProjectComponent {
                 IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
                 try
                 {
-                    Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()));
+                    // TODO: Add build type to settings
+                    Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), OutputFinderOptions.AnyBuildType);
                 }
                 // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
                 catch (CogniCryptException e)

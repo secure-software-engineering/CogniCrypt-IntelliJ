@@ -11,5 +11,9 @@ public interface IOutputFinder
 {
     public Iterable<File> GetOutputFiles();
 
+    public Iterable<File> GetOutputFiles(OutputFinderOptions options);
+
     public Iterable<File> GetOutputFiles(Path projectRootPath) throws CogniCryptException, IOException, OperationNotSupportedException;
+
+    public Iterable<File> GetOutputFiles(Path projectRootPath, OutputFinderOptions options) throws CogniCryptException, IOException, OperationNotSupportedException;
 }

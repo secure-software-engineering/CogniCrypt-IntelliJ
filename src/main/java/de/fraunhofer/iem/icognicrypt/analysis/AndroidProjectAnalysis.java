@@ -11,6 +11,7 @@ import crypto.analysis.CrySLResultsReporter;
 import crypto.analysis.CryptoScanner;
 import crypto.rules.CryptSLRule;
 import crypto.rules.CryptSLRuleReader;
+import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.results.AnalysisListener;
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -130,7 +131,7 @@ public class AndroidProjectAnalysis {
         }
         File[] listFiles = new File(rulesDirectory).listFiles();
         for (File file : listFiles) {
-            if (file != null && file.getName().endsWith(".cryptslbin")) {
+            if (file != null && file.getName().endsWith(Constants.CRYSL_BIN_EXTENSION)) {
                 rules.add(CryptSLRuleReader.readFromFile(file));
             }
         }

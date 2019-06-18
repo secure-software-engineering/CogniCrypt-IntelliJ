@@ -2,12 +2,19 @@ package de.fraunhofer.iem.icognicrypt.ui;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
+import de.fraunhofer.iem.icognicrypt.Constants;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
+import sun.java2d.loops.ProcessPath;
 
 import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FilenameFilter;
 
 public class CogniCryptSettings implements Configurable {
     private JTextField rulesDirTextfield;
@@ -31,12 +38,7 @@ public class CogniCryptSettings implements Configurable {
         contentPane.add(selectDirButton);
         CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();
         rulesDirTextfield.setText(settings.getRulesDirectory());
-        selectDirButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rulesDirTextfield.setText(openFileChooserDialog(settings.getRulesDirectory(),contentPane));
-            }
-        });
+        selectDirButton.addActionListener(e -> rulesDirTextfield.setText(openFileChooserDialog(settings.getRulesDirectory(),contentPane)));
         return contentPane;
     }
 
@@ -46,7 +48,7 @@ public class CogniCryptSettings implements Configurable {
     }
 
     @Override
-    public void apply() throws ConfigurationException {
+    public void apply() {
         CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();
         settings.setRulesDirectory(rulesDirTextfield.getText());
     }
@@ -60,10 +62,36 @@ public class CogniCryptSettings implements Configurable {
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             isModified = true;
-            return fileChooser.getSelectedFile().getPath();
+            String newPath = fileChooser.getSelectedFile().getPath();
+            if(isValidCrySLRuleDirectory(newPath)){
+                return newPath;
+            } else {
+                showDownloadCrySLRulesDialog(contentPane, newPath);
+                return path;
+            }
         }
         else {
             return path;
         }
+    }
+
+    private void showDownloadCrySLRulesDialog(JPanel contentPane, String newPath) {
+        JOptionPane.showMessageDialog(contentPane,
+                "No .cryptslbin files found in "+ newPath+" \nYou can download them here:\n" + Constants.CRYSL_RULES_DOWNLOADLINK,
+                "CrySL Rule Selection Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static boolean isValidCrySLRuleDirectory(String path){
+        File rulesDir = new File(path);
+        if(!rulesDir.exists()){
+            return false;
+        }
+
+        if(!rulesDir.isDirectory()) {
+            return false;
+        }
+
+        return rulesDir.listFiles((dir, filename) -> filename.endsWith(Constants.CRYSL_BIN_EXTENSION)).length != 0;
     }
 }

@@ -2,18 +2,24 @@ package de.fraunhofer.iem.icognicrypt.results;
 
 import crypto.analysis.errors.AbstractError;
 
-public class CognicrpyptError  {
+public class CogniCryptError {
 
     private String errorMessage;
+    private String className;
     private boolean isVisible;
 
-    public CognicrpyptError(String error) {
+    public CogniCryptError(String error, String className) {
         errorMessage = error;
+        this.className = className;
         isVisible = false;
     }
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public String getClassName(){
+        return className;
     }
 
     public boolean isVisible() {

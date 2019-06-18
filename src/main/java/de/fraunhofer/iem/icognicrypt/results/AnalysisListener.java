@@ -19,14 +19,12 @@ import crypto.extractparameter.CallSiteWithParamIndex;
 import crypto.extractparameter.ExtractedValue;
 import crypto.interfaces.ISLConstraint;
 import crypto.rules.CryptSLPredicate;
-import de.fraunhofer.iem.icognicrypt.analysis.AndroidProjectAnalysis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sync.pds.solver.nodes.Node;
 import typestate.TransitionFunction;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 public class AnalysisListener extends CrySLAnalysisListener {
@@ -86,7 +84,7 @@ public class AnalysisListener extends CrySLAnalysisListener {
         //Add error to error provider
         if (abstractError.getErrorLocation().getUnit().isPresent()) {
             logger.info("Error found in method {} in line {}", abstractError.getErrorLocation().getMethod(), abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber());
-            ErrorProvider.addError(abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1, new CognicrpyptError(abstractError.toErrorMarkerString()));
+            ErrorProvider.addError(abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1, new CogniCryptError(abstractError.toErrorMarkerString(), abstractError.getErrorLocation().getMethod().getDeclaringClass().toString()));
         }
     }
 

@@ -198,9 +198,10 @@ public class CompilationListener implements ProjectComponent {
             logger.info("Fallback for android sdk path to environment variable");
         }
 
-        if (android_sdk_root == null || android_sdk_root.equals(""))
+        Path sdkPath = Paths.get(android_sdk_root);
+        if (android_sdk_root == null || android_sdk_root.equals("") || !sdkPath.toFile().exists())
             throw new RuntimeException("Environment variable "+Constants.ANDROID_SDK+" not found!");
-        return Paths.get(android_sdk_root).resolve("platforms");
+        return sdkPath.resolve("platforms");
     }
 
     public static String getRulesDirectory() {

@@ -1,6 +1,8 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
+import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
+import de.fraunhofer.iem.icognicrypt.analysis.CompilationListener;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
@@ -14,6 +16,8 @@ import java.util.List;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
 {
+    private static final Logger logger = Logger.getInstance(AndroidStudioOutputFinder.class);
+
     private static IOutputFinder _instance;
 
     public static IOutputFinder GetInstance(){
@@ -47,6 +51,8 @@ public class AndroidStudioOutputFinder implements IOutputFinder
     @Override
     public Iterable<File> GetOutputFiles(Path projectRootPath, OutputFinderOptions options) throws CogniCryptException, IOException, OperationNotSupportedException
     {
+        logger.info("Try finding all built .apk files.");
+
         if (!Files.exists(projectRootPath))
             throw new CogniCryptException("Root path of the project does not exist.");
 
@@ -65,7 +71,10 @@ public class AndroidStudioOutputFinder implements IOutputFinder
                     {
                         File file = new File(filePath);
                         if (file.exists())
+                        {
                             result.add(file);
+                            logger.info("Found .apk File: " + file.getCanonicalPath());
+                        }
                     }
                 }
                 if (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)
@@ -75,7 +84,10 @@ public class AndroidStudioOutputFinder implements IOutputFinder
                     {
                         File file = new File(filePath);
                         if (file.exists())
+                        {
                             result.add(file);
+                            logger.info("Found .apk File: " + file.getCanonicalPath());
+                        }
                     }
                 }
             }

@@ -15,7 +15,5 @@ public class Main
         IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
         Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(tmpPath), OutputFinderOptions.AnyBuildType);
         System.out.println(files);
-        while (true){
-        }
     }
 }

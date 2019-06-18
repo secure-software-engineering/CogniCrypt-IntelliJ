@@ -5,7 +5,6 @@ import com.android.tools.idea.gradle.project.build.invoker.GradleInvocationResul
 import com.android.tools.idea.project.AndroidProjectBuildNotifications;
 import com.android.tools.idea.sdk.AndroidSdks;
 import com.google.common.base.Joiner;
-import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
@@ -25,12 +24,19 @@ import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IOutputFinder;
+import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import org.apache.commons.io.FileUtils;
 
 
+import javax.naming.OperationNotSupportedException;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -75,7 +81,7 @@ public class CompilationListener implements ProjectComponent {
                         if (buildTask.equals("clean"))
                             continue;
 
-                        startAnalyser(Constants.IDE_ANDROID_STUDIO, project);
+                        startAnalyser(IdeType.AndroidStudio, project);
                     }
                 }
             }
@@ -91,20 +97,19 @@ public class CompilationListener implements ProjectComponent {
             @Override
             public void compilationFinished(boolean aborted, int errors, int warnings, CompileContext compileContext) {
                 if (!aborted)
-                    startAnalyser(Constants.IDE_INTELLIJ, compileContext.getProject());
+                    startAnalyser(IdeType.IntelliJ, compileContext.getProject());
             }
 
             @Override
             public void automakeCompilationFinished(int errors, int warnings, CompileContext compileContext) {
-
-                startAnalyser(Constants.IDE_INTELLIJ, compileContext.getProject());
+                startAnalyser(IdeType.IntelliJ, compileContext.getProject());
             }
         });
     }
 
-
-    public static void startAnalyser(int IDE, Project project) {
-        if(!CogniCryptSettings.isValidCrySLRuleDirectory(getRulesDirectory())){
+    public static void startAnalyser(IdeType ide, Project project) {
+        if(!CogniCryptSettings.isValidCrySLRuleDirectory(getRulesDirectory()))
+        {
             Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "No valid CrySL rules found. Please go to \"File > Settings > Other Settings > CogniCrypt\" and select a valid directory.", NotificationType.INFORMATION);
             Notifications.Bus.notify(notification);
             return;
@@ -113,13 +118,35 @@ public class CompilationListener implements ProjectComponent {
 
         //Get modules that are present for each project
         //Get output path for IntelliJ project or APK path in Android Studio
-        switch (IDE) {
-            case Constants.IDE_ANDROID_STUDIO:
+        // TODO: Check if large s/c is required and code can be summarized.
+        switch (ide) {
+            case AndroidStudio:
 
                 Path platforms = getAndroidPlatformsLocation(project);
 
                 String path = project.getBasePath();
                 logger.info("Evaluating compile path "+ path);
+
+                //New FileFinder here
+                IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
+                try
+                {
+                    // TODO: Add build type to settings
+                    Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), OutputFinderOptions.AnyBuildType);
+                }
+                // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
+                catch (CogniCryptException e)
+                {
+                    e.printStackTrace();
+                }
+                catch (OperationNotSupportedException e)
+                {
+                    e.printStackTrace();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
 
                 File apkDir = new File(path);
                 LinkedList<AndroidProjectAnalysis> queue = Lists.newLinkedList();
@@ -144,7 +171,7 @@ public class CompilationListener implements ProjectComponent {
                 }
 
                 break;
-            case Constants.IDE_INTELLIJ:
+            case IntelliJ:
 
                 for (Module module : ModuleManager.getInstance(project).getModules()) {
 

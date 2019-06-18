@@ -24,6 +24,7 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
     private static final Logger logger = Logger.getInstance(AndroidProjectAnalysis.class);
     private Queue<AndroidProjectAnalysis> analysisQueue;
+    private static final Logger logger = Logger.getInstance(AndroidProjectAnalysisQueue.class);
 
     public AndroidProjectAnalysisQueue(Project p, Queue<AndroidProjectAnalysis> analysisQueue){
         super(null, "Performing CogniCrypt Analysis");
@@ -45,6 +46,7 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
                 curr.run();
             } catch (Throwable e){
                 Notification notification = new Notification("CogniCrypt", "CogniCrypt", String.format("Crashed on %s", curr), NotificationType.INFORMATION);
+                logger.error(e);
                 Notifications.Bus.notify(notification);
                 logger.error(e);
             }

@@ -33,7 +33,7 @@ public class CogniCryptSettings implements Configurable {
         contentPane.add(new JLabel("CrySL Rules Directory"));
         rulesDirTextfield = new JTextField();
         contentPane.add(rulesDirTextfield);
-        JButton selectDirButton = new JButton("...");
+        JButton selectDirButton = new JButton("Browse...");
         contentPane.add(rulesDirTextfield);
         contentPane.add(selectDirButton);
         CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();

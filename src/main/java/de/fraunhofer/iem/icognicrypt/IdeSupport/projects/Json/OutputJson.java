@@ -1,6 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json;
 
-import com.android.ide.common.build.ApkData;
 import com.fasterxml.jackson.annotation.*;
 import sun.util.resources.cldr.pa.CurrencyNames_pa;
 
@@ -14,7 +13,7 @@ public class OutputJson
     @JsonProperty("outputType")
     private OutputType outputType;
     @JsonProperty("apkData")
-    private ApkData apkData;
+    private IApkData apkData;
     @JsonProperty("path")
     private String path;
     @JsonIgnore
@@ -33,12 +32,12 @@ public class OutputJson
     }
 
     @JsonProperty("apkData")
-    public ApkData getApkData() {
+    public IApkData getApkData() {
         return apkData;
     }
 
     @JsonProperty("apkData")
-    public void setApkData(ApkData apkData) {
+    public void setApkData(IApkData apkData) {
         this.apkData = apkData;
     }
 

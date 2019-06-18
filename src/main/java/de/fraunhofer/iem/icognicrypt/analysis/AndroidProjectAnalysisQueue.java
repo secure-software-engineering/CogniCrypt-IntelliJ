@@ -24,7 +24,6 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
     private static final Logger logger = Logger.getInstance(AndroidProjectAnalysis.class);
     private Queue<AndroidProjectAnalysis> analysisQueue;
-    private static final Logger logger = Logger.getInstance(AndroidProjectAnalysisQueue.class);
 
     public AndroidProjectAnalysisQueue(Project p, Queue<AndroidProjectAnalysis> analysisQueue){
         super(null, "Performing CogniCrypt Analysis");

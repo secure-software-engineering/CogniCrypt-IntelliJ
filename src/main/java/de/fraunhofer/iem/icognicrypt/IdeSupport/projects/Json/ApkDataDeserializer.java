@@ -1,7 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json;
 
-import com.android.build.VariantOutput;
-import com.android.ide.common.build.ApkData;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -10,7 +8,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import java.io.IOException;
 
-public class ApkDataDeserializer extends StdDeserializer<ApkData>
+public class ApkDataDeserializer extends StdDeserializer<IApkData>
 {
     public ApkDataDeserializer() {
         this(null);
@@ -21,60 +19,98 @@ public class ApkDataDeserializer extends StdDeserializer<ApkData>
     }
 
     @Override
-    public ApkData deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException
+    public IApkData deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException
     {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-        String baseName = node.get("baseName").asText();
-        String fullName = node.get("fullName").asText();
-        VariantOutput.OutputType outputType = Enum.valueOf (VariantOutput.OutputType.class,  node.get("type").asText());
-        ApkData data = new SimpleApkData(baseName, fullName, outputType);
-        data.setOutputFileName(node.get("outputFile").asText());
-        data.setVersionCode(node.get("versionCode").asInt());
-        data.setVersionName(node.get("versionName").asText());
+        ApkDataOutputType outputType = Enum.valueOf (ApkDataOutputType.class,  node.get("type").asText());
+        IApkData data = new SimpleApkData();
+        data.SetOutputFile(node.get("outputFile").asText());
+        data.SetVersionCode(node.get("versionCode").asInt());
+        data.SetVersionName(node.get("versionName").asText());
+        data.SetBaseName(node.get("baseName").asText());
+        data.SetFullName(node.get("fullName").asText());
         return data;
     }
 
-    private class SimpleApkData extends ApkData
+    private class SimpleApkData implements IApkData
     {
+        String _filePath;
         String _baseName;
         String _fullName;
-        OutputType _outputType;
+        ApkDataOutputType _output;
+        int _versionCode;
+        String _versionName;
 
-
-        public SimpleApkData(String baseName, String fullName, OutputType outputType){
-            _baseName = baseName;
-            _fullName = fullName;
-            _outputType = outputType;
+        @Override
+        public void SetOutputFile(String relativeFilePath)
+        {
+            _filePath = relativeFilePath;
         }
 
         @Override
-        public String getBaseName()
+        public void SetBaseName(String baseName)
+        {
+            _baseName = baseName;
+        }
+
+        @Override
+        public void SetFullName(String fullName)
+        {
+            _fullName = fullName;
+        }
+
+        @Override
+        public void SetOutputType(ApkDataOutputType outputType)
+        {
+            _output = outputType;
+        }
+
+        @Override
+        public void SetVersionCode(int versionCode)
+        {
+            _versionCode = versionCode;
+        }
+
+        @Override
+        public void SetVersionName(String versionName)
+        {
+            _versionName = versionName;
+        }
+
+        @Override
+        public String GetOutputFile()
+        {
+            return _filePath;
+        }
+
+        @Override
+        public String GetBaseName()
         {
             return _baseName;
         }
 
         @Override
-        public String getFullName()
+        public String GetFullName()
         {
             return _fullName;
         }
 
         @Override
-        public OutputType getType()
+        public ApkDataOutputType GetOutputType()
         {
-            return _outputType;
+            return _output;
         }
 
         @Override
-        public String getFilterName()
+        public int GetVersionCode()
         {
-            return null;
+            return _versionCode;
         }
 
         @Override
-        public String getDirName()
+        public String GetVersionName()
         {
-            return null;
+            return _versionName;
         }
     }
 }

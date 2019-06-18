@@ -1,10 +1,10 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 
-import com.android.ide.common.build.ApkData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.ApkDataDeserializer;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.IApkData;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.OutputJson;
 import org.omg.CORBA.ARG_OUT;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -76,7 +76,7 @@ public class JavaModule
     private String GetOutputFilePath(OutputJson outputJson, boolean absolute)
     {
         if (outputJson == null) return null;
-        String outputFileName = outputJson.getApkData().getOutputFileName();
+        String outputFileName = outputJson.getApkData().GetOutputFile();
         if (!absolute) return outputFileName;
         return Paths.get(Paths.get(outputJson.GetFilePath()).getParent().toString(), outputFileName).toString();
     }
@@ -85,7 +85,7 @@ public class JavaModule
     {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(ApkData.class, new ApkDataDeserializer());
+        module.addDeserializer(IApkData.class, new ApkDataDeserializer());
         mapper.registerModule(module);
         try
         {

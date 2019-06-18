@@ -133,6 +133,29 @@ public class CompilationListener implements ProjectComponent {
                 {
                     // TODO: Add build type to settings
                     Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), OutputFinderOptions.AnyBuildType);
+
+                    File projectDir = new File(path);
+                    LinkedList<AndroidProjectAnalysis> queue = Lists.newLinkedList();
+                    if (!projectDir.exists()) break;
+
+                    //for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true))
+                    for (File file : files)
+                    {
+                        String apkPath = file.getAbsolutePath();
+                        logger.info("APK found in " + apkPath);
+
+                        Collection<File> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true);
+                        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
+                        Notifications.Bus.notify(notification);
+                        notification.getBalloon().hide();
+
+                        AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), javaSourceFiles);
+                        queue.add(analysis);
+                    }
+                    if (queue.isEmpty())
+                        Notifications.Bus.notify(new Notification("CogniCrypt", "Warning", "No APK file detected. Run Build > Make Project assemble an APK and trigger the analysis again.", NotificationType.WARNING));
+                    else ProgressManager.getInstance().run(new AndroidProjectAnalysisQueue(project, queue));
+
                 }
                 // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
                 catch (CogniCryptException e)
@@ -146,28 +169,6 @@ public class CompilationListener implements ProjectComponent {
                 catch (IOException e)
                 {
                     e.printStackTrace();
-                }
-
-                File apkDir = new File(path);
-                LinkedList<AndroidProjectAnalysis> queue = Lists.newLinkedList();
-                if (apkDir.exists()) {
-                    for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true)) {
-                        String apkPath = file.getAbsolutePath();
-                        logger.info("APK found in "+ apkPath);
-
-                        Collection<File> javaSourceFiles = FileUtils.listFiles(apkDir, new String[]{"java"}, true);
-                        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
-                        Notifications.Bus.notify(notification);
-                        notification.getBalloon().hide();
-
-                        AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(),javaSourceFiles );
-                        queue.add(analysis);
-                    }
-                }
-                if(queue.isEmpty()){
-                    Notifications.Bus.notify(new Notification("CogniCrypt", "Warning", "No APK file detected. Run Build > Make Project assemble an APK and trigger the analysis again.", NotificationType.WARNING));
-                } else {
-                    ProgressManager.getInstance().run(new AndroidProjectAnalysisQueue(project, queue));
                 }
 
                 break;

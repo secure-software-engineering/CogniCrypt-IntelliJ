@@ -49,5 +49,4 @@ To enable the debug functionality you need to add a run configuration in Intelli
 
 1. Build your `.apk` and make sure it successfully produces an `.apk` file within your project folder.
 2. Go to `Analyze > Run CogniCrypt`
-3. The first time the analysis is launched CogniCrypt asks you to locate the CrySL rules (a popup appears). Download https://github.com/CROSSINGTUD/CryptoAnalysis/releases/download/2.3/CrySL-rulesets.zip and extract it to some folder <CRYSL-RULES>, in the popup specify the folder <CRYSL-RULES>.
-4. Wait till analysis process terminates.
+3. Wait till analysis process terminates.

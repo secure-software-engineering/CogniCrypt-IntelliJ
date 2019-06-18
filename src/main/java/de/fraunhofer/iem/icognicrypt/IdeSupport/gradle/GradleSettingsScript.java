@@ -1,6 +1,8 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.gradle;
 
 import afu.org.checkerframework.checker.oigj.qual.O;
+import com.intellij.openapi.diagnostic.Logger;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
@@ -17,12 +19,15 @@ import java.util.HashSet;
 
 public abstract class GradleSettingsScript extends Script
 {
+    private static final Logger logger = Logger.getInstance(GradleSettingsScript.class);
+
     private boolean _initialized;
 
     private HashSet<String> _modules = new HashSet<>();
 
     public static GradleSettingsScript Find(Path rootPath) throws IOException
     {
+        logger.info("Reading settings file");
         CompilerConfiguration config = new CompilerConfiguration();
         config.setScriptBaseClass("de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettingsScript");
 
@@ -45,6 +50,7 @@ public abstract class GradleSettingsScript extends Script
 
     public void RunScript()
     {
+        logger.info("Evaluating settings file");
         _modules.clear();
         run();
     }

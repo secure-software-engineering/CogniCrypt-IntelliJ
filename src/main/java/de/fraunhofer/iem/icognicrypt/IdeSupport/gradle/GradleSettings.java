@@ -1,6 +1,8 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.gradle;
 
 import com.google.common.collect.Lists;
+import com.intellij.openapi.diagnostic.Logger;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
 import de.fraunhofer.iem.icognicrypt.core.Helpers.StringTrimming;
 import sun.util.locale.StringTokenIterator;
 
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 
 public class GradleSettings
 {
+    private static final Logger logger = Logger.getInstance(GradleSettings.class);
+
     private static GradleSettings _instance;
 
     private GradleSettingsScript _script;
@@ -45,6 +49,7 @@ public class GradleSettings
         _script = GradleSettingsScript.Find(_projectPath);
         _script.RunScript();
         _projectModules = _script.GetModules();
+        logger.info("Project modules found: " + _projectModules);
     }
 
     public Iterable<String> GetModulePaths()

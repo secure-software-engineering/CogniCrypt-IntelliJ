@@ -162,15 +162,10 @@ public class CompilationListener implements ProjectComponent {
                 {
                     e.printStackTrace();
                 }
-                catch (OperationNotSupportedException e)
+                catch (Exception e)
                 {
                     e.printStackTrace();
                 }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-
                 break;
             case IntelliJ:
 

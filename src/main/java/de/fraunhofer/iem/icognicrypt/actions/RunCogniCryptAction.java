@@ -1,17 +1,17 @@
 package de.fraunhofer.iem.icognicrypt.actions;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataConstants;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.IconLoader;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
 import de.fraunhofer.iem.icognicrypt.analysis.CompilationListener;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class RunCogniCryptAction extends AnAction {
+import javax.swing.*;
+
+public class RunCogniCryptAction extends CogniCryptAction {
 
     public RunCogniCryptAction() {
         super("CogniCrypt Analysis","Run CogniCrypt Analysis", IconLoader.getIcon("/icons/cognicrypt.png"));
@@ -22,3 +22,5 @@ public class RunCogniCryptAction extends AnAction {
         CompilationListener.startAnalyser(IdeType.AndroidStudio,p);
     }
 }
+
+

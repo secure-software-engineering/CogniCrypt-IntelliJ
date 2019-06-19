@@ -40,7 +40,7 @@
         <action id="ICognicrypt-analysis"
                 class="de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction"
                 icon="PluginIcons.COGNICRYPT"
-                text="Run CogniCrypt" description="Check for misuses of cryptographic APIs">
+                text="Run CogniCr_ypt" description="Check for misuses of cryptographic APIs">
             <add-to-group group-id="AnalyzeMenu" anchor="last"  />
         </action>
     </actions>

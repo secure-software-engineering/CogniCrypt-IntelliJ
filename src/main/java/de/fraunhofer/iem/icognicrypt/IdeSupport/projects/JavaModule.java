@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.HashSet;
 
-public class JavaModule
+public class JavaModule implements IHasOutputs
 {
     // TODO: Apparently libraries are build in a folder called aar. We need to decide if we want to check for the too, or just support apk files.
     private static final String RelativeBuildPath = "build\\outputs\\apk\\";
@@ -92,10 +92,9 @@ public class JavaModule
 
     private String GetOutputFilePath(OutputJson outputJson, boolean absolute)
     {
-        if (outputJson == null) return null;
-        String outputFileName = outputJson.getApkData().GetOutputFile();
-        if (!absolute) return outputFileName;
-        return Paths.get(Paths.get(outputJson.GetFilePath()).getParent().toString(), outputFileName).toString();
+        if (outputJson == null)
+            return null;
+        return outputJson.GetOutputFilePath(absolute);
     }
 
     private OutputJson Deserialize(String path)

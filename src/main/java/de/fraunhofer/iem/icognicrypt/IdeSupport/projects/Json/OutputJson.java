@@ -3,6 +3,7 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json;
 import com.fasterxml.jackson.annotation.*;
 import sun.util.resources.cldr.pa.CurrencyNames_pa;
 
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,5 +70,12 @@ public class OutputJson
     public String GetFilePath()
     {
         return filePath;
+    }
+
+    public String GetOutputFilePath(boolean absolute)
+    {
+        String outputFileName = getApkData().GetOutputFile();
+        if (!absolute) return outputFileName;
+        return Paths.get(Paths.get(filePath).getParent().toString(), outputFileName).toString();
     }
 }

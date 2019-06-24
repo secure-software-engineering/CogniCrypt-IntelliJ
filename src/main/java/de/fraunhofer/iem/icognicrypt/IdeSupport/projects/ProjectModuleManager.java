@@ -5,6 +5,9 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// TODO: Implement a signletone class 'ProjectManager' that has this instance (or maybe the settings.gradle ???) as property. The 'ProjectManager' also holds the IdeaWorkspace instance.
+// TODO: See what happens to settings.gradle and this instance if the project in the IDE is changed. Invalidate state then.
 public class ProjectModuleManager
 {
     private GradleSettings _settings;

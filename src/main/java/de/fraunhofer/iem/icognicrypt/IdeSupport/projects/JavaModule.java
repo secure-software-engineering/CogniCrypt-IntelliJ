@@ -12,6 +12,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.HashSet;
 
 public class JavaModule
 {
@@ -49,8 +50,24 @@ public class JavaModule
 
     public void InvalidateOutput()
     {
+        //TODO: Invalidate after each build triggered to assure the jsons are up-to-date
+
         _debugJson = Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "debug\\output.json").toString());
         _releaseJson = Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "release\\output.json").toString());
+    }
+
+    public Iterable<String> GetOutputs(OutputFinderOptions options)
+    {
+        HashSet<String> result = new HashSet<>();
+
+        if (_debugJson != null && (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)){
+            result.add(GetDebugOutputPathAbsolute());
+        }
+
+        if (_releaseJson != null && (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)){
+            result.add(GetReleaseOutputPathAbsolute());
+        }
+        return result;
     }
 
     public String GetDebugOutputPath()

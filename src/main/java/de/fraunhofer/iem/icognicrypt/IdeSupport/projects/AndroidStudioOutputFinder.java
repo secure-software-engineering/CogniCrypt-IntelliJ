@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
@@ -56,44 +58,29 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         if (!Files.exists(projectRootPath))
             throw new CogniCryptException("Root path of the project does not exist.");
 
+        HashSet<File> result = new HashSet<>();
+
+        result.addAll(GetModuleOutputs(projectRootPath, options));
+
+        return result;
+    }
+
+    private Collection<File> GetModuleOutputs(Path projectRootPath, OutputFinderOptions options) throws IOException, OperationNotSupportedException
+    {
         GradleSettings settings = new GradleSettings(projectRootPath);
+        ProjectModuleManager moduleManager = new ProjectModuleManager(settings);
 
         List<File> result = new ArrayList<>();
-        for (String modulePath: settings.GetModulePathsAbsolute())
+        for (JavaModule module : moduleManager.GetModules())
         {
-            try
+            for (String output : module.GetOutputs(options))
             {
-                JavaModule module = new JavaModule(modulePath);
-                if (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)
+                File file = new File(output);
+                if (file.exists())
                 {
-                    String filePath = module.GetDebugOutputPathAbsolute();
-                    if (filePath != null)
-                    {
-                        File file = new File(filePath);
-                        if (file.exists())
-                        {
-                            result.add(file);
-                            logger.info("Found .apk File: " + file.getCanonicalPath());
-                        }
-                    }
+                    result.add(file);
+                    logger.info("Found .apk File: " + file.getCanonicalPath());
                 }
-                if (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)
-                {
-                    String filePath = module.GetReleaseOutputPathAbsolute();
-                    if (filePath != null)
-                    {
-                        File file = new File(filePath);
-                        if (file.exists())
-                        {
-                            result.add(file);
-                            logger.info("Found .apk File: " + file.getCanonicalPath());
-                        }
-                    }
-                }
-            }
-            catch (JavaModuleNotFoundException e)
-            {
-                continue;
             }
         }
         return result;

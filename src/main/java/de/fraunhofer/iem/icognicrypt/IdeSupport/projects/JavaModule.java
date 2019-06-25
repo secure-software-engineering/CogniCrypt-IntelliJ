@@ -12,8 +12,9 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.HashSet;
 
-public class JavaModule
+public class JavaModule implements IHasOutputManager
 {
     // TODO: Apparently libraries are build in a folder called aar. We need to decide if we want to check for the too, or just support apk files.
     private static final String RelativeBuildPath = "build\\outputs\\apk\\";
@@ -23,20 +24,9 @@ public class JavaModule
     private OutputJson _debugJson;
     private OutputJson _releaseJson;
 
-    public OutputJson GetDebug()
-    {
-        return _debugJson;
-    }
+    private IHasOutputs _outputManager;
 
-    public OutputJson GetRelease()
-    {
-        return _releaseJson;
-    }
-
-    public OutputJson GetReleaseOutput()
-    {
-        return _releaseJson;
-    }
+    public IHasOutputs GetOutputManager() { return _outputManager;}
 
     public JavaModule(String path) throws JavaModuleNotFoundException
     {
@@ -44,63 +34,24 @@ public class JavaModule
         if (!realPath.toFile().exists()) throw new JavaModuleNotFoundException();
         _path = realPath;
 
-        InvalidateOutput();
+        _outputManager = new OutputManager(this);
+        _outputManager.InvalidateOutput();
+
     }
 
-    public void InvalidateOutput()
+    private class OutputManager extends OutputJsonManager
     {
-        _debugJson = Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "debug\\output.json").toString());
-        _releaseJson = Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "release\\output.json").toString());
-    }
+        private final JavaModule _owner;
 
-    public String GetDebugOutputPath()
-    {
-        return GetOutputFilePath(_debugJson, false);
-    }
-
-    public String GetDebugOutputPathAbsolute()
-    {
-        return GetOutputFilePath(_debugJson, true);
-    }
-
-    public String GetReleaseOutputPath()
-    {
-        return GetOutputFilePath(_releaseJson, false);
-    }
-
-    public String GetReleaseOutputPathAbsolute()
-    {
-        return GetOutputFilePath(_releaseJson, true);
-    }
-
-    private String GetOutputFilePath(OutputJson outputJson, boolean absolute)
-    {
-        if (outputJson == null) return null;
-        String outputFileName = outputJson.getApkData().GetOutputFile();
-        if (!absolute) return outputFileName;
-        return Paths.get(Paths.get(outputJson.GetFilePath()).getParent().toString(), outputFileName).toString();
-    }
-
-    private OutputJson Deserialize(String path)
-    {
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(IApkData.class, new ApkDataDeserializer());
-        mapper.registerModule(module);
-        try
-        {
-            OutputJson[] outputs = mapper.readValue(new File(path), OutputJson[].class);
-            if (outputs.length == 1) {
-                OutputJson output = outputs[0];
-                output.SetFilePath(path);
-                return outputs[0];
-            }
-            // TODO: I'm not sure if the Json-Array is ever filled with more than one entry. If so we need to change code here.
-            throw new NotImplementedException();
+        public OutputManager(JavaModule owner){
+            _owner = owner;
         }
-        catch (IOException e)
+
+        @Override
+        public void InvalidateOutput()
         {
-            return null;
+            DebugJson = OutputJson.Deserialize(Paths.get(_path.toString(), _owner.RelativeBuildPath, "debug\\output.json").toString());
+            ReleaseJson = OutputJson.Deserialize(Paths.get(_path.toString(), _owner.RelativeBuildPath, "release\\output.json").toString());
         }
     }
 }

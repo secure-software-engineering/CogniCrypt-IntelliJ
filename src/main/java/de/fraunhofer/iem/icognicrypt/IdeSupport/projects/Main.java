@@ -6,6 +6,8 @@ import javax.naming.OperationNotSupportedException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.EnumSet;
+import java.util.Set;
 
 public class Main
 {
@@ -13,6 +15,8 @@ public class Main
     {
         String tmpPath = "C:\\Users\\lrs\\AndroidStudioProjects\\HelloWorld";
         IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
+
+
         Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(tmpPath), OutputFinderOptions.AnyBuildType);
         System.out.println(files);
     }

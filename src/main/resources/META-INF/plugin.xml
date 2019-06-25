@@ -27,6 +27,12 @@
     <depends>com.intellij.modules.lang</depends>
     -->
 
+    <application-components>
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.CogniCryptPlugin</implementation-class>
+        </component>
+    </application-components>
+
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <codeInsight.lineMarkerProvider language="JAVA"

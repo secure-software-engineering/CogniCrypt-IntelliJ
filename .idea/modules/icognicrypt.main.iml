@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
-  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="de.fraunhofer" externalSystemModuleType="sourceSet" externalSystemModuleVersion="0.1.1" linkedProjectId="icognicrypt:main" linkedProjectPath="$MODULE_DIR$/../.." rootProjectPath="$MODULE_DIR$/../.." />
+  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="de.fraunhofer" externalSystemModuleType="sourceSet" externalSystemModuleVersion="0.2.1" linkedProjectId="icognicrypt:main" linkedProjectPath="$MODULE_DIR$/../.." rootProjectPath="$MODULE_DIR$/../.." />
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/../../out/production/classes" />
     <exclude-output />
@@ -12,6 +12,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:CryptoAnalysis:2.3" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-cmd:2.7.1" level="project" />
+    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-android:2.7.1" level="project" />
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
@@ -21,7 +22,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-android:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-summaries:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:idealPDS:2.3" level="project" />

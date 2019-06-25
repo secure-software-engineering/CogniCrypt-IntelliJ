@@ -1,8 +1,13 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import sun.util.resources.cldr.pa.CurrencyNames_pa;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,5 +82,28 @@ public class OutputJson
         String outputFileName = getApkData().GetOutputFile();
         if (!absolute) return outputFileName;
         return Paths.get(Paths.get(filePath).getParent().toString(), outputFileName).toString();
+    }
+
+    public static OutputJson Deserialize(String path)
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(IApkData.class, new ApkDataDeserializer());
+        mapper.registerModule(module);
+        try
+        {
+            OutputJson[] outputs = mapper.readValue(new File(path), OutputJson[].class);
+            if (outputs.length == 1) {
+                OutputJson output = outputs[0];
+                output.SetFilePath(path);
+                return outputs[0];
+            }
+            // TODO: I'm not sure if the Json-Array is ever filled with more than one entry. If so we need to change code here.
+            throw new NotImplementedException();
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
     }
 }

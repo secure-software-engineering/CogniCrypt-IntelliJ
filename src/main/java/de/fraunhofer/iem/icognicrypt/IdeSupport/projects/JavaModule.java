@@ -51,9 +51,8 @@ public class JavaModule implements IHasOutputs
     public void InvalidateOutput()
     {
         //TODO: Invalidate after each build triggered to assure the jsons are up-to-date
-
-        _debugJson = Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "debug\\output.json").toString());
-        _releaseJson = Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "release\\output.json").toString());
+        _debugJson = OutputJson.Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "debug\\output.json").toString());
+        _releaseJson = OutputJson.Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "release\\output.json").toString());
     }
 
     public Iterable<String> GetOutputs(OutputFinderOptions options)
@@ -61,33 +60,33 @@ public class JavaModule implements IHasOutputs
         HashSet<String> result = new HashSet<>();
 
         if (_debugJson != null && (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)){
-            result.add(GetDebugOutputPathAbsolute());
+            result.add(GetDebugOutputPath());
         }
 
         if (_releaseJson != null && (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)){
-            result.add(GetReleaseOutputPathAbsolute());
+            result.add(GetReleaseOutputPath());
         }
         return result;
     }
 
     public String GetDebugOutputPath()
     {
-        return GetOutputFilePath(_debugJson, false);
+        return GetOutputFilePath(_debugJson, true);
     }
 
-    public String GetDebugOutputPathAbsolute()
+    public String GetDebugOutputPathRelative()
     {
-        return GetOutputFilePath(_debugJson, true);
+        return GetOutputFilePath(_debugJson, false);
     }
 
     public String GetReleaseOutputPath()
     {
-        return GetOutputFilePath(_releaseJson, false);
+        return GetOutputFilePath(_releaseJson, true);
     }
 
-    public String GetReleaseOutputPathAbsolute()
+    public String GetReleaseOutputPathRelative()
     {
-        return GetOutputFilePath(_releaseJson, true);
+        return GetOutputFilePath(_releaseJson, false);
     }
 
     private String GetOutputFilePath(OutputJson outputJson, boolean absolute)
@@ -95,29 +94,6 @@ public class JavaModule implements IHasOutputs
         if (outputJson == null)
             return null;
         return outputJson.GetOutputFilePath(absolute);
-    }
-
-    private OutputJson Deserialize(String path)
-    {
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(IApkData.class, new ApkDataDeserializer());
-        mapper.registerModule(module);
-        try
-        {
-            OutputJson[] outputs = mapper.readValue(new File(path), OutputJson[].class);
-            if (outputs.length == 1) {
-                OutputJson output = outputs[0];
-                output.SetFilePath(path);
-                return outputs[0];
-            }
-            // TODO: I'm not sure if the Json-Array is ever filled with more than one entry. If so we need to change code here.
-            throw new NotImplementedException();
-        }
-        catch (IOException e)
-        {
-            return null;
-        }
     }
 }
 

@@ -2,15 +2,11 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 public interface IHasOutputs
 {
-    public void InvalidateOutput();
+    void InvalidateOutput();
 
-    public Iterable<String> GetOutputs(OutputFinderOptions options);
+    Iterable<String> GetOutputs(OutputFinderOptions options);
 
-    public String GetDebugOutputPath();
+    String GetDebugOutputPath();
 
-    public String GetDebugOutputPathAbsolute();
-
-    public String GetReleaseOutputPath();
-
-    public String GetReleaseOutputPathAbsolute();
+    String GetReleaseOutputPath();
 }

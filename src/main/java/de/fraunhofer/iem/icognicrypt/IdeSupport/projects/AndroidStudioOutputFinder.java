@@ -76,33 +76,33 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         return result;
     }
 
-    private  Collection<File> GetExportedOutputs(Path projectRootPath, OutputFinderOptions options)
+    private  Collection<File> GetExportedOutputs(Path projectRootPath, OutputFinderOptions options) throws IOException
     {
         logger.info("Get exported .apks from workspace cache");
 
         File workspaceFile = Paths.get(projectRootPath.toString(), ".idea\\workspace.xml").toFile();
+
+        HashSet<File> result = new HashSet<>();
+
+        IHasOutputs workspace;
         try
         {
-            IHasOutputs workspace = new IdeaWorkspace(workspaceFile);
-
-
-            if (!workspaceFile.exists()) return Collections.EMPTY_LIST;
-
-
-            Node buildInfo = XmlUtilities.FindFirstNode(workspaceFile, "//component[@name='PropertiesComponent']/property[@name='ExportApk.BuildVariants']");
-            String buildType = XmlUtilities.GetAttributeValue(buildInfo, "value");
-            System.out.println(buildType);
+            workspace = new IdeaWorkspace(workspaceFile);
         }
         catch (FileNotFoundException e)
         {
             return Collections.EMPTY_LIST;
         }
-        catch (XPathExpressionException e)
-        {
-            return Collections.EMPTY_LIST;
-        }
 
-        HashSet<File> result = new HashSet<>();
+        for (String output : workspace.GetOutputs(options))
+        {
+            File file = new File(output);
+            if (file.exists())
+            {
+                result.add(file);
+                logger.info("Found .apk File: " + file.getCanonicalPath());
+            }
+        }
 
         return result;
     }

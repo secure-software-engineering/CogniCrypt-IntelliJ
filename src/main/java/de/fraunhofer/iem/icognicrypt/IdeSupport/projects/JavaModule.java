@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.HashSet;
 
-public class JavaModule implements IHasOutputs
+public class JavaModule implements IHasOutputManager
 {
     // TODO: Apparently libraries are build in a folder called aar. We need to decide if we want to check for the too, or just support apk files.
     private static final String RelativeBuildPath = "build\\outputs\\apk\\";
@@ -24,20 +24,9 @@ public class JavaModule implements IHasOutputs
     private OutputJson _debugJson;
     private OutputJson _releaseJson;
 
-    public OutputJson GetDebug()
-    {
-        return _debugJson;
-    }
+    private IHasOutputs _outputManager;
 
-    public OutputJson GetRelease()
-    {
-        return _releaseJson;
-    }
-
-    public OutputJson GetReleaseOutput()
-    {
-        return _releaseJson;
-    }
+    public IHasOutputs GetOutputManager() { return _outputManager;}
 
     public JavaModule(String path) throws JavaModuleNotFoundException
     {
@@ -45,55 +34,25 @@ public class JavaModule implements IHasOutputs
         if (!realPath.toFile().exists()) throw new JavaModuleNotFoundException();
         _path = realPath;
 
-        InvalidateOutput();
+        _outputManager = new OutputManager(this);
+        _outputManager.InvalidateOutput();
+
     }
 
-    public void InvalidateOutput()
+    private class OutputManager extends OutputJsonManager
     {
-        //TODO: Invalidate after each build triggered to assure the jsons are up-to-date
-        _debugJson = OutputJson.Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "debug\\output.json").toString());
-        _releaseJson = OutputJson.Deserialize(Paths.get(_path.toString(), RelativeBuildPath, "release\\output.json").toString());
-    }
+        private final JavaModule _owner;
 
-    public Iterable<String> GetOutputs(OutputFinderOptions options)
-    {
-        HashSet<String> result = new HashSet<>();
-
-        if (_debugJson != null && (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)){
-            result.add(GetDebugOutputPath());
+        public OutputManager(JavaModule owner){
+            _owner = owner;
         }
 
-        if (_releaseJson != null && (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)){
-            result.add(GetReleaseOutputPath());
+        @Override
+        public void InvalidateOutput()
+        {
+            DebugJson = OutputJson.Deserialize(Paths.get(_path.toString(), _owner.RelativeBuildPath, "debug\\output.json").toString());
+            ReleaseJson = OutputJson.Deserialize(Paths.get(_path.toString(), _owner.RelativeBuildPath, "release\\output.json").toString());
         }
-        return result;
-    }
-
-    public String GetDebugOutputPath()
-    {
-        return GetOutputFilePath(_debugJson, true);
-    }
-
-    public String GetDebugOutputPathRelative()
-    {
-        return GetOutputFilePath(_debugJson, false);
-    }
-
-    public String GetReleaseOutputPath()
-    {
-        return GetOutputFilePath(_releaseJson, true);
-    }
-
-    public String GetReleaseOutputPathRelative()
-    {
-        return GetOutputFilePath(_releaseJson, false);
-    }
-
-    private String GetOutputFilePath(OutputJson outputJson, boolean absolute)
-    {
-        if (outputJson == null)
-            return null;
-        return outputJson.GetOutputFilePath(absolute);
     }
 }
 

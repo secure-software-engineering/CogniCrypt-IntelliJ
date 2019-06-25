@@ -2,24 +2,11 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
-import de.fraunhofer.iem.icognicrypt.analysis.CompilationListener;
-import de.fraunhofer.iem.icognicrypt.core.Xml.XmlUtilities;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import org.apache.xmlbeans.impl.xb.xsdschema.SelectorDocument;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import javax.naming.OperationNotSupportedException;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
@@ -82,9 +69,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
 
         File workspaceFile = Paths.get(projectRootPath.toString(), ".idea\\workspace.xml").toFile();
 
-        HashSet<File> result = new HashSet<>();
-
-        IHasOutputs workspace;
+        IdeaWorkspace workspace;
         try
         {
             workspace = new IdeaWorkspace(workspaceFile);
@@ -94,17 +79,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
             return Collections.EMPTY_LIST;
         }
 
-        for (String output : workspace.GetOutputs(options))
-        {
-            File file = new File(output);
-            if (file.exists())
-            {
-                result.add(file);
-                logger.info("Found .apk File: " + file.getCanonicalPath());
-            }
-        }
-
-        return result;
+        return GetOutputs(workspace.GetOutputManager(), options);
     }
 
     private Collection<File> GetModuleOutputs(Path projectRootPath, OutputFinderOptions options) throws IOException, OperationNotSupportedException
@@ -114,16 +89,23 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         ProjectModuleManager moduleManager = new ProjectModuleManager(settings);
 
         HashSet<File> result = new HashSet<>();
-        for (IHasOutputs module : moduleManager.GetModules())
+        for (JavaModule module : moduleManager.GetModules())
         {
-            for (String output : module.GetOutputs(options))
+           result.addAll(GetOutputs(module.GetOutputManager(), options));
+        }
+        return result;
+    }
+
+    private Collection<File> GetOutputs(IHasOutputs outputManager, OutputFinderOptions options) throws IOException
+    {
+        HashSet<File> result = new HashSet<>();
+        for (String output : outputManager.GetOutputs(options))
+        {
+            File file = new File(output);
+            if (file.exists())
             {
-                File file = new File(output);
-                if (file.exists())
-                {
-                    result.add(file);
-                    logger.info("Found .apk File: " + file.getCanonicalPath());
-                }
+                result.add(file);
+                logger.info("Found .apk File: " + file.getCanonicalPath());
             }
         }
         return result;

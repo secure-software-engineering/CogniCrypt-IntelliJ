@@ -1,11 +1,16 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.fileChooser.FileChooser;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
 import de.fraunhofer.iem.icognicrypt.analysis.CompilationListener;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,7 +56,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
     @Override
     public Iterable<File> GetOutputFiles(Path projectRootPath, OutputFinderOptions options) throws CogniCryptException, IOException, OperationNotSupportedException
     {
-        logger.info("Try finding all built .apk files.");
+        logger.info("Try finding all built .apk files with options: " + options);
 
         if (!Files.exists(projectRootPath))
             throw new CogniCryptException("Root path of the project does not exist.");
@@ -59,41 +64,65 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         GradleSettings settings = new GradleSettings(projectRootPath);
 
         List<File> result = new ArrayList<>();
-        for (String modulePath: settings.GetModulePathsAbsolute())
-        {
-            try
-            {
-                JavaModule module = new JavaModule(modulePath);
-                if (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)
-                {
-                    String filePath = module.GetDebugOutputPathAbsolute();
-                    if (filePath != null)
-                    {
-                        File file = new File(filePath);
-                        if (file.exists())
-                        {
-                            result.add(file);
-                            logger.info("Found .apk File: " + file.getCanonicalPath());
-                        }
-                    }
-                }
-                if (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)
-                {
-                    String filePath = module.GetReleaseOutputPathAbsolute();
-                    if (filePath != null)
-                    {
-                        File file = new File(filePath);
-                        if (file.exists())
-                        {
-                            result.add(file);
-                            logger.info("Found .apk File: " + file.getCanonicalPath());
-                        }
-                    }
-                }
-            }
-            catch (JavaModuleNotFoundException e)
-            {
-                continue;
+//        for (String modulePath: settings.GetModulePathsAbsolute())
+//        {
+//            try
+//            {
+//                logger.info("Processing module: "  + modulePath);
+//
+//                JavaModule module = new JavaModule(modulePath);
+//                if (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)
+//                {
+//                    String filePath = module.GetDebugOutputPathAbsolute();
+//                    if (filePath != null)
+//                    {
+//                        File file = new File(filePath);
+//                        if (file.exists())
+//                        {
+//                            result.add(file);
+//                            logger.info("Found .apk File: " + file.getCanonicalPath());
+//                        }
+//                    }
+//                }
+//                if (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)
+//                {
+//                    String filePath = module.GetReleaseOutputPathAbsolute();
+//                    if (filePath != null)
+//                    {
+//                        File file = new File(filePath);
+//                        if (file.exists())
+//                        {
+//                            result.add(file);
+//                            logger.info("Found .apk File: " + file.getCanonicalPath());
+//                        }
+//                    }
+//                }
+//            }
+//            catch (JavaModuleNotFoundException e)
+//            {
+//                logger.info("Unable to find JavaModule: " + e.getMessage());
+//                continue;
+//            }
+//        }
+
+        // Quick and Dirty Fallback
+        logger.info("Could not find any file. User is requested to choose one manually");
+        if (result.isEmpty()){
+
+            FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            fileChooser.setMultiSelectionEnabled(false);
+            fileChooser.addChoosableFileFilter(filter);
+            fileChooser.setCurrentDirectory(projectRootPath.toFile());
+            int returnValue = fileChooser.showOpenDialog(null);
+
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                logger.info("Added manual file: " + selectedFile.getAbsolutePath());
+                result.add(selectedFile);
             }
         }
         return result;

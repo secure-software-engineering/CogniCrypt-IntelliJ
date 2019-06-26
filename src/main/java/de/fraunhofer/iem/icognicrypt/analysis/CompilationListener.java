@@ -21,6 +21,7 @@ import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
+import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
@@ -147,7 +148,9 @@ public class CompilationListener implements ProjectComponent {
                         Collection<File> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true);
                         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
                         Notifications.Bus.notify(notification);
-                        notification.getBalloon().hide();
+                        Balloon balloon  = notification.getBalloon();
+                        if (balloon != null)
+                            balloon.hide();
 
                         AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), javaSourceFiles);
                         queue.add(analysis);

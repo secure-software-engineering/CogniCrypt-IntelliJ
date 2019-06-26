@@ -70,4 +70,10 @@ public class OutputJson
     {
         return filePath;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("Path: %s;Apk Path: %s", filePath, apkData.GetOutputFile());
+    }
 }

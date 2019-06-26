@@ -67,6 +67,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         result.addAll(GetModuleOutputs(projectRootPath, options));
         result.addAll(GetExportedOutputs(projectRootPath, options));
 
+        logger.info("Could not find any file. User is requested to choose one manually");
         if (result.isEmpty()){
 
             FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");

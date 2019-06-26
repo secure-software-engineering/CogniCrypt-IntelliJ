@@ -163,10 +163,12 @@ public class CompilationListener implements ProjectComponent {
                 // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
                 catch (CogniCryptException e)
                 {
+                    logger.info("CogniCryptException was thrown: " + e.getMessage());
                     e.printStackTrace();
                 }
                 catch (Exception e)
                 {
+                    logger.info("Exception was thrown: " + e.getMessage());
                     e.printStackTrace();
                 }
                 break;

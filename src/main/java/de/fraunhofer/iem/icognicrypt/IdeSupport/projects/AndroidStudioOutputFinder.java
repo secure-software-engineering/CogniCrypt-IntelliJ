@@ -64,46 +64,46 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         GradleSettings settings = new GradleSettings(projectRootPath);
 
         List<File> result = new ArrayList<>();
-//        for (String modulePath: settings.GetModulePathsAbsolute())
-//        {
-//            try
-//            {
-//                logger.info("Processing module: "  + modulePath);
-//
-//                JavaModule module = new JavaModule(modulePath);
-//                if (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)
-//                {
-//                    String filePath = module.GetDebugOutputPathAbsolute();
-//                    if (filePath != null)
-//                    {
-//                        File file = new File(filePath);
-//                        if (file.exists())
-//                        {
-//                            result.add(file);
-//                            logger.info("Found .apk File: " + file.getCanonicalPath());
-//                        }
-//                    }
-//                }
-//                if (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)
-//                {
-//                    String filePath = module.GetReleaseOutputPathAbsolute();
-//                    if (filePath != null)
-//                    {
-//                        File file = new File(filePath);
-//                        if (file.exists())
-//                        {
-//                            result.add(file);
-//                            logger.info("Found .apk File: " + file.getCanonicalPath());
-//                        }
-//                    }
-//                }
-//            }
-//            catch (JavaModuleNotFoundException e)
-//            {
-//                logger.info("Unable to find JavaModule: " + e.getMessage());
-//                continue;
-//            }
-//        }
+        for (String modulePath: settings.GetModulePathsAbsolute())
+        {
+            try
+            {
+                logger.info("Processing module: "  + modulePath);
+
+                JavaModule module = new JavaModule(modulePath);
+                if (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)
+                {
+                    String filePath = module.GetDebugOutputPathAbsolute();
+                    if (filePath != null)
+                    {
+                        File file = new File(filePath);
+                        if (file.exists())
+                        {
+                            result.add(file);
+                            logger.info("Found .apk File: " + file.getCanonicalPath());
+                        }
+                    }
+                }
+                if (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)
+                {
+                    String filePath = module.GetReleaseOutputPathAbsolute();
+                    if (filePath != null)
+                    {
+                        File file = new File(filePath);
+                        if (file.exists())
+                        {
+                            result.add(file);
+                            logger.info("Found .apk File: " + file.getCanonicalPath());
+                        }
+                    }
+                }
+            }
+            catch (JavaModuleNotFoundException e)
+            {
+                logger.info("Unable to find JavaModule: " + e.getMessage());
+                continue;
+            }
+        }
 
         // Quick and Dirty Fallback
         logger.info("Could not find any file. User is requested to choose one manually");

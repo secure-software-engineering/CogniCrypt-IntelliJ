@@ -6,8 +6,15 @@ import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
 import java.io.*;
-import java.nio.file.*;
 import java.util.*;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
 {
@@ -50,7 +57,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         // as a weak class field. It should be weak so the developer can delete the files safely without causing the reference kept alive by the GC. When the weak reference is gone we
         // should check for a new file and invalidate this class aganin.
 
-        logger.info("Try finding all built .apk files.");
+        logger.info("Try finding all built .apk files with options: " + options);
 
         if (!Files.exists(projectRootPath))
             throw new CogniCryptException("Root path of the project does not exist.");
@@ -59,6 +66,25 @@ public class AndroidStudioOutputFinder implements IOutputFinder
 
         result.addAll(GetModuleOutputs(projectRootPath, options));
         result.addAll(GetExportedOutputs(projectRootPath, options));
+
+        if (result.isEmpty()){
+
+            FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            fileChooser.setMultiSelectionEnabled(false);
+            fileChooser.addChoosableFileFilter(filter);
+            fileChooser.setCurrentDirectory(projectRootPath.toFile());
+            int returnValue = fileChooser.showOpenDialog(null);
+
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                logger.info("Added manual file: " + selectedFile.getAbsolutePath());
+                result.add(selectedFile);
+            }
+        }
 
         return result;
     }

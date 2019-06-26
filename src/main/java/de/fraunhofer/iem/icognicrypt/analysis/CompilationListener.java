@@ -21,6 +21,7 @@ import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
+import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
@@ -147,7 +148,9 @@ public class CompilationListener implements ProjectComponent {
                         Collection<File> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true);
                         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
                         Notifications.Bus.notify(notification);
-                        notification.getBalloon().hide();
+                        Balloon balloon  = notification.getBalloon();
+                        if (balloon != null)
+                            balloon.hide();
 
                         AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), javaSourceFiles);
                         queue.add(analysis);
@@ -160,10 +163,12 @@ public class CompilationListener implements ProjectComponent {
                 // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
                 catch (CogniCryptException e)
                 {
+                    logger.info("CogniCryptException was thrown: " + e.getMessage());
                     e.printStackTrace();
                 }
                 catch (Exception e)
                 {
+                    logger.info("Exception was thrown: " + e.getMessage());
                     e.printStackTrace();
                 }
                 break;
@@ -198,9 +203,10 @@ public class CompilationListener implements ProjectComponent {
             logger.info("Fallback for android sdk path to environment variable");
         }
 
-        if (android_sdk_root == null || "".equals(android_sdk_root))
+        Path sdkPath = Paths.get(android_sdk_root);
+        if (android_sdk_root == null || android_sdk_root.equals("") || !sdkPath.toFile().exists())
             throw new RuntimeException("Environment variable "+Constants.ANDROID_SDK+" not found!");
-        return Paths.get(android_sdk_root).resolve("platforms");
+        return sdkPath.resolve("platforms");
     }
 
     public static String getRulesDirectory() {

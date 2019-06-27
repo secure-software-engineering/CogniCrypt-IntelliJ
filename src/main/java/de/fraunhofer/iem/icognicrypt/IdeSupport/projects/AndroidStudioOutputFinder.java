@@ -2,6 +2,7 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
+import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
@@ -68,22 +69,15 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         result.addAll(GetExportedOutputs(projectRootPath, options));
 
         logger.info("Could not find any file. User is requested to choose one manually");
-        if (result.isEmpty()){
-
+        if (result.isEmpty())
+        {
             FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
-
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            fileChooser.setAcceptAllFileFilterUsed(false);
-            fileChooser.setMultiSelectionEnabled(false);
-            fileChooser.addChoosableFileFilter(filter);
-            fileChooser.setCurrentDirectory(projectRootPath.toFile());
-            int returnValue = fileChooser.showOpenDialog(null);
-
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                logger.info("Added manual file: " + selectedFile.getAbsolutePath());
-                result.add(selectedFile);
+            File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...",filter, projectRootPath);
+            if (userSelectedFile == null) logger.info("User did not select any file.");
+            else
+            {
+                logger.info("Added manual file: " + userSelectedFile.getAbsolutePath());
+                result.add(userSelectedFile);
             }
         }
 

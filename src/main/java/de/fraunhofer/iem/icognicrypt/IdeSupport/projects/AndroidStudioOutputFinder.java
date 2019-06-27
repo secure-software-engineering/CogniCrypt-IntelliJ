@@ -8,14 +8,11 @@ import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import javax.naming.OperationNotSupportedException;
 import java.io.*;
 import java.util.*;
-import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
 {
@@ -29,11 +26,9 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         return _instance;
     }
 
-
     private AndroidStudioOutputFinder()
     {
     }
-
 
     public Iterable<File> GetOutputFiles(){
        return GetOutputFiles(OutputFinderOptions.AnyBuildType);

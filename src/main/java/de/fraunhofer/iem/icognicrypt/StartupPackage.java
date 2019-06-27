@@ -1,7 +1,15 @@
 package de.fraunhofer.iem.icognicrypt;
 
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.project.ProjectManagerListener;
+import com.intellij.util.messages.MessageBus;
+import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.core.BackgroundPackage;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This class is the main entry point to CogniCrypt. When a project is loaded after the IDE was started we consider the IDE setup to be completed.
@@ -11,26 +19,30 @@ import de.fraunhofer.iem.icognicrypt.core.BackgroundPackage;
  */
 public class StartupPackage extends BackgroundPackage
 {
+    private static final Logger logger = Logger.getInstance(StartupPackage.class);
+
     public StartupPackage(){
-        Title = "Test123";
-        CanCancelInit = true;
+        Title = "CogniCrypt Bootstrapper";
+        CanCancelInit = false;
     }
 
     @Override
     protected void InitializeInBackground(ProgressIndicator indicator)
     {
-        System.out.println("starting");
-        indicator.setIndeterminate(true);
-        for (int i = 0 ; i < 10; i++){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                System.out.println("interruped");
-                e.printStackTrace();
+        MessageBus bus = ApplicationManager.getApplication().getMessageBus();
+        MessageBusConnection connection = bus.connect();
+
+        logger.info("Waiting for IDE to be ready...");
+
+        connection.subscribe(ProjectManager.TOPIC, new ProjectManagerListener()
+        {
+            @Override
+            public void projectOpened(@NotNull Project project)
+            {
+                logger.info("IDE initialized - First Project loaded");
+                connection.disconnect();
             }
-            indicator.checkCanceled();
-        }
-        System.out.println("success");
+        });
     }
 }
 

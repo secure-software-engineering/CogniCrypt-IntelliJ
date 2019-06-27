@@ -1,13 +1,13 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.fileChooser.FileChooser;
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
-import de.fraunhofer.iem.icognicrypt.analysis.CompilationListener;
+import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
+import java.io.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
 {
@@ -56,73 +54,77 @@ public class AndroidStudioOutputFinder implements IOutputFinder
     @Override
     public Iterable<File> GetOutputFiles(Path projectRootPath, OutputFinderOptions options) throws CogniCryptException, IOException, OperationNotSupportedException
     {
+        //TODO: Once we have this class created by the IDE instance (not in the CompilationListenerClass) we want to have the settings.gradle and workspace.xml models
+        // as a weak class field. It should be weak so the developer can delete the files safely without causing the reference kept alive by the GC. When the weak reference is gone we
+        // should check for a new file and invalidate this class aganin.
+
         logger.info("Try finding all built .apk files with options: " + options);
 
         if (!Files.exists(projectRootPath))
             throw new CogniCryptException("Root path of the project does not exist.");
 
-        GradleSettings settings = new GradleSettings(projectRootPath);
+        HashSet<File> result = new HashSet<>();
 
-        List<File> result = new ArrayList<>();
-        for (String modulePath: settings.GetModulePathsAbsolute())
+        result.addAll(GetModuleOutputs(projectRootPath, options));
+        result.addAll(GetExportedOutputs(projectRootPath, options));
+
+        logger.info("Could not find any file. User is requested to choose one manually");
+        if (result.isEmpty())
         {
-            try
+            FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
+            File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...",filter, projectRootPath);
+            if (userSelectedFile == null) logger.info("User did not select any file.");
+            else
             {
-                logger.info("Processing module: "  + modulePath);
-
-                JavaModule module = new JavaModule(modulePath);
-                if (options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType)
-                {
-                    String filePath = module.GetDebugOutputPathAbsolute();
-                    if (filePath != null)
-                    {
-                        File file = new File(filePath);
-                        if (file.exists())
-                        {
-                            result.add(file);
-                            logger.info("Found .apk File: " + file.getCanonicalPath());
-                        }
-                    }
-                }
-                if (options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType)
-                {
-                    String filePath = module.GetReleaseOutputPathAbsolute();
-                    if (filePath != null)
-                    {
-                        File file = new File(filePath);
-                        if (file.exists())
-                        {
-                            result.add(file);
-                            logger.info("Found .apk File: " + file.getCanonicalPath());
-                        }
-                    }
-                }
-            }
-            catch (JavaModuleNotFoundException e)
-            {
-                logger.info("Unable to find JavaModule: " + e.getMessage());
-                continue;
+                logger.info("Added manual file: " + userSelectedFile.getAbsolutePath());
+                result.add(userSelectedFile);
             }
         }
 
-        // Quick and Dirty Fallback
-        logger.info("Could not find any file. User is requested to choose one manually");
-        if (result.isEmpty()){
+        return result;
+    }
 
-            FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
+    private  Collection<File> GetExportedOutputs(Path projectRootPath, OutputFinderOptions options) throws IOException
+    {
+        logger.info("Get exported .apks from workspace cache");
 
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            fileChooser.setAcceptAllFileFilterUsed(false);
-            fileChooser.setMultiSelectionEnabled(false);
-            fileChooser.addChoosableFileFilter(filter);
-            fileChooser.setCurrentDirectory(projectRootPath.toFile());
-            int returnValue = fileChooser.showOpenDialog(null);
+        File workspaceFile = Paths.get(projectRootPath.toString(), ".idea\\workspace.xml").toFile();
 
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                logger.info("Added manual file: " + selectedFile.getAbsolutePath());
-                result.add(selectedFile);
+        try
+        {
+            IdeaWorkspace workspace = new IdeaWorkspace(workspaceFile);
+            return GetOutputs(workspace.GetOutputManager(), options);
+        }
+        catch (FileNotFoundException e)
+        {
+            return Collections.EMPTY_LIST;
+        }
+    }
+
+    private Collection<File> GetModuleOutputs(Path projectRootPath, OutputFinderOptions options) throws IOException, OperationNotSupportedException
+    {
+        logger.info("Get .apks from project modules");
+        GradleSettings settings = new GradleSettings(projectRootPath);
+        ProjectModuleManager moduleManager = new ProjectModuleManager(settings);
+
+        HashSet<File> result = new HashSet<>();
+        for (JavaModule module : moduleManager.GetModules())
+        {
+           result.addAll(GetOutputs(module.GetOutputManager(), options));
+        }
+        return result;
+    }
+
+    private Collection<File> GetOutputs(IHasOutputs outputManager, OutputFinderOptions options) throws IOException
+    {
+        HashSet<File> result = new HashSet<>();
+        for (String output : outputManager.GetOutputs(options))
+        {
+            File file = new File(output);
+            if (file.exists())
+            {
+                result.add(file);
+                logger.info("Found .apk File: " + file.getCanonicalPath());
             }
         }
         return result;

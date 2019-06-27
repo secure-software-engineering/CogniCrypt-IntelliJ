@@ -29,7 +29,7 @@
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
         <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"/>
 
-        <toolWindow id="ICogniCrypt.ToolWindow" anchor="bottom" secondary="true" factoryClass="de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowFactory"
+        <toolWindow id="CogniCrypt" anchor="bottom" secondary="true" factoryClass="de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowFactory"
                     icon="PluginIcons.COGNICRYPT"/>
 
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.CogniCryptPlugin"/>

@@ -6,13 +6,13 @@ import crypto.analysis.CrySLAnalysisListener;
 import de.fraunhofer.iem.icognicrypt.results.AnalysisListener;
 import org.jetbrains.annotations.NotNull;
 
-class JavaProjectAnalysis extends Task.Backgroundable {
+public class JavaProjectAnalysis extends Task.Backgroundable {
 
     protected final String applicationClassPath;
     protected final String wholeClassPath;
     protected final String rulesDirectory;
 
-    JavaProjectAnalysis(String applicationClass , String classPath, String rulesDir) {
+    public JavaProjectAnalysis(String applicationClass , String classPath, String rulesDir) {
         super(null, "Performing CogniCrypt Analysis");
         this.applicationClassPath = applicationClass;
         this.wholeClassPath = classPath;

@@ -27,7 +27,7 @@
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="de.fraunhofer.iem.icognicrypt.results.ErrorLineMarker"/>
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
-        <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"></applicationConfigurable>
+        <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"/>
         <toolWindow id="CogniCrypt Results" anchor="bottom" secondary="true" factoryClass="de.fraunhofer.iem.icognicrypt.results.ErrorWindowFactory"
                     icon="PluginIcons.COGNICRYPT"/>
 
@@ -37,7 +37,7 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="ICognicrypt-analysis"
+        <action id="ICognicrypt.ExecuteAnalysis"
                 class="de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction"
                 icon="PluginIcons.COGNICRYPT"
                 text="Run CogniCr_ypt" description="Check for misuses of cryptographic APIs">

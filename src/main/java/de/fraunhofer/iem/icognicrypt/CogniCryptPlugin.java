@@ -5,6 +5,13 @@ import com.intellij.util.messages.MessageBus;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
+/**
+ * This class gets initialized as soon as one project is loaded to the IDE.
+ * It shall initialize global project-independent services.
+ *
+ * The attempt to create a second instance will cause an {@link CogniCryptException} to be thrown.
+ *
+ */
 public class CogniCryptPlugin
 {
     private static CogniCryptPlugin _instance;

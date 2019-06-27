@@ -30,7 +30,10 @@
         <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"></applicationConfigurable>
         <toolWindow id="CogniCrypt Results" anchor="bottom" secondary="true" factoryClass="de.fraunhofer.iem.icognicrypt.results.ErrorWindowFactory"
                     icon="PluginIcons.COGNICRYPT"/>
+
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.CogniCryptPlugin"/>
     </extensions>
+
 
     <actions>
         <!-- Add your actions here -->

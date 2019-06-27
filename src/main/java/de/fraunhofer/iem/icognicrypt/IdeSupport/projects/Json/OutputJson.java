@@ -3,8 +3,8 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.intellij.openapi.diagnostic.Logger;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import sun.util.resources.cldr.pa.CurrencyNames_pa;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,8 @@ import java.util.Map;
 @JsonPropertyOrder({"outputType", "apkData", "path"})
 public class OutputJson
 {
+    private static final Logger logger = Logger.getInstance(OutputJson.class);
+
     @JsonProperty("outputType")
     private OutputType outputType;
     @JsonProperty("apkData")
@@ -44,6 +46,11 @@ public class OutputJson
 
     @JsonProperty("apkData")
     public void setApkData(IApkData apkData) {
+        this.apkData = apkData;
+    }
+
+    @JsonProperty("apkInfo")
+    public void setApkInfo(IApkData apkData) {
         this.apkData = apkData;
     }
 
@@ -96,6 +103,8 @@ public class OutputJson
             if (outputs.length == 1) {
                 OutputJson output = outputs[0];
                 output.SetFilePath(path);
+
+                logger.info("Found and deserialized output.json: " + output);
                 return outputs[0];
             }
             // TODO: I'm not sure if the Json-Array is ever filled with more than one entry. If so we need to change code here.
@@ -103,7 +112,14 @@ public class OutputJson
         }
         catch (IOException e)
         {
+            logger.info("Failed deserializing output.json: " + path);
             return null;
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("Path: %s;Apk Path: %s", filePath, apkData.GetOutputFile());
     }
 }

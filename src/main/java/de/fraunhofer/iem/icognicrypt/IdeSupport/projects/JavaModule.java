@@ -1,28 +1,16 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.ApkDataDeserializer;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.IApkData;
+import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.OutputJson;
-import org.omg.CORBA.ARG_OUT;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.*;
-import java.util.HashSet;
 
 public class JavaModule implements IHasOutputManager
 {
     // TODO: Apparently libraries are build in a folder called aar. We need to decide if we want to check for the too, or just support apk files.
     private static final String RelativeBuildPath = "build\\outputs\\apk\\";
+    private static final Logger logger = Logger.getInstance(JavaModule.class);
 
     private Path _path;
-
-    private OutputJson _debugJson;
-    private OutputJson _releaseJson;
 
     private IHasOutputs _outputManager;
 
@@ -31,7 +19,7 @@ public class JavaModule implements IHasOutputManager
     public JavaModule(String path) throws JavaModuleNotFoundException
     {
         Path realPath = Paths.get(path);
-        if (!realPath.toFile().exists()) throw new JavaModuleNotFoundException();
+        if (!realPath.toFile().exists()) throw new JavaModuleNotFoundException(path);
         _path = realPath;
 
         _outputManager = new OutputManager(this);
@@ -43,13 +31,15 @@ public class JavaModule implements IHasOutputManager
     {
         private final JavaModule _owner;
 
-        public OutputManager(JavaModule owner){
+        public OutputManager(JavaModule owner)
+        {
             _owner = owner;
         }
 
         @Override
         public void InvalidateOutput()
         {
+            _owner.logger.info("Invalidating Java Module " + _path);
             DebugJson = OutputJson.Deserialize(Paths.get(_path.toString(), _owner.RelativeBuildPath, "debug\\output.json").toString());
             ReleaseJson = OutputJson.Deserialize(Paths.get(_path.toString(), _owner.RelativeBuildPath, "release\\output.json").toString());
         }

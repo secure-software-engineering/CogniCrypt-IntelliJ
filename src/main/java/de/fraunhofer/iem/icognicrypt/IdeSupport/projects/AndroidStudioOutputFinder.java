@@ -2,12 +2,17 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
+import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
 import java.io.*;
-import java.nio.file.*;
 import java.util.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
 {
@@ -21,11 +26,9 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         return _instance;
     }
 
-
     private AndroidStudioOutputFinder()
     {
     }
-
 
     public Iterable<File> GetOutputFiles(){
        return GetOutputFiles(OutputFinderOptions.AnyBuildType);
@@ -50,7 +53,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         // as a weak class field. It should be weak so the developer can delete the files safely without causing the reference kept alive by the GC. When the weak reference is gone we
         // should check for a new file and invalidate this class aganin.
 
-        logger.info("Try finding all built .apk files.");
+        logger.info("Try finding all built .apk files with options: " + options);
 
         if (!Files.exists(projectRootPath))
             throw new CogniCryptException("Root path of the project does not exist.");
@@ -59,6 +62,19 @@ public class AndroidStudioOutputFinder implements IOutputFinder
 
         result.addAll(GetModuleOutputs(projectRootPath, options));
         result.addAll(GetExportedOutputs(projectRootPath, options));
+
+        logger.info("Could not find any file. User is requested to choose one manually");
+        if (result.isEmpty())
+        {
+            FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
+            File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...",filter, projectRootPath);
+            if (userSelectedFile == null) logger.info("User did not select any file.");
+            else
+            {
+                logger.info("Added manual file: " + userSelectedFile.getAbsolutePath());
+                result.add(userSelectedFile);
+            }
+        }
 
         return result;
     }
@@ -69,17 +85,15 @@ public class AndroidStudioOutputFinder implements IOutputFinder
 
         File workspaceFile = Paths.get(projectRootPath.toString(), ".idea\\workspace.xml").toFile();
 
-        IdeaWorkspace workspace;
         try
         {
-            workspace = new IdeaWorkspace(workspaceFile);
+            IdeaWorkspace workspace = new IdeaWorkspace(workspaceFile);
+            return GetOutputs(workspace.GetOutputManager(), options);
         }
         catch (FileNotFoundException e)
         {
             return Collections.EMPTY_LIST;
         }
-
-        return GetOutputs(workspace.GetOutputManager(), options);
     }
 
     private Collection<File> GetModuleOutputs(Path projectRootPath, OutputFinderOptions options) throws IOException, OperationNotSupportedException

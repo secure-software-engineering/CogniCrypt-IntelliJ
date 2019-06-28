@@ -20,6 +20,9 @@
         <component>
             <implementation-class>de.fraunhofer.iem.icognicrypt.StartupPackage</implementation-class>
         </component>
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager</implementation-class>
+        </component>
     </application-components>
 
     <extensions defaultExtensionNs="com.intellij">

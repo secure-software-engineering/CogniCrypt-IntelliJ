@@ -1,7 +1,10 @@
-package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
+package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectModuleManager;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 

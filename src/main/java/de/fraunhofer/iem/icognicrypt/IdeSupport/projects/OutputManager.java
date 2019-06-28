@@ -4,7 +4,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.OutputJson;
 
 import java.util.HashSet;
 
-abstract class OutputJsonManager implements IHasOutputs
+abstract class OutputManager implements IHasOutputs
 {
     protected OutputJson DebugJson;
     protected OutputJson ReleaseJson;

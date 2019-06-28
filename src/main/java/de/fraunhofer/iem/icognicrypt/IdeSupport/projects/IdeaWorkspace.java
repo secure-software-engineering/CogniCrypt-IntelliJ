@@ -82,7 +82,7 @@ public class IdeaWorkspace implements IHasOutputManager
         return false;
     }
 
-    private class OutputManager extends OutputJsonManager
+    private class OutputManager extends de.fraunhofer.iem.icognicrypt.IdeSupport.projects.OutputManager
     {
         private final IdeaWorkspace _owner;
 

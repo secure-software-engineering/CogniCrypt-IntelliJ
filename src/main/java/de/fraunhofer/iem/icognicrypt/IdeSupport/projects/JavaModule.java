@@ -27,7 +27,7 @@ public class JavaModule implements IHasOutputManager
 
     }
 
-    private class OutputManager extends OutputJsonManager
+    private class OutputManager extends de.fraunhofer.iem.icognicrypt.IdeSupport.projects.OutputManager
     {
         private final JavaModule _owner;
 

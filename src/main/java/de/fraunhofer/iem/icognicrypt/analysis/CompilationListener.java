@@ -25,19 +25,17 @@ import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.OutputFinderOptions;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IOutputFinder;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.AndroidStudioOutputFinder;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import org.apache.commons.io.FileUtils;
 
 
-import javax.naming.OperationNotSupportedException;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;

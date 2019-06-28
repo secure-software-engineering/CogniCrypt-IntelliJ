@@ -1,10 +1,10 @@
-package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
+package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.OutputJson;
 
 import java.util.HashSet;
 
-abstract class OutputManager implements IHasOutputs
+public abstract class OutputManager implements IHasOutputs
 {
     protected OutputJson DebugJson;
     protected OutputJson ReleaseJson;

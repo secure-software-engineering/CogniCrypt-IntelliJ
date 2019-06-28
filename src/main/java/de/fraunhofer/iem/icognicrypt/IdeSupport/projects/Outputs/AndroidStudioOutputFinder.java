@@ -1,14 +1,16 @@
-package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
+package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectModuleManager;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
 import java.io.*;
 import java.util.*;
-import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;

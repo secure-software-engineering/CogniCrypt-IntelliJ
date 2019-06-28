@@ -2,6 +2,10 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.OutputJson;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IHasOutputManager;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IHasOutputs;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputManager;
 import de.fraunhofer.iem.icognicrypt.core.Xml.XmlUtilities;
 import org.w3c.dom.Node;
 
@@ -34,7 +38,7 @@ public class IdeaWorkspace implements IHasOutputManager
             throw new FileNotFoundException();
         _xmlFile = xmlFile;
 
-        _outputManager = new OutputManager(this);
+        _outputManager = new IdeaWorkspaceOutputManager(this);
         Invalidate();
     }
 
@@ -82,11 +86,11 @@ public class IdeaWorkspace implements IHasOutputManager
         return false;
     }
 
-    private class OutputManager extends de.fraunhofer.iem.icognicrypt.IdeSupport.projects.OutputManager
+    private class IdeaWorkspaceOutputManager extends OutputManager
     {
         private final IdeaWorkspace _owner;
 
-        public OutputManager(IdeaWorkspace owner)
+        public IdeaWorkspaceOutputManager(IdeaWorkspace owner)
         {
             _owner = owner;
         }

@@ -1,8 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.gradle;
 
-import afu.org.checkerframework.checker.oigj.qual.O;
 import com.intellij.openapi.diagnostic.Logger;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
@@ -14,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public abstract class GradleSettingsScript extends Script

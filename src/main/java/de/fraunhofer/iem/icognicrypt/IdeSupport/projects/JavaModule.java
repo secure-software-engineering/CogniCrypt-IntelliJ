@@ -2,6 +2,10 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
 import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.OutputJson;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IHasOutputManager;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IHasOutputs;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputManager;
+
 import java.nio.file.*;
 
 public class JavaModule implements IHasOutputManager
@@ -22,16 +26,16 @@ public class JavaModule implements IHasOutputManager
         if (!realPath.toFile().exists()) throw new JavaModuleNotFoundException(path);
         _path = realPath;
 
-        _outputManager = new OutputManager(this);
+        _outputManager = new JavaModuleOutputManager(this);
         _outputManager.InvalidateOutput();
 
     }
 
-    private class OutputManager extends OutputJsonManager
+    private class JavaModuleOutputManager extends OutputManager
     {
         private final JavaModule _owner;
 
-        public OutputManager(JavaModule owner)
+        public JavaModuleOutputManager(JavaModule owner)
         {
             _owner = owner;
         }

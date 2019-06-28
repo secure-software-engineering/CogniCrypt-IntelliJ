@@ -3,6 +3,7 @@ package de.fraunhofer.iem.icognicrypt;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.util.messages.MessageBus;
 import com.intellij.util.messages.MessageBusConnection;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 /**
@@ -35,6 +36,8 @@ public class CogniCryptPlugin
 
     public void Initialize()
     {
+        new CogniCryptProjectManager();
+
         MessageBus bus = ApplicationManager.getApplication().getMessageBus();
         _connection = bus.connect();
 //        _connection.subscribe(ProjectManager.TOPIC, new ProjectManagerListener()

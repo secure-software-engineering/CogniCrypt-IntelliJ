@@ -1,15 +1,10 @@
 package de.fraunhofer.iem.icognicrypt;
 
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
-import com.intellij.util.messages.MessageBus;
 import com.intellij.util.messages.MessageBusConnection;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptAnalysisManager;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListener;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
-import soot.jimple.infoflow.android.iccta.App;
 
 /**
  * This class gets initialized as soon as one project is loaded to the IDE.
@@ -41,7 +36,6 @@ public class CogniCryptPlugin
 
     public void Initialize()
     {
-        System.out.println("PluginInit Thread: " + Thread.currentThread().getId());
         CogniCryptProjectManager projectManager = ServiceManager.getService(CogniCryptProjectManager.class);
         CogniCryptToolWindowManager toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
 

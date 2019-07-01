@@ -23,9 +23,7 @@
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
         <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"/>
 
-<!--        <toolWindow id="CogniCrypt" anchor="bottom" factoryClass="de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowFactory"-->
-<!--                    icon="PluginIcons.COGNICRYPT"/>-->
-
+        <!-- The CogniCrypt ToolWindow is handled separately to ensure a synced lifecycle with it's project and the initialization of the plugin itself. -->
 
     </extensions>
 
@@ -73,9 +71,6 @@
     <application-components>
         <component>
             <implementation-class>de.fraunhofer.iem.icognicrypt.StartupPackage</implementation-class>
-        </component>
-        <component>
-            <implementation-class>de.fraunhofer.iem.icognicrypt.TestPackage</implementation-class>
         </component>
     </application-components>
 

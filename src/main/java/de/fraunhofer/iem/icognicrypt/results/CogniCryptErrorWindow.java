@@ -1,12 +1,9 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptWindowBase;
-import groovy.lang.Tuple;
 
 import javax.swing.*;
-import java.util.Dictionary;
 
 public class CogniCryptErrorWindow extends CogniCryptWindowBase
 {
@@ -16,7 +13,6 @@ public class CogniCryptErrorWindow extends CogniCryptWindowBase
     public CogniCryptErrorWindow(ToolWindow toolWindow)
     {
         super(toolWindow);
-        System.out.println("Error Window Thread: " + Thread.currentThread().getId());
     }
 
     @Override

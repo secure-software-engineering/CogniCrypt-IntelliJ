@@ -40,5 +40,9 @@ public class CogniCryptPlugin
 
     public void Initialize()
     {
+        ServiceManager.getService(CogniCryptProjectManager.class);
+        System.out.println("PluginInit Thread: " + Thread.currentThread().getId());
+
+        // TODO: As CogniCrypt is executed on a totally different thread, check on which Thread the window is running and check if we can push data from this thread to the window.
     }
 }

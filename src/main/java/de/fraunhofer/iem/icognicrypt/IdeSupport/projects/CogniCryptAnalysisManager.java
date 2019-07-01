@@ -6,7 +6,8 @@ public final class CogniCryptAnalysisManager extends CogniCryptProjectListener {
 
     private static CogniCryptAnalysisManager _instance;
 
-    public CogniCryptAnalysisManager(){
+    public CogniCryptAnalysisManager()
+    {
 
     }
 

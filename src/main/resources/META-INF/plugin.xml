@@ -16,15 +16,6 @@
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="183"/>
 
-    <application-components>
-        <component>
-            <implementation-class>de.fraunhofer.iem.icognicrypt.StartupPackage</implementation-class>
-        </component>
-        <component>
-            <implementation-class>de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager</implementation-class>
-        </component>
-    </application-components>
-
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <codeInsight.lineMarkerProvider language="JAVA"
@@ -35,7 +26,13 @@
         <toolWindow id="CogniCrypt" anchor="bottom" secondary="true" factoryClass="de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowFactory"
                     icon="PluginIcons.COGNICRYPT"/>
 
+
+    </extensions>
+
+
+    <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.CogniCryptPlugin"/>
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager"/>
     </extensions>
 
 
@@ -73,6 +70,15 @@
 
 
     </actions>
+
+    <application-components>
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.StartupPackage</implementation-class>
+        </component>
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.TestPackage</implementation-class>
+        </component>
+    </application-components>
 
     <project-components>
         <component>

@@ -51,6 +51,9 @@ public class RunCogniCryptAction extends CogniCryptAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
+
+        System.out.println("Action Thread: " + Thread.currentThread().getId());
+
         Project p = e.getDataContext().getData(PlatformDataKeys.PROJECT);
         RunAnalysis(IdeType.AndroidStudio,p);
     }

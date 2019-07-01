@@ -6,6 +6,8 @@ public interface ICogniCryptProjectListener
 {
     void OnProjectOpened(Project project);
 
+    void OnProjectInitialized(Project project);
+
     void OnProjectClosing(Project project);
 
     void OnProjectClosed(Project project);

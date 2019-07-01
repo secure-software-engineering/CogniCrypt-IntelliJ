@@ -1,6 +1,7 @@
 package de.fraunhofer.iem.icognicrypt;
 
 import com.intellij.openapi.components.BaseComponent;
+import com.intellij.openapi.components.ServiceManager;
 
 public class TestPackage implements BaseComponent
 {

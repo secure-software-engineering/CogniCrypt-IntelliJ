@@ -8,6 +8,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptAnalysisManag
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListener;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
+import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
 import soot.jimple.infoflow.android.iccta.App;
 
 /**
@@ -40,8 +41,12 @@ public class CogniCryptPlugin
 
     public void Initialize()
     {
-        ServiceManager.getService(CogniCryptProjectManager.class);
         System.out.println("PluginInit Thread: " + Thread.currentThread().getId());
+        CogniCryptProjectManager projectManager = ServiceManager.getService(CogniCryptProjectManager.class);
+        CogniCryptToolWindowManager toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
+
+
+        projectManager.Subscribe(toolWindowManager);
 
         // TODO: As CogniCrypt is executed on a totally different thread, check on which Thread the window is running and check if we can push data from this thread to the window.
     }

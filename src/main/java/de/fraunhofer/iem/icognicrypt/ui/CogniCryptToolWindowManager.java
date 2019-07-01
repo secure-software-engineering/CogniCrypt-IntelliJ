@@ -1,0 +1,71 @@
+package de.fraunhofer.iem.icognicrypt.ui;
+
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowAnchor;
+import com.intellij.openapi.wm.ToolWindowManager;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListener;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
+import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
+import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
+
+import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
+
+public class CogniCryptToolWindowManager extends CogniCryptProjectListener
+{
+    private WeakHashMap<ToolWindow, Iterable<CogniCryptWindowBase>> _windowModelMapping = new WeakHashMap<>();
+    private  WeakHashMap<Project,WeakReference<ToolWindow>> _projectWindowMapping = new WeakHashMap<>();
+
+
+    public static final String CogniCryptWindowId = "CogniCrypt";
+
+    @Override
+    public void OnProjectOpened(Project project)
+    {
+        ToolWindow window  = ToolWindowManager.getInstance(project).registerToolWindow(CogniCryptWindowId, false, ToolWindowAnchor.BOTTOM, false);
+        IReadOnlyCollection<CogniCryptWindowBase> models =  CogniCryptToolWindowFactory.CreateToolWindow(project, window);
+
+        _projectWindowMapping.put(project, new WeakReference<>(window));
+        _windowModelMapping.put(window, models);
+    }
+
+    @Override
+    public void OnProjectInitialized(Project project)
+    {
+    }
+
+    @Override
+    public void OnProjectClosing(Project project)
+    {
+    }
+
+    @Override
+    public void OnProjectClosed(Project project)
+    {
+        ToolWindow toolWindow = _projectWindowMapping.get(project).get();
+        if (toolWindow != null)
+            ToolWindowManager.getInstance(project).unregisterToolWindow(CogniCryptWindowId);
+        if (_windowModelMapping.containsKey(toolWindow))
+            _windowModelMapping.remove(toolWindow);
+    }
+
+    public ToolWindow GetToolWindow(Project project) throws CogniCryptException
+    {
+        if (project == null || project.isDefault() || !project.isInitialized() || project.isDisposed())
+            throw new CogniCryptException("The given project must not be null, a default project, uninitialized or disposed");
+
+        ToolWindow toolWindow = _projectWindowMapping.get(project).get();
+
+        if (toolWindow == null)
+            throw new CogniCryptException("CogniCrypt ToolWindow was not initialized by the manager");
+        return toolWindow;
+    }
+
+    @Override
+    public void dispose()
+    {
+        ServiceManager.getService(CogniCryptProjectManager.class).UnSubscribe(this);
+    }
+}

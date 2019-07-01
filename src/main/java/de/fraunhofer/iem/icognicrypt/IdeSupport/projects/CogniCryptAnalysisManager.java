@@ -18,6 +18,12 @@ public final class CogniCryptAnalysisManager extends CogniCryptProjectListener {
     }
 
     @Override
+    public void OnProjectInitialized(Project project)
+    {
+
+    }
+
+    @Override
     public void OnProjectClosing(Project project)
     {
 

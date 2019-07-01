@@ -107,7 +107,13 @@ public class OutputJson
         }
         catch (IOException e)
         {
-            logger.info("Failed deserializing output.json: " + path);
+            logger.info("Failed deserializing output.json (IOException): " + path);
+            return null;
+        }
+        catch (NullPointerException e)
+        {
+            // For some yet unidentified reason i got a single NullPointerException when testing Oshando's issue. After new build the issue was gone!?
+            logger.info("Failed deserializing output.json (NullPointerException): " + path);
             return null;
         }
     }

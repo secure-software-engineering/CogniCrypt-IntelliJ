@@ -18,6 +18,10 @@ public interface IReadOnlyCollection<T> extends Iterable<T>
 
     boolean retainAll(Collection<?> c);
 
+    <T> T Get(int index);
+
+    int indexOf(T item);
+
     @Contract(value = "null -> false", pure = true)
     boolean equals(Object o);
 

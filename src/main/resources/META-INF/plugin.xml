@@ -66,6 +66,11 @@
                 text="Runs Anlysis (from other Action)" description="Check for misuses of cryptographic APIs">
             <add-to-group group-id="ICogniCryptMenu.Tests" anchor="first"/>
         </action>
+        <action id="ICognicrypt.Test.PushData"
+                class="de.fraunhofer.iem.icognicrypt.actions.Tests.PushToWindowAction"
+                text="Push Data to ToolWindow">
+            <add-to-group group-id="ICogniCryptMenu.Tests"/>
+        </action>
     </actions>
 
     <application-components>

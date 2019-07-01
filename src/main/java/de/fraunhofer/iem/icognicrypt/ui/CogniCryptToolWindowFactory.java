@@ -1,6 +1,7 @@
 package de.fraunhofer.iem.icognicrypt.ui;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
@@ -20,23 +21,24 @@ import java.util.List;
  */
 public class CogniCryptToolWindowFactory
 {
-
     private static ContentFactory ContentFactory = com.intellij.ui.content.ContentFactory.SERVICE.getInstance();
 
     public static IReadOnlyCollection<CogniCryptWindowBase> CreateToolWindow(@NotNull Project project, @NotNull ToolWindow toolWindow)
     {
-        System.out.println("Window Factory Thread: " + Thread.currentThread().getId());
+        toolWindow.setStripeTitle("CogniCrypt");
+        toolWindow.setIcon(IconLoader.getIcon("/icons/cognicrypt.png"));
 
         List<CogniCryptWindowBase> models =  new ArrayList<>();
-        CogniCryptWindowBase errorWindow = new CogniCryptErrorWindow(toolWindow);
 
         // Error Window
+        CogniCryptWindowBase errorWindow = new CogniCryptErrorWindow(toolWindow);
         Content errorWindowContent = ContentFactory.createContent(errorWindow.GetContent(), "Errors", false);
         toolWindow.getContentManager().addContent(errorWindowContent);
-        models.add(errorWindow);
 
         //Other Windows below...
 
+        // Do NOT change order
+        models.add(errorWindow);
         return new ReadOnlyCollection<>(models);
     }
 }

@@ -9,22 +9,26 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListen
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
 import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
+import de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorWindow;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 import java.util.WeakHashMap;
 
 public class CogniCryptToolWindowManager extends CogniCryptProjectListener
 {
-    private WeakHashMap<ToolWindow, Iterable<CogniCryptWindowBase>> _windowModelMapping = new WeakHashMap<>();
+    private WeakHashMap<ToolWindow, IReadOnlyCollection<CogniCryptWindowBase>> _windowModelMapping = new WeakHashMap<>();
     private  WeakHashMap<Project,WeakReference<ToolWindow>> _projectWindowMapping = new WeakHashMap<>();
 
 
-    public static final String CogniCryptWindowId = "CogniCrypt";
+    public static final String CogniCryptWindowId = "ICogniCrypt.ToolWindow";
+
+    public static final int ErrorView = 0;
 
     @Override
     public void OnProjectOpened(Project project)
     {
-        ToolWindow window  = ToolWindowManager.getInstance(project).registerToolWindow(CogniCryptWindowId, false, ToolWindowAnchor.BOTTOM, false);
+        ToolWindow window  = ToolWindowManager.getInstance(project).registerToolWindow(CogniCryptWindowId, false, ToolWindowAnchor.BOTTOM, true);
         IReadOnlyCollection<CogniCryptWindowBase> models =  CogniCryptToolWindowFactory.CreateToolWindow(project, window);
 
         _projectWindowMapping.put(project, new WeakReference<>(window));
@@ -61,6 +65,21 @@ public class CogniCryptToolWindowManager extends CogniCryptProjectListener
         if (toolWindow == null)
             throw new CogniCryptException("CogniCrypt ToolWindow was not initialized by the manager");
         return toolWindow;
+    }
+
+    public <T extends CogniCryptWindowBase> T GetWindowModel(ToolWindow toolWindow, int viewIndex,Class<T> type) throws CogniCryptException
+    {
+        IReadOnlyCollection<CogniCryptWindowBase> list = _windowModelMapping.get(toolWindow);
+        if (list == null){
+            throw new CogniCryptException("CogniCrypt ToolWindow was not initialized by the manager");
+        }
+
+        CogniCryptErrorWindow model = list.Get(viewIndex);
+        if (model == null)
+            return null;
+        if (type.isInstance(model))
+            return type.cast(model);
+        throw new CogniCryptException("Cannot cast type: " + model.getClass() + " to type: " + type);
     }
 
     @Override

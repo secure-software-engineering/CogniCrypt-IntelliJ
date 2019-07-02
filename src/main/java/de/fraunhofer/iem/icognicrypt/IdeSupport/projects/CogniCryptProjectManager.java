@@ -52,7 +52,7 @@ public final class CogniCryptProjectManager implements ProjectManagerListener
         });
 
 
-        Task t = new Task.Backgroundable(project, "Wait until project is initialized", false)
+        Task t = new Task.Backgroundable(project, "Wait Until Project Is Initialized", false)
         {
             @Override
             public void run(@NotNull ProgressIndicator indicator)
@@ -65,8 +65,8 @@ public final class CogniCryptProjectManager implements ProjectManagerListener
                             break;
                         if (project.isInitialized())
                             break;
-                        Thread.currentThread().yield();
-                        Thread.currentThread().sleep(200);
+                        Thread.yield();
+                        Thread.sleep(200);
                     }
                     catch (Exception e)
                     {

@@ -1,5 +1,7 @@
 package de.fraunhofer.iem.icognicrypt.ui;
 
+import com.intellij.ide.UiActivity;
+import com.intellij.ide.UiActivityMonitor;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;

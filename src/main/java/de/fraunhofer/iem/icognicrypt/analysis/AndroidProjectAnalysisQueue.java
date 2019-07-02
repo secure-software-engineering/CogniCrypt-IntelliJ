@@ -6,12 +6,17 @@ import com.google.common.collect.Sets;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.ToolWindow;
+import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
+import de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorWindow;
 import de.fraunhofer.iem.icognicrypt.results.ErrorProvider;
+import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -23,24 +28,30 @@ import java.util.Set;
 public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
     private static final Logger logger = Logger.getInstance(AndroidProjectAnalysis.class);
-    private Queue<AndroidProjectAnalysis> analysisQueue;
+    private final CogniCryptToolWindowManager _toolWindowManager;
+    private Queue<AndroidProjectAnalysis> _analysisQueue;
+
+    private Project _project;
 
     public AndroidProjectAnalysisQueue(Project p, Queue<AndroidProjectAnalysis> analysisQueue){
         super(p, "Performing CogniCrypt Analysis");
-        this.analysisQueue = analysisQueue;
+        _project = p;
+        _analysisQueue = analysisQueue;
+
+        _toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
     }
 
     @Override
     public void run(@NotNull ProgressIndicator indicator) {
-        //Remove errors before rerunning Cognicrypt
+        // Remove errors before rerunning Cognicrypt
         ErrorProvider.clearError();
 
-        int size = analysisQueue.size();
+        int size = _analysisQueue.size();
         int index = 0;  Stopwatch w = Stopwatch.createStarted();
-        while(!analysisQueue.isEmpty()){
+        while(!_analysisQueue.isEmpty()){
             index++;
             indicator.setText(String.format("Performing CogniCrypt Analysis (APK %s of %s)", index,size));
-            AndroidProjectAnalysis curr = analysisQueue.poll();
+            AndroidProjectAnalysis curr = _analysisQueue.poll();
             try {
                 curr.run();
             } catch (Throwable e){
@@ -54,5 +65,16 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
         Notifications.Bus.notify(notification);
         Notification errorNotification = new Notification("CogniCrypt", "CogniCrypt Info", String.format("Found %s errors in classes: ", ErrorProvider.getErrorCount()) + Joiner.on("\n").join(ErrorProvider.getErrorClasses()), NotificationType.INFORMATION);
         Notifications.Bus.notify(errorNotification);
+
+        try
+        {
+            ToolWindow t  = _toolWindowManager.GetToolWindow(_project);
+            CogniCryptErrorWindow errorWindow =  _toolWindowManager.GetWindowModel(t, CogniCryptToolWindowManager.ErrorView, CogniCryptErrorWindow.class);
+            errorWindow.SetText("Test Text");
+        }
+        catch (CogniCryptException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 }

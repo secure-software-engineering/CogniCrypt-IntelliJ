@@ -98,16 +98,18 @@ public class RunCogniCryptAction extends CogniCryptAction {
                         Collection<File> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true);
                         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
                         Notifications.Bus.notify(notification);
-                        Balloon balloon  = notification.getBalloon();
-                        if (balloon != null)
-                            balloon.hide();
+                        Balloon balloon = notification.getBalloon();
+                        if (balloon != null) balloon.hide();
 
                         AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), javaSourceFiles);
                         queue.add(analysis);
                     }
                     if (queue.isEmpty())
                         Notifications.Bus.notify(new Notification("CogniCrypt", "Warning", "No APK file detected. Run Build > Make Project assemble an APK and trigger the analysis again.", NotificationType.WARNING));
-                    else ProgressManager.getInstance().run(new AndroidProjectAnalysisQueue(project, queue));
+                    else
+                    {
+                        ProgressManager.getInstance().run(new AndroidProjectAnalysisQueue(project, queue));
+                    }
 
                 }
                 // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)

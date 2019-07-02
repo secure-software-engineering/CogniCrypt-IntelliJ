@@ -9,6 +9,7 @@ public class CogniCryptErrorWindow extends CogniCryptWindowBase
 {
     private JPanel _content;
     private JTextField _textField1;
+    private JTable table1;
 
     public CogniCryptErrorWindow(ToolWindow toolWindow)
     {

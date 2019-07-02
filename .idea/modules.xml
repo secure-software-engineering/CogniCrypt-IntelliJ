@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/icognicrypt.iml" filepath="$PROJECT_DIR$/.idea/modules/icognicrypt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/icognicrypt.main.iml" filepath="$PROJECT_DIR$/.idea/modules/icognicrypt.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/icognicrypt.test.iml" filepath="$PROJECT_DIR$/.idea/modules/icognicrypt.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/de.fraunhofer.icognicrypt.iml" filepath="$PROJECT_DIR$/.idea/modules/de.fraunhofer.icognicrypt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/de.fraunhofer.icognicrypt.main.iml" filepath="$PROJECT_DIR$/.idea/modules/de.fraunhofer.icognicrypt.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/de.fraunhofer.icognicrypt.test.iml" filepath="$PROJECT_DIR$/.idea/modules/de.fraunhofer.icognicrypt.test.iml" />
     </modules>
   </component>
 </project>

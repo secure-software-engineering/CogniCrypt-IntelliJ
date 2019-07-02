@@ -1,4 +1,4 @@
-package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
+package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
@@ -13,6 +13,8 @@ public class Main
     {
         String tmpPath = "C:\\Users\\lrs\\AndroidStudioProjects\\HelloWorld";
         IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
+
+
         Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(tmpPath), OutputFinderOptions.AnyBuildType);
         System.out.println(files);
     }

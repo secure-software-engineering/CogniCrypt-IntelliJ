@@ -1,4 +1,4 @@
-package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
+package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 

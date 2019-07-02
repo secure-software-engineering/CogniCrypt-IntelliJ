@@ -2,9 +2,7 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.gradle;
 
 import com.google.common.collect.Lists;
 import com.intellij.openapi.diagnostic.Logger;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
 import de.fraunhofer.iem.icognicrypt.core.Helpers.StringTrimming;
-import sun.util.locale.StringTokenIterator;
 
 import javax.naming.OperationNotSupportedException;
 import java.io.IOException;

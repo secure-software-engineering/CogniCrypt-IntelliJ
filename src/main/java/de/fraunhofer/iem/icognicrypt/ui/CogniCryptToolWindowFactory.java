@@ -19,7 +19,7 @@ import java.util.List;
  * Custom class that does not implement or utilize {@link ToolWindowFactory}. Reason is that {@link ToolWindowFactory} (by
  * design) loses information about the model classes that hold the Java-Swing components.
  */
-public class CogniCryptToolWindowFactory
+public final class CogniCryptToolWindowFactory
 {
     private static ContentFactory ContentFactory = com.intellij.ui.content.ContentFactory.SERVICE.getInstance();
 

@@ -12,10 +12,9 @@ import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorWindow;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 import java.util.WeakHashMap;
 
-public class CogniCryptToolWindowManager extends CogniCryptProjectListener
+public final class CogniCryptToolWindowManager extends CogniCryptProjectListener
 {
     private WeakHashMap<ToolWindow, IReadOnlyCollection<CogniCryptWindowBase>> _windowModelMapping = new WeakHashMap<>();
     private  WeakHashMap<Project,WeakReference<ToolWindow>> _projectWindowMapping = new WeakHashMap<>();
@@ -33,16 +32,6 @@ public class CogniCryptToolWindowManager extends CogniCryptProjectListener
 
         _projectWindowMapping.put(project, new WeakReference<>(window));
         _windowModelMapping.put(window, models);
-    }
-
-    @Override
-    public void OnProjectInitialized(Project project)
-    {
-    }
-
-    @Override
-    public void OnProjectClosing(Project project)
-    {
     }
 
     @Override

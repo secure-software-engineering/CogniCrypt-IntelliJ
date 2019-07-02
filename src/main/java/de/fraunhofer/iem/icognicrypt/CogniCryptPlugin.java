@@ -2,7 +2,9 @@ package de.fraunhofer.iem.icognicrypt;
 
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.util.messages.MessageBusConnection;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListener;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
+import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
 
@@ -40,9 +42,11 @@ public class CogniCryptPlugin
             throw new CogniCryptException("CogniCrypt already initialized");
 
         CogniCryptProjectManager projectManager = ServiceManager.getService(CogniCryptProjectManager.class);
-        CogniCryptToolWindowManager toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
+        CogniCryptProjectListener toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
+        CogniCryptProjectListener analysisManager = ServiceManager.getService(CogniCryptAnalysisManager.class);
 
         projectManager.Subscribe(toolWindowManager);
+        projectManager.Subscribe(analysisManager);
 
         _initialized = true;
     }

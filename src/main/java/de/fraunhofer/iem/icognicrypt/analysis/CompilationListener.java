@@ -151,7 +151,7 @@ public class CompilationListener implements ProjectComponent {
                         if (balloon != null)
                             balloon.hide();
 
-                        CogniCryptAndroidAnalysis analysis = new CogniCryptAndroidAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), Lists.newArrayList("Crypto"));
+                        CogniCryptAndroidAnalysis analysis = new CogniCryptAndroidAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), Lists.newArrayList());
                         queue.add(analysis);
                     }
                     if (queue.isEmpty())

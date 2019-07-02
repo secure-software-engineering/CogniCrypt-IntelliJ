@@ -24,6 +24,7 @@ import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
+import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
@@ -44,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CompilationListener implements ProjectComponent {
 
@@ -136,7 +138,7 @@ public class CompilationListener implements ProjectComponent {
                     Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), OutputFinderOptions.AnyBuildType);
 
                     File projectDir = new File(path);
-                    LinkedList<AndroidProjectAnalysis> queue = Lists.newLinkedList();
+                    LinkedList<CogniCryptAndroidAnalysis> queue = Lists.newLinkedList();
                     if (!projectDir.exists()) break;
 
                     //for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true))
@@ -144,15 +146,14 @@ public class CompilationListener implements ProjectComponent {
                     {
                         String apkPath = file.getAbsolutePath();
                         logger.info("APK found in " + apkPath);
-
-                        Collection<File> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true);
+                       List<String> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true).stream().map(f -> f.getName().replace(".java","")).distinct().collect(Collectors.toList());
                         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
                         Notifications.Bus.notify(notification);
                         Balloon balloon  = notification.getBalloon();
                         if (balloon != null)
                             balloon.hide();
 
-                        AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), javaSourceFiles);
+                        CogniCryptAndroidAnalysis analysis = new CogniCryptAndroidAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), Lists.newArrayList("Crypto"));
                         queue.add(analysis);
                     }
                     if (queue.isEmpty())

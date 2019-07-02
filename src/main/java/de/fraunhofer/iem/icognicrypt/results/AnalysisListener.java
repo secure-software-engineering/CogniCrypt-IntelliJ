@@ -81,11 +81,7 @@ public class AnalysisListener extends CrySLAnalysisListener {
 
     @Override
     public void reportError(AbstractError abstractError) {
-        //Add error to error provider
-        if (abstractError.getErrorLocation().getUnit().isPresent()) {
-            logger.info("Error found in method {} in line {}", abstractError.getErrorLocation().getMethod(), abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber());
-            ErrorProvider.addError(abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1, new CogniCryptError(abstractError.toErrorMarkerString(), abstractError.getErrorLocation().getMethod().getDeclaringClass().toString()));
-        }
+
     }
 
     @Override

@@ -1,41 +1,54 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Sets;
+import com.google.common.collect.Table;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class ErrorProvider {
 
-    private static HashMap<Integer, CogniCryptError> errors = new HashMap<>();
-
-    static void addError(int lineNumber, CogniCryptError error) {
-        errors.put(lineNumber, error);
+    private static Table<String, Integer, Set<CogniCryptError>> errors = HashBasedTable.create();
+    private static int errorCount = 0;
+    public static void addError(String fullyQualifiedClassName, int lineNumber, CogniCryptError error) {
+        Set<CogniCryptError> s = getErrors(fullyQualifiedClassName, lineNumber);
+        if(s.add(error)) {
+            errorCount++;
+        }
+        errors.put(fullyQualifiedClassName, lineNumber, s);
     }
 
     public static void clearError() {
+        errorCount = 0;
         errors.clear();
     }
 
-    static boolean errorExists(int lineNumber) {
-        return errors.containsKey(lineNumber) && !errors.get(lineNumber).isVisible();
+    private static Set<CogniCryptError> getErrors(String fullyQualifiedClassName, int lineNumber) {
+        return errors.get(fullyQualifiedClassName, lineNumber) != null ? errors.get(fullyQualifiedClassName, lineNumber) : Sets.newHashSet();
     }
-
-    static String getError(int lineNumber) {
-        errors.get(lineNumber).setVisible(true);
-        return errors.get(lineNumber).getErrorMessage();
+    public static Set<CogniCryptError> findErrors(String javaAbsolutFilePath, int lineNumber) {
+        Set<CogniCryptError> res = Sets.newHashSet();
+        for(String fullyQualifiedClassName : errors.rowKeySet()){
+            String path = javaAbsolutFilePath.replace(".java","").replace("/",".");
+            if(path.endsWith(fullyQualifiedClassName)){
+                Map<Integer, Set<CogniCryptError>> resultsInFile = errors.row(fullyQualifiedClassName);
+                if(resultsInFile.get(lineNumber) != null) {
+                    res.addAll(resultsInFile.get(lineNumber));
+                }
+            }
+        }
+        return res;
     }
 
     public static int getErrorCount() {
-        return errors.values().size();
+        return errorCount;
     }
 
     public static Collection<String> getErrorClasses() {
-        Set<String> errorClasses = Sets.newHashSet();
-        for(CogniCryptError e: errors.values()){
-            errorClasses.add(e.getClassName());
-        }
-        return errorClasses;
+        return errors.rowKeySet();
     }
 }

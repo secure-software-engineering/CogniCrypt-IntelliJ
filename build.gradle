@@ -25,14 +25,15 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.3'
+    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis-Android', version: '2.4'
+    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.4'
     compile group: 'ca.mcgill.sable', name: 'soot', version: '3.3.0'
     compile group: 'de.tud.sse', name: 'soot-infoflow', version: '2.7.1'
     compile group: 'de.tud.sse', name: 'soot-infoflow-android', version: '2.7.1'
     compile group: 'de.tud.sse', name: 'soot-infoflow-cmd', version: '2.7.1'
 }
 
-// See https://github.com/JetBrains/gradle-intellij-plugin/
+// See https://github.com/JetBrains/gradle-intellij-plugin/gradle
 intellij {
     plugins 'android'
     version '2018.3.6'

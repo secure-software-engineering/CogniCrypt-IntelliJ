@@ -34,7 +34,6 @@
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager"/>
     </extensions>
 
-
     <actions>
 
         <!-- Dedicated menu item for the IDE's main menu -->

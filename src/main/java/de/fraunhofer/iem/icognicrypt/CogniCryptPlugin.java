@@ -17,7 +17,7 @@ public class CogniCryptPlugin
 {
     private static CogniCryptPlugin _instance;
 
-    private MessageBusConnection _connection;
+    private boolean _initialized;
 
     public static CogniCryptPlugin GetInstance() throws CogniCryptException
     {
@@ -29,19 +29,21 @@ public class CogniCryptPlugin
     private CogniCryptPlugin() throws CogniCryptException
     {
         if (_instance != null)
-            throw new CogniCryptException("CogniCrypt already initialized");
+            throw new CogniCryptException("CogniCrypt already instanciated");
         _instance = this;
         Initialize();
     }
 
-    public void Initialize()
+    public void Initialize() throws CogniCryptException
     {
+        if (_initialized)
+            throw new CogniCryptException("CogniCrypt already initialized");
+
         CogniCryptProjectManager projectManager = ServiceManager.getService(CogniCryptProjectManager.class);
         CogniCryptToolWindowManager toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
 
-
         projectManager.Subscribe(toolWindowManager);
 
-        // TODO: As CogniCrypt is executed on a totally different thread, check on which Thread the window is running and check if we can push data from this thread to the window.
+        _initialized = true;
     }
 }

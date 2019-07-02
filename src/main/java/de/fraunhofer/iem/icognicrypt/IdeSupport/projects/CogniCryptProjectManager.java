@@ -27,7 +27,6 @@ public final class CogniCryptProjectManager implements ProjectManagerListener
     private CogniCryptProjectManager()
     {
         _instance = this;
-        System.out.println("CogniCryptProjectManager Thread: " + Thread.currentThread().getId());
 
         CogniCryptProjectManager.GetInstance();
         MessageBus bus = ApplicationManager.getApplication().getMessageBus();

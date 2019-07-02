@@ -23,7 +23,9 @@
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
         <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"/>
 
-        <!-- The CogniCrypt ToolWindow is handled separately to ensure a synced lifecycle with it's project and the initialization of the plugin itself. -->
+        <!-- The CogniCrypt ToolWindow is handled separately to ensure a synced lifecycle with it's project and the initialization of the plugin itself.
+             See icognicrypt.CogniCryptToolWindowManager::OnProjectOpened how it's done here.
+             If we ever need a tool window that does not require such a strict synchronisation we can declare them in this file again. -->
 
     </extensions>
 

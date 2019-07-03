@@ -1,16 +1,15 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class ErrorTableModel extends AbstractTableModel implements Serializable
+public class ResultTableModel extends AbstractTableModel implements Serializable
 {
-    public enum ErrorTableColumn
+    public enum ResultTableColumn
     {
         EmptyColumn(0),
         Severity(1),
@@ -22,18 +21,18 @@ public class ErrorTableModel extends AbstractTableModel implements Serializable
         private int value;
         private static Map map = new HashMap<>();
 
-        ErrorTableColumn(int value) {
+        ResultTableColumn(int value) {
             this.value = value;
         }
 
         static {
-            for (ErrorTableColumn pageType : ErrorTableColumn.values()) {
+            for (ResultTableColumn pageType : ResultTableColumn.values()) {
                 map.put(pageType.value, pageType);
             }
         }
 
-        public static ErrorTableColumn valueOf(int pageType) {
-            return (ErrorTableColumn) map.get(pageType);
+        public static ResultTableColumn valueOf(int pageType) {
+            return (ResultTableColumn) map.get(pageType);
         }
 
         public int getValue() {
@@ -41,12 +40,12 @@ public class ErrorTableModel extends AbstractTableModel implements Serializable
         }
     }
 
-    private final Vector<ErrorTableColumn> _columns = new Vector<>();
+    private final Vector<ResultTableColumn> _columns = new Vector<>();
     private final Vector<CogniCryptError> _errors = new Vector<>();
 
-    public ErrorTableModel()
+    public ResultTableModel()
     {
-        _columns.addAll(Arrays.asList(ErrorTableColumn.values()));
+        _columns.addAll(Arrays.asList(ResultTableColumn.values()));
         fireTableStructureChanged();
     }
 
@@ -88,7 +87,7 @@ public class ErrorTableModel extends AbstractTableModel implements Serializable
     @Override
     public String getColumnName(int column)
     {
-        ErrorTableColumn data = _columns.get(column);
+        ResultTableColumn data = _columns.get(column);
 
         switch (data)
         {

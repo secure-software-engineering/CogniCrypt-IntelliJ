@@ -9,15 +9,15 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.util.Collections;
 
-public class ErrorTable extends JBTable
+public class CogniCryptResultTable extends JBTable
 {
     private static final long serialVersionUID = 1L;
 
-    public ErrorTable()
+    public CogniCryptResultTable()
     {
-        ErrorTableModel model = new ErrorTableModel();
+        ResultTableModel model = new ResultTableModel();
 
-        TableColumnModel columnModel = new ErrorTableColumnModel();
+        TableColumnModel columnModel = new ResultTableColumnModel();
         columnModel.setColumnSelectionAllowed(false);
 
         setColumnModel(columnModel);
@@ -26,27 +26,27 @@ public class ErrorTable extends JBTable
 
         for (TableColumn column : Collections.list(getColumnModel().getColumns()))
         {
-            Object t = ErrorTableModel.ErrorTableColumn.valueOf(column.getModelIndex());
+            Object t = ResultTableModel.ResultTableColumn.valueOf(column.getModelIndex());
             column.setIdentifier(t);
 
-            if (t != ErrorTableModel.ErrorTableColumn.Description)
+            if (t != ResultTableModel.ResultTableColumn.Description)
                 column.sizeWidthToFit();
 
             column.setWidth(column.getWidth() + 10);
             column.setHeaderRenderer(new HorizontalAlignmentCellRenderer(SwingConstants.LEFT, new EmptyBorder(0,6,0,0)));
         }
 
-        TableColumn emptyColumn = getColumn(ErrorTableModel.ErrorTableColumn.EmptyColumn);
+        TableColumn emptyColumn = getColumn(ResultTableModel.ResultTableColumn.EmptyColumn);
         emptyColumn.setMaxWidth(20);
         emptyColumn.setResizable(false);
 
-        TableColumn severityColumn = getColumn(ErrorTableModel.ErrorTableColumn.Severity);
+        TableColumn severityColumn = getColumn(ResultTableModel.ResultTableColumn.Severity);
         severityColumn.setMaxWidth(20);
         severityColumn.setResizable(false);
     }
 
-    public ErrorTableModel GetErrorTableModel()
+    public ResultTableModel GetErrorTableModel()
     {
-        return (ErrorTableModel) getModel();
+        return (ResultTableModel) getModel();
     }
 }

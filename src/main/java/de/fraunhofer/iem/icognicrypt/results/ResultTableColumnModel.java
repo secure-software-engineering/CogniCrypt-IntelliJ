@@ -2,7 +2,7 @@ package de.fraunhofer.iem.icognicrypt.results;
 
 import javax.swing.table.DefaultTableColumnModel;
 
-public class ErrorTableColumnModel extends DefaultTableColumnModel
+public class ResultTableColumnModel extends DefaultTableColumnModel
 {
     @Override
     public void moveColumn(int columnIndex, int newIndex)

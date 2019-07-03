@@ -5,16 +5,16 @@ import de.fraunhofer.iem.icognicrypt.ui.CogniCryptWindowBase;
 
 import javax.swing.*;
 
-public class CogniCryptErrorWindow extends CogniCryptWindowBase
+public class CogniCryptResultWindow extends CogniCryptWindowBase
 {
     private JPanel _content;
-    private ErrorTable _errorTable;
+    private CogniCryptResultTable _resultTable;
     private JComboBox _scopeComboBox;
     private JLabel _errorNumberLabel;
 
-    private ErrorTableModel _tableModel;
+    private ResultTableModel _tableModel;
 
-    public CogniCryptErrorWindow(ToolWindow toolWindow)
+    public CogniCryptResultWindow(ToolWindow toolWindow)
     {
         super(toolWindow);
     }
@@ -31,8 +31,8 @@ public class CogniCryptErrorWindow extends CogniCryptWindowBase
     }
 
     private void createUIComponents(){
-        _errorTable = new ErrorTable();
-        _tableModel = _errorTable.GetErrorTableModel();
+        _resultTable = new CogniCryptResultTable();
+        _tableModel = _resultTable.GetErrorTableModel();
 
         _tableModel.AddError(new CogniCryptError("123", "123"));
     }

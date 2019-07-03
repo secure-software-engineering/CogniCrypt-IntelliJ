@@ -1,7 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.ui;
 
-import com.intellij.ide.UiActivity;
-import com.intellij.ide.UiActivityMonitor;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -11,7 +9,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListen
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
 import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorWindow;
+import de.fraunhofer.iem.icognicrypt.results.CogniCryptResultWindow;
 
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
@@ -24,7 +22,7 @@ public final class CogniCryptToolWindowManager extends CogniCryptProjectListener
 
     public static final String CogniCryptWindowId = "ICogniCrypt.ToolWindow";
 
-    public static final int ErrorView = 0;
+    public static final int ResultsView = 0;
 
     @Override
     public void OnProjectOpened(Project project)
@@ -65,7 +63,7 @@ public final class CogniCryptToolWindowManager extends CogniCryptProjectListener
             throw new CogniCryptException("CogniCrypt ToolWindow was not initialized by the manager");
         }
 
-        CogniCryptErrorWindow model = list.Get(viewIndex);
+        CogniCryptResultWindow model = list.Get(viewIndex);
         if (model == null)
             return null;
         if (type.isInstance(model))

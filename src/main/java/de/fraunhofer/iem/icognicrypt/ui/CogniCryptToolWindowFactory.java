@@ -8,7 +8,7 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
 import de.fraunhofer.iem.icognicrypt.core.Collections.ReadOnlyCollection;
-import de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorWindow;
+import de.fraunhofer.iem.icognicrypt.results.CogniCryptResultWindow;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -31,14 +31,14 @@ public final class CogniCryptToolWindowFactory
         List<CogniCryptWindowBase> models =  new ArrayList<>();
 
         // Error Window
-        CogniCryptWindowBase errorWindow = new CogniCryptErrorWindow(toolWindow);
-        Content errorWindowContent = ContentFactory.createContent(errorWindow.GetContent(), "Errors", false);
+        CogniCryptWindowBase resultsWindow = new CogniCryptResultWindow(toolWindow);
+        Content errorWindowContent = ContentFactory.createContent(resultsWindow.GetContent(), "Analysis Results", false);
         toolWindow.getContentManager().addContent(errorWindowContent);
 
         //Other Windows below...
 
         // Do NOT change order
-        models.add(errorWindow);
+        models.add(resultsWindow);
         return new ReadOnlyCollection<>(models);
     }
 }

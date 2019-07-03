@@ -29,6 +29,7 @@ public class ApkDataDeserializer extends StdDeserializer<IApkData>
         data.SetVersionName(node.get("versionName").asText());
         data.SetBaseName(node.get("baseName").asText());
         data.SetFullName(node.get("fullName").asText());
+        data.SetOutputType(outputType);
         return data;
     }
 

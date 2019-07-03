@@ -21,22 +21,21 @@ import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
+import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.OutputFinderOptions;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.AndroidStudioOutputFinder;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IOutputFinder;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.AndroidStudioOutputFinder;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import org.apache.commons.io.FileUtils;
 
 
-import javax.naming.OperationNotSupportedException;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -147,7 +146,9 @@ public class CompilationListener implements ProjectComponent {
                         Collection<File> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true);
                         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
                         Notifications.Bus.notify(notification);
-                        notification.getBalloon().hide();
+                        Balloon balloon  = notification.getBalloon();
+                        if (balloon != null)
+                            balloon.hide();
 
                         AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), javaSourceFiles);
                         queue.add(analysis);
@@ -160,10 +161,12 @@ public class CompilationListener implements ProjectComponent {
                 // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
                 catch (CogniCryptException e)
                 {
+                    logger.info("CogniCryptException was thrown: " + e.getMessage());
                     e.printStackTrace();
                 }
                 catch (Exception e)
                 {
+                    logger.info("Exception was thrown: " + e.getMessage());
                     e.printStackTrace();
                 }
                 break;

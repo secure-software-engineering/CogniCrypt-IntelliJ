@@ -26,7 +26,7 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
     private Queue<AndroidProjectAnalysis> analysisQueue;
 
     public AndroidProjectAnalysisQueue(Project p, Queue<AndroidProjectAnalysis> analysisQueue){
-        super(null, "Performing CogniCrypt Analysis");
+        super(p, "Performing CogniCrypt Analysis");
         this.analysisQueue = analysisQueue;
     }
 
@@ -47,7 +47,6 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
                 Notification notification = new Notification("CogniCrypt", "CogniCrypt", String.format("Crashed on %s", curr), NotificationType.INFORMATION);
                 logger.error(e);
                 Notifications.Bus.notify(notification);
-                logger.error(e);
             }
             indicator.setFraction((index / (double)size));
         }

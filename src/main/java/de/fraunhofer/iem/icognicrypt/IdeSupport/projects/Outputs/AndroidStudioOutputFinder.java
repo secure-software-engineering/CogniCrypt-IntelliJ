@@ -1,13 +1,23 @@
-package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
+package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectModuleManager;
+import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
 import java.io.*;
-import java.nio.file.*;
 import java.util.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
 {
@@ -50,7 +60,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         // as a weak class field. It should be weak so the developer can delete the files safely without causing the reference kept alive by the GC. When the weak reference is gone we
         // should check for a new file and invalidate this class aganin.
 
-        logger.info("Try finding all built .apk files.");
+        logger.info("Try finding all built .apk files with options: " + options);
 
         if (!Files.exists(projectRootPath))
             throw new CogniCryptException("Root path of the project does not exist.");
@@ -59,6 +69,19 @@ public class AndroidStudioOutputFinder implements IOutputFinder
 
         result.addAll(GetModuleOutputs(projectRootPath, options));
         result.addAll(GetExportedOutputs(projectRootPath, options));
+
+        logger.info("Could not find any file. User is requested to choose one manually");
+        if (result.isEmpty())
+        {
+            FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
+            File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...",filter, projectRootPath);
+            if (userSelectedFile == null) logger.info("User did not select any file.");
+            else
+            {
+                logger.info("Added manual file: " + userSelectedFile.getAbsolutePath());
+                result.add(userSelectedFile);
+            }
+        }
 
         return result;
     }

@@ -1,4 +1,4 @@
-package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
+package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
@@ -6,8 +6,6 @@ import javax.naming.OperationNotSupportedException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.EnumSet;
-import java.util.Set;
 
 public class Main
 {

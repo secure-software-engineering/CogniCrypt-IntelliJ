@@ -1,8 +1,8 @@
-package de.fraunhofer.iem.icognicrypt.results;
+package de.fraunhofer.iem.icognicrypt.results.ui;
 
 import javax.swing.table.DefaultTableColumnModel;
 
-public class ResultTableColumnModel extends DefaultTableColumnModel
+class ResultTableColumnModel extends DefaultTableColumnModel
 {
     @Override
     public void moveColumn(int columnIndex, int newIndex)

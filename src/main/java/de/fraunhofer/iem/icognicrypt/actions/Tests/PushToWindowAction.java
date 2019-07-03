@@ -7,7 +7,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import de.fraunhofer.iem.icognicrypt.actions.CogniCryptAction;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.results.CogniCryptResultWindow;
+import de.fraunhofer.iem.icognicrypt.results.ui.CogniCryptResultWindow;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
 import org.jetbrains.annotations.NotNull;
 

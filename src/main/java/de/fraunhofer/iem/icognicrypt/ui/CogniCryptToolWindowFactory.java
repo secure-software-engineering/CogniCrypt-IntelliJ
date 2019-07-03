@@ -8,7 +8,7 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
 import de.fraunhofer.iem.icognicrypt.core.Collections.ReadOnlyCollection;
-import de.fraunhofer.iem.icognicrypt.results.CogniCryptResultWindow;
+import de.fraunhofer.iem.icognicrypt.results.ui.CogniCryptResultWindow;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

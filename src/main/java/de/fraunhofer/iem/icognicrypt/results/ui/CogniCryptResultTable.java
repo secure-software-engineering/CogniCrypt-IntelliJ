@@ -1,7 +1,8 @@
-package de.fraunhofer.iem.icognicrypt.results;
+package de.fraunhofer.iem.icognicrypt.results.ui;
 
 import com.intellij.ui.table.JBTable;
 import de.fraunhofer.iem.icognicrypt.core.ui.HorizontalAlignmentCellRenderer;
+import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,7 +10,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.util.Collections;
 
-public class CogniCryptResultTable extends JBTable
+class CogniCryptResultTable extends JBTable
 {
     private static final long serialVersionUID = 1L;
 
@@ -45,8 +46,8 @@ public class CogniCryptResultTable extends JBTable
         severityColumn.setResizable(false);
     }
 
-    public ResultTableModel GetErrorTableModel()
+    public ICogniCryptResultTableModel GetErrorTableModel()
     {
-        return (ResultTableModel) getModel();
+        return (ICogniCryptResultTableModel) getModel();
     }
 }

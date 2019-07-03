@@ -9,7 +9,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListen
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
 import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.results.CogniCryptResultWindow;
+import de.fraunhofer.iem.icognicrypt.results.ui.CogniCryptResultWindow;
 
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
@@ -56,7 +56,7 @@ public final class CogniCryptToolWindowManager extends CogniCryptProjectListener
         return toolWindow;
     }
 
-    public <T extends CogniCryptWindowBase> T GetWindowModel(ToolWindow toolWindow, int viewIndex,Class<T> type) throws CogniCryptException
+    public <T extends CogniCryptWindowBase> T GetWindowModel(ToolWindow toolWindow, int viewIndex, Class<T> type) throws CogniCryptException
     {
         IReadOnlyCollection<CogniCryptWindowBase> list = _windowModelMapping.get(toolWindow);
         if (list == null){

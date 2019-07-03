@@ -1,6 +1,8 @@
-package de.fraunhofer.iem.icognicrypt.results;
+package de.fraunhofer.iem.icognicrypt.results.ui;
 
 import com.intellij.openapi.wm.ToolWindow;
+import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
+import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptWindowBase;
 
 import javax.swing.*;
@@ -12,7 +14,7 @@ public class CogniCryptResultWindow extends CogniCryptWindowBase
     private JComboBox _scopeComboBox;
     private JLabel _errorNumberLabel;
 
-    private ResultTableModel _tableModel;
+    private ICogniCryptResultTableModel _tableModel;
 
     public CogniCryptResultWindow(ToolWindow toolWindow)
     {

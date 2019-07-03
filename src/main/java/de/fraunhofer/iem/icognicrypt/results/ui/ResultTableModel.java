@@ -1,4 +1,7 @@
-package de.fraunhofer.iem.icognicrypt.results;
+package de.fraunhofer.iem.icognicrypt.results.ui;
+
+import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
+import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 
 import javax.swing.table.AbstractTableModel;
 import java.io.Serializable;
@@ -7,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class ResultTableModel extends AbstractTableModel implements Serializable
+class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTableModel
 {
     public enum ResultTableColumn
     {

@@ -24,7 +24,7 @@ public class PushToWindowAction extends CogniCryptAction
         {
             ToolWindow t  = toolWindowManager.GetToolWindow(p);
             CogniCryptErrorWindow errorWindow =  toolWindowManager.GetWindowModel(t, CogniCryptToolWindowManager.ErrorView, CogniCryptErrorWindow.class);
-            errorWindow.SetText("Test Text");
+            errorWindow.SetSearchText("Test Text");
         }
         catch (CogniCryptException ex)
         {

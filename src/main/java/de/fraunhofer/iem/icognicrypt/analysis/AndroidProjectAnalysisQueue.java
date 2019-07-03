@@ -2,14 +2,12 @@ package de.fraunhofer.iem.icognicrypt.analysis;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.Sets;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -19,11 +17,7 @@ import de.fraunhofer.iem.icognicrypt.results.ErrorProvider;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.util.Collection;
-import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 
 public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
@@ -70,7 +64,7 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
         {
             ToolWindow t  = _toolWindowManager.GetToolWindow(_project);
             CogniCryptErrorWindow errorWindow =  _toolWindowManager.GetWindowModel(t, CogniCryptToolWindowManager.ErrorView, CogniCryptErrorWindow.class);
-            errorWindow.SetText("Test Text");
+            errorWindow.SetSearchText("Test Text");
         }
         catch (CogniCryptException ex)
         {

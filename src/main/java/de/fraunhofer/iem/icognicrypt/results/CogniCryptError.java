@@ -1,7 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
-import crypto.analysis.errors.AbstractError;
-
 public class CogniCryptError {
 
     private String errorMessage;

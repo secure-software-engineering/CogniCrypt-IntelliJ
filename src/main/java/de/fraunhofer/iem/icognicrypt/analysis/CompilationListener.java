@@ -20,7 +20,9 @@ import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderEnumerator;
+import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.messages.MessageBusConnection;
@@ -40,7 +42,6 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -116,7 +117,6 @@ public class CompilationListener implements ProjectComponent {
             return;
         }
         List<String> classpath = new ArrayList<>();
-
         //Get modules that are present for each project
         //Get output path for IntelliJ project or APK path in Android Studio
         // TODO: Check if large s/c is required and code can be summarized.
@@ -144,7 +144,6 @@ public class CompilationListener implements ProjectComponent {
                     {
                         String apkPath = file.getAbsolutePath();
                         logger.info("APK found in " + apkPath);
-                       List<String> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true).stream().map(f -> f.getName().replace(".java","")).distinct().collect(Collectors.toList());
                         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
                         Notifications.Bus.notify(notification);
                         Balloon balloon  = notification.getBalloon();
@@ -188,6 +187,7 @@ public class CompilationListener implements ProjectComponent {
         }
 
     }
+
 
     private static Path getAndroidPlatformsLocation(Project project) {
         File androidSdkPath = AndroidSdks.getInstance().findPathOfSdkWithoutAddonsFolder(project);

@@ -7,7 +7,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import de.fraunhofer.iem.icognicrypt.actions.CogniCryptAction;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.results.ui.CogniCryptResultWindow;
+import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +23,7 @@ public class PushToWindowAction extends CogniCryptAction
         try
         {
             ToolWindow t  = toolWindowManager.GetToolWindow(p);
-            CogniCryptResultWindow errorWindow =  toolWindowManager.GetWindowModel(t, CogniCryptToolWindowManager.ResultsView, CogniCryptResultWindow.class);
+            ICogniCryptResultWindow errorWindow =  toolWindowManager.GetWindowModel(t, CogniCryptToolWindowManager.ResultsView, ICogniCryptResultWindow.class);
             errorWindow.SetSearchText("Test Text");
         }
         catch (CogniCryptException ex)

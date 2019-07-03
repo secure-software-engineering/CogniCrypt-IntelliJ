@@ -8,7 +8,7 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
 import de.fraunhofer.iem.icognicrypt.core.Collections.ReadOnlyCollection;
-import de.fraunhofer.iem.icognicrypt.results.ui.CogniCryptResultWindow;
+import de.fraunhofer.iem.icognicrypt.results.ui.CogniCryptResultWindowFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -23,15 +23,15 @@ public final class CogniCryptToolWindowFactory
 {
     private static ContentFactory ContentFactory = com.intellij.ui.content.ContentFactory.SERVICE.getInstance();
 
-    public static IReadOnlyCollection<CogniCryptWindowBase> CreateToolWindow(@NotNull Project project, @NotNull ToolWindow toolWindow)
+    public static IReadOnlyCollection<ICogniCryptWindowBase> CreateToolWindow(@NotNull Project project, @NotNull ToolWindow toolWindow)
     {
         toolWindow.setStripeTitle("CogniCrypt");
         toolWindow.setIcon(IconLoader.getIcon("/icons/cognicrypt.png"));
 
-        List<CogniCryptWindowBase> models =  new ArrayList<>();
+        List<ICogniCryptWindowBase> models =  new ArrayList<>();
 
         // Error Window
-        CogniCryptWindowBase resultsWindow = new CogniCryptResultWindow(toolWindow);
+        ICogniCryptWindowBase resultsWindow = CogniCryptResultWindowFactory.CreateWindow(toolWindow);
         Content errorWindowContent = ContentFactory.createContent(resultsWindow.GetContent(), "Analysis Results", false);
         toolWindow.getContentManager().addContent(errorWindowContent);
 

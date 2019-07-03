@@ -3,11 +3,11 @@ package de.fraunhofer.iem.icognicrypt.results.ui;
 import com.intellij.openapi.wm.ToolWindow;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptWindowBase;
+import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
 
 import javax.swing.*;
 
-public class CogniCryptResultWindow extends CogniCryptWindowBase
+public class CogniCryptResultWindow implements ICogniCryptResultWindow
 {
     private JPanel _content;
     private CogniCryptResultTable _resultTable;
@@ -18,7 +18,6 @@ public class CogniCryptResultWindow extends CogniCryptWindowBase
 
     public CogniCryptResultWindow(ToolWindow toolWindow)
     {
-        super(toolWindow);
     }
 
     @Override

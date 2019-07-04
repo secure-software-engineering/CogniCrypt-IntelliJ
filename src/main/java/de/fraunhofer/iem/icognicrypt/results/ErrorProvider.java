@@ -12,6 +12,10 @@ import java.util.Set;
 
 public class ErrorProvider {
 
+    // TODO: Make this project depended to support multi-project
+    // TODO: Add listeners to events like errors added/removed
+
+
     private static Table<String, Integer, Set<CogniCryptError>> errors = HashBasedTable.create();
     private static int errorCount = 0;
     public static void addError(String fullyQualifiedClassName, int lineNumber, CogniCryptError error) {

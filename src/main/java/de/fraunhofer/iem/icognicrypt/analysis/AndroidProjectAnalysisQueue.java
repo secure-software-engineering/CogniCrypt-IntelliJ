@@ -40,7 +40,10 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
     private static final Logger logger = Logger.getInstance(AndroidProjectAnalysisQueue.class);
     private final CogniCryptToolWindowManager _toolWindowManager;
+    private Stopwatch _stopWatch;
     private Queue<CogniCryptAndroidAnalysis> _analysisQueue;
+
+    private int _analysedFilesCount;
 
     private Project _project;
     private final List<String> sourceCodeJavaFiles;
@@ -56,23 +59,34 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
         } else {
             sourceCodeJavaFiles = Lists.newArrayList();
         }
+
+        _stopWatch = Stopwatch.createStarted();
     }
 
     @Override
     public void run(@NotNull ProgressIndicator indicator) {
+
+        // TODO: Check on a few relevant points (maybe after each .apk analysis) if the process was canceled by the user
+
         // Remove errors before rerunning Cognicrypt
         ErrorProvider.clearError();
 
+        if (true)
+            throw new RuntimeException();
+
         int size = _analysisQueue.size();
-        int index = 0;  Stopwatch w = Stopwatch.createStarted();
-        while(!_analysisQueue.isEmpty()){
-            index++;
-            indicator.setText(String.format("Performing CogniCrypt Analysis (APK %s of %s)", index,size));
+
+        _stopWatch.start();
+        while(!_analysisQueue.isEmpty())
+        {
+            _analysedFilesCount++;
+            indicator.setText(String.format("Performing CogniCrypt Analysis (APK %s of %s)", _analysedFilesCount, size));
             G.v().reset();
             CogniCryptAndroidAnalysis curr = _analysisQueue.poll();
 
             try {
                 Collection<AbstractError> results = curr.run();
+
                 for(AbstractError abstractError : results){
                     if (abstractError.getErrorLocation().getUnit().isPresent()) {
                         if(isIgnoredErrorType(abstractError))
@@ -87,23 +101,38 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
                 logger.error(e);
                 Notifications.Bus.notify(notification);
             }
-            indicator.setFraction((index / (double)size));
+            indicator.setFraction((_analysedFilesCount / (double)size));
         }
-        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", String.format("Analyzed %s APKs in %s", index,w), NotificationType.INFORMATION);
-        Notifications.Bus.notify(notification);
-        Notification errorNotification = new Notification("CogniCrypt", "CogniCrypt Info", String.format("Found %s errors in classes: ", ErrorProvider.getErrorCount()) + Joiner.on("\n").join(ErrorProvider.getErrorClasses()), NotificationType.INFORMATION);
-        Notifications.Bus.notify(errorNotification);
+        _stopWatch.stop();
+    }
 
-        try
-        {
-            ToolWindow t  = _toolWindowManager.GetToolWindow(_project);
-            CogniCryptResultWindow errorWindow =  _toolWindowManager.GetWindowModel(t, CogniCryptToolWindowManager.ResultsView, CogniCryptResultWindow.class);
-            errorWindow.SetSearchText("Test Text");
-        }
-        catch (CogniCryptException ex)
-        {
-            ex.printStackTrace();
-        }
+    @Override
+    public void onCancel()
+    {
+        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "The Analysis was cancelled ", NotificationType.INFORMATION);
+        Notifications.Bus.notify(notification);
+    }
+
+    @Override
+    public void onFinished()
+    {
+        super.onFinished();
+        _stopWatch = null;
+    }
+
+    @Override
+    public void onSuccess()
+    {
+        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", String.format("Analyzed %s APKs in %s", _analysedFilesCount, _stopWatch), NotificationType.INFORMATION);
+        Notifications.Bus.notify(notification);
+    }
+
+    @Override
+    public void onThrowable(@NotNull Throwable error)
+    {
+        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "The analysis produced an unhandled exception. " +
+                "The operation will terminate now.", NotificationType.ERROR);
+        Notifications.Bus.notify(notification);
     }
 
     private boolean isIgnoredErrorType(AbstractError abstractError) {

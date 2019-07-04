@@ -15,9 +15,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
 {
@@ -31,11 +29,9 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         return _instance;
     }
 
-
     private AndroidStudioOutputFinder()
     {
     }
-
 
     public Iterable<File> GetOutputFiles(){
        return GetOutputFiles(OutputFinderOptions.AnyBuildType);
@@ -92,17 +88,15 @@ public class AndroidStudioOutputFinder implements IOutputFinder
 
         File workspaceFile = Paths.get(projectRootPath.toString(), ".idea\\workspace.xml").toFile();
 
-        IdeaWorkspace workspace;
         try
         {
-            workspace = new IdeaWorkspace(workspaceFile);
+            IdeaWorkspace workspace = new IdeaWorkspace(workspaceFile);
+            return GetOutputs(workspace.GetOutputManager(), options);
         }
         catch (FileNotFoundException e)
         {
             return Collections.EMPTY_LIST;
         }
-
-        return GetOutputs(workspace.GetOutputManager(), options);
     }
 
     private Collection<File> GetModuleOutputs(Path projectRootPath, OutputFinderOptions options) throws IOException, OperationNotSupportedException

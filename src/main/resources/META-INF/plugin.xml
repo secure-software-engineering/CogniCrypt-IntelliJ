@@ -2,48 +2,84 @@
     <id>de.fraunhofer.iem.icognicrypt</id>
     <name>ICogniCrypt</name>
     <version>1.0-SNAPSHOT</version>
-    <vendor email="support@yourcompany.com" url="https://www.iem.fraunhofer.de/">Fraunhofer IEM</vendor>
+    <vendor url="https://www.iem.fraunhofer.de/">Fraunhofer IEM</vendor>
 
     <description><![CDATA[
       <em>ICogniCrypt<em> is an IntelliJ IDEA plugin that supports Java developers in using cryptographic APIs.
     ]]></description>
 
-    <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
-    ]]>
-    </change-notes>
-
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+        on how to target different products -->
     <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.android</depends>
 
-    <idea-version since-build="183"/>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <!--<idea-version since-build="173.0"/>-->
-
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+    <idea-version since-build="183"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="de.fraunhofer.iem.icognicrypt.results.ErrorLineMarker"/>
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
-        <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"></applicationConfigurable>
+        <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"/>
+
+        <!-- The CogniCrypt ToolWindow is handled separately to ensure a synced lifecycle with it's project and the initialization of the plugin itself.
+             See icognicrypt.CogniCryptToolWindowManager::OnProjectOpened how it's done here.
+             If we ever need a tool window that does not require such a strict synchronisation we can declare them in this file again. -->
+
+    </extensions>
+
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.CogniCryptPlugin"/>
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager"/>
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager"/>
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager"/>
     </extensions>
 
     <actions>
+
+        <!-- Dedicated menu item for the IDE's main menu -->
+        <group id="ICogniCryptMenu" text="CogniCr_ypt" popup="true">
+            <add-to-group group-id="MainMenu" anchor="after" relative-to-action="ToolsMenu"/>
+        </group>
+
+        <group id="ICogniCryptMenu.BasicActions">
+            <add-to-group group-id="ICogniCryptMenu" anchor="first"/>
+            <separator/>
+        </group>
+
+        <group id="ICogniCryptMenu.Tests">
+            <add-to-group group-id="ICogniCryptMenu" anchor="last"/>
+            <separator/>
+        </group>
+
         <!-- Add your actions here -->
-        <action id="ICognicrypt-analysis"
+        <action id="ICognicrypt.ExecuteAnalysis"
                 class="de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction"
                 icon="PluginIcons.COGNICRYPT"
                 text="Run CogniCr_ypt" description="Check for misuses of cryptographic APIs">
-            <add-to-group group-id="AnalyzeMenu" anchor="last"  />
+            <add-to-group group-id="ICogniCryptMenu.BasicActions" anchor="first"/>
+        </action>
+
+        <!-- Test Actions -->
+        <action id="ICognicrypt.Test.ExecuteAction"
+                class="de.fraunhofer.iem.icognicrypt.actions.Tests.ExecuteOtherAction"
+                text="Runs Anlysis (from other Action)" description="Check for misuses of cryptographic APIs">
+            <add-to-group group-id="ICogniCryptMenu.Tests" anchor="first"/>
+        </action>
+        <action id="ICognicrypt.Test.PushData"
+                class="de.fraunhofer.iem.icognicrypt.actions.Tests.PushToWindowAction"
+                text="Push Data to ToolWindow">
+            <add-to-group group-id="ICogniCryptMenu.Tests"/>
         </action>
     </actions>
+
+    <application-components>
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.StartupPackage</implementation-class>
+        </component>
+    </application-components>
 
     <project-components>
         <component>

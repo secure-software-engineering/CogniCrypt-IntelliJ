@@ -49,6 +49,11 @@ public class OutputJson
         this.apkData = apkData;
     }
 
+    @JsonProperty("apkInfo")
+    public void setApkInfo(IApkData apkData) {
+        this.apkData = apkData;
+    }
+
     @JsonProperty("path")
     public String getPath() {
         return path;

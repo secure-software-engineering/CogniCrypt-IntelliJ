@@ -18,14 +18,13 @@ import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.vfs.VirtualFile;
+import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.AndroidStudioOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
-import de.fraunhofer.iem.icognicrypt.analysis.AndroidProjectAnalysis;
 import de.fraunhofer.iem.icognicrypt.analysis.AndroidProjectAnalysisQueue;
-import de.fraunhofer.iem.icognicrypt.analysis.CompilationListener;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysis;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
@@ -40,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RunCogniCryptAction extends CogniCryptAction {
 
@@ -86,7 +86,7 @@ public class RunCogniCryptAction extends CogniCryptAction {
                     Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), OutputFinderOptions.AnyBuildType);
 
                     File projectDir = new File(path);
-                    LinkedList<AndroidProjectAnalysis> queue = Lists.newLinkedList();
+                    LinkedList<CogniCryptAndroidAnalysis> queue = Lists.newLinkedList();
                     if (!projectDir.exists()) break;
 
                     //for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true))
@@ -94,14 +94,13 @@ public class RunCogniCryptAction extends CogniCryptAction {
                     {
                         String apkPath = file.getAbsolutePath();
                         logger.info("APK found in " + apkPath);
-
-                        Collection<File> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true);
+                        List<String> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true).stream().map(f -> f.getName().replace(".java","")).distinct().collect(Collectors.toList());
                         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
                         Notifications.Bus.notify(notification);
                         Balloon balloon = notification.getBalloon();
                         if (balloon != null) balloon.hide();
 
-                        AndroidProjectAnalysis analysis = new AndroidProjectAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), javaSourceFiles);
+                        CogniCryptAndroidAnalysis  analysis = new CogniCryptAndroidAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), javaSourceFiles);
                         queue.add(analysis);
                     }
                     if (queue.isEmpty())

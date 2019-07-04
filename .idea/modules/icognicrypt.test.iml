@@ -11,9 +11,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="icognicrypt.main" />
-    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:CryptoAnalysis:2.3" level="project" />
-    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-cmd:2.7.1" level="project" />
-    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-android:2.7.1" level="project" />
+    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:CryptoAnalysis-Android:2.4" level="project" />
+    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:CryptoAnalysis:2.4" level="project" />
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
@@ -23,11 +22,10 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-cmd:2.7.1" level="project" />
+    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-android:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-summaries:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow:2.7.1" level="project" />
-    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:idealPDS:2.3" level="project" />
-    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:boomerangPDS:2.3" level="project" />
-    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:testCore:2.3" level="project" />
     <orderEntry type="library" name="Gradle: ca.mcgill.sable:soot:3.3.0" level="project" />
     <orderEntry type="module-library">
       <library name="Gradle: com.jetbrains:ideaIC:2018.3.6">
@@ -216,7 +214,20 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Gradle: com.sun.xml.fastinfoset:FastInfoset:1.2.15" level="project" />
+    <orderEntry type="library" name="Gradle: org.jvnet.staxex:stax-ex:1.8" level="project" />
+    <orderEntry type="library" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.7" level="project" />
+    <orderEntry type="library" name="Gradle: org.glassfish.jaxb:txw2:2.4.0-b180830.0438" level="project" />
+    <orderEntry type="library" name="Gradle: javax.activation:javax.activation-api:1.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm:7.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:7.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-analysis:7.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.11.0" level="project" />
+    <orderEntry type="library" name="Gradle: javax.xml.bind:jaxb-api:2.4.0-b180830.0359" level="project" />
+    <orderEntry type="library" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.4.0-b180830.0438" level="project" />
+    <orderEntry type="library" name="Gradle: javax.annotation:javax.annotation-api:1.3.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-util:7.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-commons:7.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.11.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.5" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
@@ -243,13 +254,17 @@
     <orderEntry type="library" name="Gradle: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:25.1-jre" level="project" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:PathExpression:1.0.0" level="project" />
-    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:WPDS:2.3" level="project" />
+    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:WPDS:2.4-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: heros:heros:1.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: de.upb.cs.swt:heros:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.smali:dexlib2:2.2.5" level="project" />
+    <orderEntry type="library" name="Gradle: ca.mcgill.sable:soot-j9:4.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
-    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:synchronizedPDS:2.3" level="project" />
+    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:synchronizedPDS:2.4-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:testCore:2.4-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:boomerangPDS:2.4-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: de.fraunhofer.iem:idealPDS:2.4-SNAPSHOT" level="project" />
     <orderEntry type="module-library">
       <library name="Gradle: unzipped.com.jetbrains.plugins:android:unzipped.com.jetbrains.plugins:ideaIC-IC-183.6156.11-withSources">
         <CLASSES>

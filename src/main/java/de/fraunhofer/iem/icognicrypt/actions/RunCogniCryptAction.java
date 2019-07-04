@@ -94,13 +94,12 @@ public class RunCogniCryptAction extends CogniCryptAction {
                     {
                         String apkPath = file.getAbsolutePath();
                         logger.info("APK found in " + apkPath);
-                        List<String> javaSourceFiles = FileUtils.listFiles(projectDir, new String[]{"java"}, true).stream().map(f -> f.getName().replace(".java","")).distinct().collect(Collectors.toList());
                         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
                         Notifications.Bus.notify(notification);
                         Balloon balloon = notification.getBalloon();
                         if (balloon != null) balloon.hide();
 
-                        CogniCryptAndroidAnalysis  analysis = new CogniCryptAndroidAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), javaSourceFiles);
+                        CogniCryptAndroidAnalysis  analysis = new CogniCryptAndroidAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), Lists.newArrayList());
                         queue.add(analysis);
                     }
                     if (queue.isEmpty())

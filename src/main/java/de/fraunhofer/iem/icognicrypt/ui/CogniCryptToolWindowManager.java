@@ -38,7 +38,10 @@ public final class CogniCryptToolWindowManager extends CogniCryptProjectListener
     {
         ToolWindow toolWindow = _projectWindowMapping.get(project).get();
         if (toolWindow != null)
+        {
+            // Apparently the unregisterToolWindow method also destroys all evidence of the model, thus they get GC'ed correctly.
             ToolWindowManager.getInstance(project).unregisterToolWindow(CogniCryptWindowId);
+        }
         if (_windowModelMapping.containsKey(toolWindow))
             _windowModelMapping.remove(toolWindow);
     }

@@ -14,6 +14,7 @@ public class ErrorProvider {
 
     // TODO: Make this project depended to support multi-project
     // TODO: Add listeners to events like errors added/removed
+    // TODO: This class should not 'publicly require'
 
 
     private static Table<String, Integer, Set<CogniCryptError>> errors = HashBasedTable.create();

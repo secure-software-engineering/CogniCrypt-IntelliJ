@@ -1,23 +1,30 @@
 package de.fraunhofer.iem.icognicrypt.results.ui;
 
 import com.intellij.openapi.wm.ToolWindow;
-import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
 
 import javax.swing.*;
+import java.lang.ref.WeakReference;
 
-public class CogniCryptResultWindow implements ICogniCryptResultWindow
+class CogniCryptResultWindow implements ICogniCryptResultWindow
 {
     private JPanel _content;
     private CogniCryptResultTable _resultTable;
     private JComboBox _scopeComboBox;
     private JLabel _errorNumberLabel;
 
+    private WeakReference<ToolWindow> _toolWindow;
+
     private ICogniCryptResultTableModel _tableModel;
+
+    public ICogniCryptResultTableModel GetTableModel(){
+        return _tableModel;
+    }
 
     public CogniCryptResultWindow(ToolWindow toolWindow)
     {
+        _toolWindow = new WeakReference<>(toolWindow);
     }
 
     @Override
@@ -31,11 +38,16 @@ public class CogniCryptResultWindow implements ICogniCryptResultWindow
 
     }
 
+    @Override
+    protected void finalize() throws Throwable
+    {
+        super.finalize();
+    }
+
     private void createUIComponents(){
         _resultTable = new CogniCryptResultTable();
         _tableModel = _resultTable.GetErrorTableModel();
-
-        _tableModel.AddError(new CogniCryptError("123", "123"));
+        _resultTable.addMouseListener(new ResultsMouseHandler());
     }
 }
 

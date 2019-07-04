@@ -1,5 +1,8 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects;
 
+import com.intellij.ide.DataManager;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
@@ -7,12 +10,14 @@ import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.project.ProjectManagerListener;
+import com.intellij.openapi.wm.WindowManager;
 import com.intellij.util.messages.MessageBus;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
 import de.fraunhofer.iem.icognicrypt.core.Collections.ReadOnlyCollection;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.HashSet;
@@ -61,10 +66,8 @@ public final class CogniCryptProjectManager implements ProjectManagerListener
                 {
                     try
                     {
-                        if (Thread.currentThread().isInterrupted())
-                            break;
-                        if (project.isInitialized())
-                            break;
+                        if (Thread.currentThread().isInterrupted()) break;
+                        if (project.isInitialized()) break;
                         Thread.yield();
                         Thread.sleep(200);
                     }
@@ -96,8 +99,7 @@ public final class CogniCryptProjectManager implements ProjectManagerListener
         _subscribers.forEach(s ->
         {
             ICogniCryptProjectListener value = s.get();
-            if (value != null)
-                value.OnProjectClosed(project);
+            if (value != null) value.OnProjectClosed(project);
         });
     }
 
@@ -107,8 +109,7 @@ public final class CogniCryptProjectManager implements ProjectManagerListener
         _subscribers.forEach(s ->
         {
             ICogniCryptProjectListener value = s.get();
-            if (value != null)
-                value.OnProjectClosing(project);
+            if (value != null) value.OnProjectClosing(project);
         });
     }
 
@@ -125,6 +126,25 @@ public final class CogniCryptProjectManager implements ProjectManagerListener
     public void UnSubscribe(ICogniCryptProjectListener subscriber)
     {
         _subscribers.remove(subscriber);
+    }
+
+    public Project GetActiveProject()
+    {
+        for (Project project : _projects)
+        {
+            Window window = WindowManager.getInstance().suggestParentWindow(project);
+            if (window != null && window.isActive())
+            {
+                return project;
+            }
+        }
+        return null;
+    }
+
+    public static Project GetProjectFromComponent(Component component)
+    {
+        DataContext d = DataManager.getInstance().getDataContext(component);
+        return d.getData(PlatformDataKeys.PROJECT);
     }
 }
 

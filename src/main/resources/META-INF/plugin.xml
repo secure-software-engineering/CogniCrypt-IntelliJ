@@ -71,7 +71,12 @@
         <action id="ICognicrypt.Test.PushData"
                 class="de.fraunhofer.iem.icognicrypt.actions.Tests.PushToWindowAction"
                 text="Push Data to ToolWindow">
-            <add-to-group group-id="ICogniCryptMenu.Tests"/>
+            <add-to-group group-id="ICogniCryptMenu.Tests" anchor="last"/>
+        </action>
+        <action id="ICognicrypt.Test.OpenFileTest"
+                class="de.fraunhofer.iem.icognicrypt.actions.Tests.OpenFileTest"
+                text="Open File">
+            <add-to-group group-id="ICogniCryptMenu.Tests" anchor="last"/>
         </action>
     </actions>
 

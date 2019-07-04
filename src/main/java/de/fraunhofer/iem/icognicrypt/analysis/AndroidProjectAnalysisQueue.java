@@ -23,7 +23,8 @@ import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ErrorProvider;
-import de.fraunhofer.iem.icognicrypt.results.ui.CogniCryptResultWindow;
+import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
+import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
@@ -60,7 +61,7 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
             sourceCodeJavaFiles = Lists.newArrayList();
         }
 
-        _stopWatch = Stopwatch.createStarted();
+        _stopWatch = Stopwatch.createUnstarted();
     }
 
     @Override
@@ -70,9 +71,6 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
         // Remove errors before rerunning Cognicrypt
         ErrorProvider.clearError();
-
-        if (true)
-            throw new RuntimeException();
 
         int size = _analysisQueue.size();
 
@@ -125,6 +123,25 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
     {
         Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", String.format("Analyzed %s APKs in %s", _analysedFilesCount, _stopWatch), NotificationType.INFORMATION);
         Notifications.Bus.notify(notification);
+
+
+        // TODO: Remove quick and dirty code and create subscription to Error provider
+        try
+        {
+            ToolWindow t  = _toolWindowManager.GetToolWindow(_project);
+
+            //TODO: Change CogniCryptError model
+            ICogniCryptResultTableModel tableModel =  _toolWindowManager.GetWindowModel(t, CogniCryptToolWindowManager.ResultsView, ICogniCryptResultWindow.class).GetTableModel();
+
+            for (String className : ErrorProvider.getErrorClasses()){
+                tableModel.AddError(new CogniCryptError("123", className));
+            }
+
+        }
+        catch (CogniCryptException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     @Override

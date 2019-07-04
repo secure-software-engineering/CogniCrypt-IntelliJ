@@ -4,7 +4,6 @@ import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 
 import javax.swing.table.AbstractTableModel;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,39 +11,8 @@ import java.util.Vector;
 
 class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTableModel
 {
-    public enum ResultTableColumn
-    {
-        EmptyColumn(0),
-        Severity(1),
-        Id(2),
-        Description(3),
-        File(4),
-        Line(5);
-
-        private int value;
-        private static Map map = new HashMap<>();
-
-        ResultTableColumn(int value) {
-            this.value = value;
-        }
-
-        static {
-            for (ResultTableColumn pageType : ResultTableColumn.values()) {
-                map.put(pageType.value, pageType);
-            }
-        }
-
-        public static ResultTableColumn valueOf(int pageType) {
-            return (ResultTableColumn) map.get(pageType);
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
     private final Vector<ResultTableColumn> _columns = new Vector<>();
-    private final Vector<CogniCryptError> _errors = new Vector<>();
+    private final Vector<CogniCryptError> _results = new Vector<>();
 
     public ResultTableModel()
     {
@@ -55,7 +23,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
     @Override
     public int getRowCount()
     {
-        return _errors.size();
+        return _results.size();
     }
 
     @Override
@@ -70,7 +38,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
         if (columnIndex == 0)
             return null;
 
-        CogniCryptError error = _errors.elementAt(rowIndex);
+        CogniCryptError error = _results.elementAt(rowIndex);
 
         switch (columnIndex){
 
@@ -108,8 +76,48 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
         insertRow(getRowCount(), error);
     }
 
+    @Override
+    public CogniCryptError GetResultAt(int row)
+    {
+        if (row < 0 || row > _results.size())
+            return null;
+        return _results.elementAt(row);
+    }
+
     private void insertRow(int row, CogniCryptError rowData) {
-        _errors.insertElementAt(rowData, row);
+        _results.insertElementAt(rowData, row);
         fireTableRowsInserted(row, row);
     }
+
+    public enum ResultTableColumn
+    {
+        EmptyColumn(0),
+        Severity(1),
+        Id(2),
+        Description(3),
+        File(4),
+        Line(5);
+
+        private int value;
+        private static Map map = new HashMap<>();
+
+        ResultTableColumn(int value) {
+            this.value = value;
+        }
+
+        static {
+            for (ResultTableColumn pageType : ResultTableColumn.values()) {
+                map.put(pageType.value, pageType);
+            }
+        }
+
+        public static ResultTableColumn valueOf(int pageType) {
+            return (ResultTableColumn) map.get(pageType);
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
 }
+

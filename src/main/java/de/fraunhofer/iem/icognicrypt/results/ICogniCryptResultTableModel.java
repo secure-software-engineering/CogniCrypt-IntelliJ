@@ -7,4 +7,6 @@ public interface ICogniCryptResultTableModel extends TableModel
     void AddError(CogniCryptError cogniCryptError);
 
     CogniCryptError GetResultAt(int selectedRow);
+
+    void ClearErrors();
 }

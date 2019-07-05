@@ -4,6 +4,7 @@ import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,9 +85,22 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
         return _results.elementAt(row);
     }
 
+    @Override
+    public void ClearErrors()
+    {
+        for (int i = 0; i <= _results.size(); i++){
+            removeRow(i);
+        }
+    }
+
     private void insertRow(int row, CogniCryptError rowData) {
         _results.insertElementAt(rowData, row);
         fireTableRowsInserted(row, row);
+    }
+
+    private void removeRow(int row){
+        _results.removeElementAt(row);
+        fireTableRowsDeleted(row, row);
     }
 
     public enum ResultTableColumn

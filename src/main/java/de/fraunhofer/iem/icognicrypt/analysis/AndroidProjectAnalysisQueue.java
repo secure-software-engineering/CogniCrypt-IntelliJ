@@ -1,6 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.analysis;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 import com.intellij.notification.Notification;
@@ -8,55 +7,59 @@ import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import crypto.analysis.errors.AbstractError;
 import crypto.analysis.errors.IncompleteOperationError;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.core.Java.JavaFileToClassNameResolver;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ErrorProvider;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
-import org.apache.commons.io.FileUtils;
+import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import org.jetbrains.annotations.NotNull;
 import soot.G;
 import soot.SootClass;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
 public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
     private static final Logger logger = Logger.getInstance(AndroidProjectAnalysisQueue.class);
-    private final CogniCryptToolWindowManager _toolWindowManager;
+    private ICogniCryptResultTableModel _tableModel;
     private Stopwatch _stopWatch;
     private Queue<CogniCryptAndroidAnalysis> _analysisQueue;
 
     private int _analysedFilesCount;
 
-    private Project _project;
     private final List<String> sourceCodeJavaFiles;
 
     public AndroidProjectAnalysisQueue(Project p, Queue<CogniCryptAndroidAnalysis> analysisQueue){
         super(p, "Performing CogniCrypt Analysis");
-        _project = p;
         _analysisQueue = analysisQueue;
 
-        _toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
+        CogniCryptToolWindowManager toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
+
+        try
+        {
+            ToolWindow toolWindow  = toolWindowManager.GetToolWindow(getProject());
+            _tableModel =  toolWindowManager.GetWindowModel(toolWindow, CogniCryptToolWindowManager.ResultsView, ICogniCryptResultWindow.class).GetTableModel();
+        }
+        catch (CogniCryptException e)
+        {
+            e.printStackTrace();
+        }
+
         if(Constants.WARNINGS_IN_SOURCECODECLASSES_ONLY) {
-            sourceCodeJavaFiles = findFullyQualifiedJavaClassNames();
+            sourceCodeJavaFiles = JavaFileToClassNameResolver.findFullyQualifiedJavaClassNames(getProject());
         } else {
             sourceCodeJavaFiles = Lists.newArrayList();
         }
@@ -87,11 +90,15 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
                 for(AbstractError abstractError : results){
                     if (abstractError.getErrorLocation().getUnit().isPresent()) {
+
                         if(isIgnoredErrorType(abstractError))
                             continue;
                         SootClass affectedClass = abstractError.getErrorLocation().getMethod().getDeclaringClass();
 
-                        ErrorProvider.addError(affectedClass.getName(), abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1, new CogniCryptError(abstractError.toErrorMarkerString(), affectedClass.getName()));
+                        String name = affectedClass.getName();
+                        int line = abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1;
+
+                        ErrorProvider.addError(name, line, new CogniCryptError(abstractError.toErrorMarkerString(), name));
                     }
                 }
             } catch (Throwable e){
@@ -121,27 +128,19 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
     @Override
     public void onSuccess()
     {
-        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", String.format("Analyzed %s APKs in %s", _analysedFilesCount, _stopWatch), NotificationType.INFORMATION);
-        Notifications.Bus.notify(notification);
+        if (_tableModel == null)
+            return;
 
+        _tableModel.ClearErrors();
 
         // TODO: Remove quick and dirty code and create subscription to Error provider
-        try
+        //TODO: Change CogniCryptError model
+        for (String className : ErrorProvider.getErrorClasses())
         {
-            ToolWindow t  = _toolWindowManager.GetToolWindow(_project);
-
-            //TODO: Change CogniCryptError model
-            ICogniCryptResultTableModel tableModel =  _toolWindowManager.GetWindowModel(t, CogniCryptToolWindowManager.ResultsView, ICogniCryptResultWindow.class).GetTableModel();
-
-            for (String className : ErrorProvider.getErrorClasses()){
-                tableModel.AddError(new CogniCryptError("123", className));
-            }
-
+            _tableModel.AddError(new CogniCryptError("123", className));
         }
-        catch (CogniCryptException ex)
-        {
-            ex.printStackTrace();
-        }
+
+        NotificationProvider.ShowInfo(String.format("Analyzed %s APKs in %s", _analysedFilesCount, _stopWatch));
     }
 
     @Override
@@ -162,33 +161,11 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
     }
 
     private boolean isSourceCodeClass(SootClass affectedClass) {
-        return sourceCodeJavaFiles.contains(affectedClass.getName());
-    }
 
-    private List<String> findFullyQualifiedJavaClassNames() {
-        List<String> results = Lists.newArrayList();
-        List<VirtualFile> sourceRoots = getSourceRoots(this.getProject());
-        for(VirtualFile m : sourceRoots){
-            results.addAll(FileUtils.listFiles(new File(m.getPath()), new String[]{"java"}, true).stream().map(f -> convertToFullyQualifiedClassName(f, m.getPath())
-            ).distinct().collect(Collectors.toList()));
-        }
-        return results;
-    }
-    private String convertToFullyQualifiedClassName(File javaFile, String sourceCodeBasePath) {
-        String withoutFileending = javaFile.getAbsolutePath().replace(".java","");
-        String replaceWindowsStrings = withoutFileending.replace("\\","/");
-        String stripBasePath = replaceWindowsStrings.replace(sourceCodeBasePath,"");
-        String slashesToDots = stripBasePath.replace("/",".");
-        return slashesToDots.replaceFirst(".","");
-    }
-    private List<VirtualFile> getSourceRoots(Project project) {
-        List<VirtualFile> res = Lists.newArrayList();
-        for(Module m : ModuleManager.getInstance(project).getModules()){
-            ModuleRootManager mgr = ModuleRootManager.getInstance(m);
-            for(VirtualFile f : mgr.getSourceRoots(false)) {
-                res.add(f);
-            }
-        }
-        return res;
+        String className = affectedClass.getName();
+
+        // For nested private classes we need to find the root container, which is always the first entry of any possible '$' delimiter.
+        String containerClass = className.split("$")[0];
+        return sourceCodeJavaFiles.contains(containerClass);
     }
 }

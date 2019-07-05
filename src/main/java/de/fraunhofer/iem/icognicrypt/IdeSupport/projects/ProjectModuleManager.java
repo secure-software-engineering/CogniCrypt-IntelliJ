@@ -13,7 +13,6 @@ public class ProjectModuleManager
     private GradleSettings _settings;
 
     public ProjectModuleManager(GradleSettings settings){
-
         _settings = settings;
         RegisterEvents(_settings);
     }

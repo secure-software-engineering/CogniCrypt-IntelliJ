@@ -8,6 +8,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputManager;
 
 import java.nio.file.*;
 
+// TODO: There already is a Module implementation "ModuleImpl". Try to it with this.
 public class JavaModule implements IHasOutputManager
 {
     // TODO: Apparently libraries are build in a folder called aar. We need to decide if we want to check for the too, or just support apk files.

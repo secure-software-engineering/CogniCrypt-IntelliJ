@@ -12,6 +12,13 @@ import java.util.Vector;
 
 class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTableModel
 {
+    private static final int EmptyColumnIndex = 0;
+    private static final int SeverityColumnIndex = 1;
+    private static final int IdColumnIndex  = 0; //2;
+    private static final int DescriptionColumnIndex = 1; //3;
+    private static final int FileColumnIndex = 2; //4;
+    private static final int LineColumnIndex = 3; // 5;
+
     private final Vector<ResultTableColumn> _columns = new Vector<>();
     private final Vector<CogniCryptError> _results = new Vector<>();
 
@@ -43,13 +50,13 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
 
         switch (columnIndex){
 
-            case 2:
+            case IdColumnIndex:
                 return "ID";
-            case 3:
+            case DescriptionColumnIndex:
                 return error.getErrorMessage();
-            case 4:
+            case FileColumnIndex:
                 return error.getClassName();
-            case 5:
+            case LineColumnIndex:
                 return error.getLine();
             default:
                 return null;
@@ -63,9 +70,9 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
 
         switch (data)
         {
-            case EmptyColumn:
-            case Severity:
-                return "";
+//            case EmptyColumn:
+//            case Severity:
+//                return "";
             default:
                 return (data == null) ? super.getColumnName(column)
                                       : data.toString();
@@ -111,12 +118,12 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
 
     public enum ResultTableColumn
     {
-        EmptyColumn(0),
-        Severity(1),
-        Id(2),
-        Description(3),
-        File(4),
-        Line(5);
+//        EmptyColumn(EmptyColumnIndex),
+//        Severity(SeverityColumnIndex),
+        Id(IdColumnIndex),
+        Description(DescriptionColumnIndex),
+        File(FileColumnIndex),
+        Line(LineColumnIndex);
 
         private int value;
         private static Map map = new HashMap<>();

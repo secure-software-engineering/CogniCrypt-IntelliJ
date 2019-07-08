@@ -39,45 +39,27 @@
 
     <actions>
 
-        <!-- Dedicated menu item for the IDE's main menu -->
-        <group id="ICogniCryptMenu" text="CogniCr_ypt" popup="true">
-            <add-to-group group-id="MainMenu" anchor="after" relative-to-action="ToolsMenu"/>
-        </group>
+        <!-- Add your actions here -->
+        <action id="ICognicrypt.ExecuteAnalysis"
+                class="de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction"
+                icon="PluginIcons.COGNICRYPT"
+                text="Run CogniCr_ypt" description="Check for misuses of cryptographic APIs">
+            <add-to-group group-id="AnalyzeMenu" anchor="last"/>
+        </action>
 
-        <group id="ICogniCryptMenu.BasicActions">
-            <add-to-group group-id="ICogniCryptMenu" anchor="first"/>
-            <separator/>
+
+        <!-- Dedicated menu item for the IDE's main menu -->
+        <!--<group id="ICogniCryptMenu" text="CogniCr_ypt" popup="true">
+            <add-to-group group-id="MainMenu" anchor="after" relative-to-action="ToolsMenu"/>
         </group>
 
         <group id="ICogniCryptMenu.Tests">
             <add-to-group group-id="ICogniCryptMenu" anchor="last"/>
             <separator/>
         </group>
-
-        <!-- Add your actions here -->
-        <action id="ICognicrypt.ExecuteAnalysis"
-                class="de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction"
-                icon="PluginIcons.COGNICRYPT"
-                text="Run CogniCr_ypt" description="Check for misuses of cryptographic APIs">
-            <add-to-group group-id="ICogniCryptMenu.BasicActions" anchor="first"/>
-        </action>
+        -->
 
         <!-- Test Actions -->
-        <action id="ICognicrypt.Test.ExecuteAction"
-                class="de.fraunhofer.iem.icognicrypt.actions.Tests.ExecuteOtherAction"
-                text="Runs Anlysis (from other Action)" description="Check for misuses of cryptographic APIs">
-            <add-to-group group-id="ICogniCryptMenu.Tests" anchor="first"/>
-        </action>
-        <action id="ICognicrypt.Test.PushData"
-                class="de.fraunhofer.iem.icognicrypt.actions.Tests.PushToWindowAction"
-                text="Push Data to ToolWindow">
-            <add-to-group group-id="ICogniCryptMenu.Tests" anchor="last"/>
-        </action>
-        <action id="ICognicrypt.Test.OpenFileTest"
-                class="de.fraunhofer.iem.icognicrypt.actions.Tests.OpenFileTest"
-                text="Open File">
-            <add-to-group group-id="ICogniCryptMenu.Tests" anchor="last"/>
-        </action>
     </actions>
 
     <application-components>

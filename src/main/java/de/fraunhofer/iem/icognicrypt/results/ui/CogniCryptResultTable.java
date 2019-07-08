@@ -38,13 +38,18 @@ class CogniCryptResultTable extends JBTable
             column.setHeaderRenderer(new HorizontalAlignmentCellRenderer(SwingConstants.LEFT, new EmptyBorder(0,6,0,0)));
         }
 
-        TableColumn emptyColumn = getColumn(ResultTableModel.ResultTableColumn.EmptyColumn);
-        emptyColumn.setMaxWidth(20);
-        emptyColumn.setResizable(false);
 
-        TableColumn severityColumn = getColumn(ResultTableModel.ResultTableColumn.Severity);
+        //TODO: Remove after empty and severity are back again
+        TableColumn severityColumn = getColumn(ResultTableModel.ResultTableColumn.Id);
         severityColumn.setMaxWidth(20);
-        severityColumn.setResizable(false);
+
+//      TableColumn emptyColumn = getColumn(ResultTableModel.ResultTableColumn.EmptyColumn);
+//      emptyColumn.setMaxWidth(20);
+//      emptyColumn.setResizable(false);
+
+//      TableColumn severityColumn = getColumn(ResultTableModel.ResultTableColumn.Severity);
+//      severityColumn.setMaxWidth(20);
+//      severityColumn.setResizable(false);
     }
 
     public ICogniCryptResultTableModel GetErrorTableModel()

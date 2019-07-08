@@ -27,14 +27,20 @@
              See icognicrypt.CogniCryptToolWindowManager::OnProjectOpened how it's done here.
              If we ever need a tool window that does not require such a strict synchronisation we can declare them in this file again. -->
 
+        <toolWindow factoryClass="de.fraunhofer.iem.icognicrypt.TestFactory" id="TestWindow" anchor="right" canCloseContents="false"/>
+
     </extensions>
 
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.CogniCryptPlugin"/>
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager"/>
-        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager"/>
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager"/>
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager"/>
+
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.TestServiceA"/>
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.TestServiceB"/>
+
     </extensions>
 
     <actions>

@@ -26,6 +26,7 @@ public final class CogniCryptToolWindowManager extends CogniCryptProjectListener
     @Override
     public void OnProjectOpened(Project project)
     {
+        System.out.println("Tool");
         ToolWindow window  = ToolWindowManager.getInstance(project).registerToolWindow(CogniCryptWindowId, false, ToolWindowAnchor.BOTTOM, true);
         IReadOnlyCollection<ICogniCryptWindowBase> models =  CogniCryptToolWindowFactory.CreateToolWindow(project, window);
 

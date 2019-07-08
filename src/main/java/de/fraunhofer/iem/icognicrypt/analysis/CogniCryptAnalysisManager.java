@@ -21,9 +21,11 @@ public final class CogniCryptAnalysisManager extends CogniCryptProjectListener
     }
 
     @Override
-    public void OnProjectInitialized(Project project)
+    public void OnProjectOpened(Project project)
     {
-        super.OnProjectInitialized(project);
+        System.out.println("Analysis");
+
+        super.OnProjectOpened(project);
 
         Lazy<IResultProvider> lazy = new Lazy<IResultProvider>()
         {

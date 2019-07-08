@@ -41,12 +41,15 @@ public class CogniCryptPlugin
         if (_initialized)
             throw new CogniCryptException("CogniCrypt already initialized");
 
-        CogniCryptProjectManager projectManager = ServiceManager.getService(CogniCryptProjectManager.class);
-        CogniCryptProjectListener toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
-        CogniCryptProjectListener analysisManager = ServiceManager.getService(CogniCryptAnalysisManager.class);
+        //Priority: Plugin-Components -> Analysis-Components -> UI-Components
 
-        projectManager.Subscribe(toolWindowManager);
+        CogniCryptProjectManager projectManager = ServiceManager.getService(CogniCryptProjectManager.class);
+
+        CogniCryptProjectListener analysisManager = ServiceManager.getService(CogniCryptAnalysisManager.class);
         projectManager.Subscribe(analysisManager);
+
+        CogniCryptProjectListener toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
+        projectManager.Subscribe(toolWindowManager);
 
         _initialized = true;
     }

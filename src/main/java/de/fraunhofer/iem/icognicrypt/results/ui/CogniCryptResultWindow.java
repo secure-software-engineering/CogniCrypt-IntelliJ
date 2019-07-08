@@ -55,8 +55,6 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
         _resultTable = new CogniCryptResultTable();
         _tableModel = _resultTable.GetErrorTableModel();
         _resultTable.addMouseListener(new ResultsMouseHandler());
-
-        CogniCryptAnalysisManager manager = ServiceManager.getService(CogniCryptAnalysisManager.class);
     }
 }
 

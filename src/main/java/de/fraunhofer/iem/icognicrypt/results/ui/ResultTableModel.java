@@ -2,6 +2,7 @@ package de.fraunhofer.iem.icognicrypt.results.ui;
 
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
+import de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTableModel
+class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTableModel, IResultsProviderListener
 {
     private final Vector<ResultTableColumn> _columns = new Vector<>();
     private final Vector<CogniCryptError> _results = new Vector<>();
@@ -107,6 +108,24 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
         catch (IndexOutOfBoundsException e){
 
         }
+    }
+
+    @Override
+    public void OnResultAdded()
+    {
+
+    }
+
+    @Override
+    public void OnResultRemoved()
+    {
+
+    }
+
+    @Override
+    public void OnResultsCleared()
+    {
+
     }
 
     public enum ResultTableColumn

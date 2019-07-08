@@ -10,7 +10,7 @@ public interface IResultProvider
 
     void RemoveAllResults();
 
-    void Subscribe(IErrorProviderListener listener);
+    void Subscribe(IResultsProviderListener listener);
 
-    void Unsubscribe(IErrorProviderListener listener);
+    void Unsubscribe(IResultsProviderListener listener);
 }

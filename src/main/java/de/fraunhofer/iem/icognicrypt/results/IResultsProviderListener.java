@@ -1,6 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
-public interface IErrorProviderListener
+public interface IResultsProviderListener
 {
     void OnResultAdded();
 

@@ -1,10 +1,17 @@
 package de.fraunhofer.iem.icognicrypt.results.ui;
 
+import com.android.tools.idea.profiling.view.AnalysisResultsManager;
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
+import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
+import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
 
 import javax.swing.*;
+import java.awt.*;
 import java.lang.ref.WeakReference;
 
 class CogniCryptResultWindow implements ICogniCryptResultWindow
@@ -48,6 +55,8 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
         _resultTable = new CogniCryptResultTable();
         _tableModel = _resultTable.GetErrorTableModel();
         _resultTable.addMouseListener(new ResultsMouseHandler());
+
+        CogniCryptAnalysisManager manager = ServiceManager.getService(CogniCryptAnalysisManager.class);
     }
 }
 

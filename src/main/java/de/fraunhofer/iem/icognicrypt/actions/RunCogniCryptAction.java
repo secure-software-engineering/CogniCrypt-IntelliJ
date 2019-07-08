@@ -29,6 +29,7 @@ import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysis;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
+import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -48,9 +49,6 @@ public class RunCogniCryptAction extends CogniCryptAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-
-        System.out.println("Action Thread: " + Thread.currentThread().getId());
-
         Project p = e.getDataContext().getData(PlatformDataKeys.PROJECT);
         RunAnalysis(IdeType.AndroidStudio,p);
     }
@@ -58,8 +56,7 @@ public class RunCogniCryptAction extends CogniCryptAction {
     public static void RunAnalysis(IdeType ide, Project project) {
         if(!CogniCryptSettings.isValidCrySLRuleDirectory(getRulesDirectory()))
         {
-            Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "No valid CrySL rules found. Please go to \"File > Settings > Other Settings > CogniCrypt\" and select a valid directory.", NotificationType.INFORMATION);
-            Notifications.Bus.notify(notification);
+            NotificationProvider.Warn("No valid CrySL rules found. Please go to \"File > Settings > Other Settings > CogniCrypt\" and select a valid directory.");
             return;
         }
         List<String> classpath = new ArrayList<>();
@@ -86,25 +83,18 @@ public class RunCogniCryptAction extends CogniCryptAction {
                     LinkedList<CogniCryptAndroidAnalysis> queue = Lists.newLinkedList();
                     if (!projectDir.exists()) break;
 
-                    //for (File file : FileUtils.listFiles(apkDir, new String[]{"apk"}, true))
                     for (File file : files)
                     {
                         String apkPath = file.getAbsolutePath();
                         logger.info("APK found in " + apkPath);
-                        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "Queing APK " + file.getName() + " for analysis", NotificationType.INFORMATION);
-                        Notifications.Bus.notify(notification);
-                        Balloon balloon = notification.getBalloon();
-                        if (balloon != null) balloon.hide();
 
                         CogniCryptAndroidAnalysis  analysis = new CogniCryptAndroidAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), Lists.newArrayList());
                         queue.add(analysis);
                     }
                     if (queue.isEmpty())
-                        Notifications.Bus.notify(new Notification("CogniCrypt", "Warning", "No APK file detected. Run Build > Make Project assemble an APK and trigger the analysis again.", NotificationType.WARNING));
+                        NotificationProvider.ShowInfo("No APK file detected. Run Build > Make Project assemble an APK and trigger the analysis again.");
                     else
-                    {
                         ProgressManager.getInstance().run(new CogniCryptAndroidStudioAnalysisTask(project, queue));
-                    }
 
                 }
                 // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)

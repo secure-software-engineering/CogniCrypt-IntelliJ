@@ -32,9 +32,9 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
+public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
-    private static final Logger logger = Logger.getInstance(AndroidProjectAnalysisQueue.class);
+    private static final Logger logger = Logger.getInstance(CogniCryptAndroidStudioAnalysisTask.class);
     private ICogniCryptResultTableModel _tableModel;
     private Stopwatch _stopWatch;
     private Queue<CogniCryptAndroidAnalysis> _analysisQueue;
@@ -43,7 +43,7 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
     private final List<String> sourceCodeJavaFiles;
 
-    public AndroidProjectAnalysisQueue(Project p, Queue<CogniCryptAndroidAnalysis> analysisQueue){
+    public CogniCryptAndroidStudioAnalysisTask(Project p, Queue<CogniCryptAndroidAnalysis> analysisQueue){
         super(p, "Performing CogniCrypt Analysis");
         _analysisQueue = analysisQueue;
 

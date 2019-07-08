@@ -24,22 +24,19 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.AndroidStudioOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
-import de.fraunhofer.iem.icognicrypt.analysis.AndroidProjectAnalysisQueue;
+import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysis;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
-import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RunCogniCryptAction extends CogniCryptAction {
 
@@ -106,7 +103,7 @@ public class RunCogniCryptAction extends CogniCryptAction {
                         Notifications.Bus.notify(new Notification("CogniCrypt", "Warning", "No APK file detected. Run Build > Make Project assemble an APK and trigger the analysis again.", NotificationType.WARNING));
                     else
                     {
-                        ProgressManager.getInstance().run(new AndroidProjectAnalysisQueue(project, queue));
+                        ProgressManager.getInstance().run(new CogniCryptAndroidStudioAnalysisTask(project, queue));
                     }
 
                 }

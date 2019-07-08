@@ -26,7 +26,9 @@ public class JavaFileToClassNameResolver
      */
     public static String FindFileFromFullyQualifiedName(String fullyQualifiedName, Project project)
     {
-        String relativePath = fullyQualifiedName.replace(".","\\") + ".java";
+
+        String relativeContainerPath = fullyQualifiedName.split("\\$")[0];
+        String relativePath = relativeContainerPath.replace(".","\\") + ".java";
 
         List<VirtualFile> sourceRoots = getSourceRoots(project);
 

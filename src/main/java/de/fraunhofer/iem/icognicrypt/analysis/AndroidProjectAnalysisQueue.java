@@ -30,6 +30,7 @@ import soot.SootClass;
 import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
@@ -98,7 +99,7 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
                         String name = affectedClass.getName();
                         int line = abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1;
 
-                        ErrorProvider.addError(name, line, new CogniCryptError(abstractError.toErrorMarkerString(), name));
+                        ErrorProvider.addError(name, line, new CogniCryptError(abstractError.toErrorMarkerString(), name, line));
                     }
                 }
             } catch (Throwable e){
@@ -135,9 +136,14 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
 
         // TODO: Remove quick and dirty code and create subscription to Error provider
         //TODO: Change CogniCryptError model
-        for (String className : ErrorProvider.getErrorClasses())
+
+
+        for (Set<CogniCryptError> errorSet : ErrorProvider.GetErrors().values())
         {
-            _tableModel.AddError(new CogniCryptError("123", className));
+            for (CogniCryptError error : errorSet)
+            {
+                _tableModel.AddError(error);
+            }
         }
 
         NotificationProvider.ShowInfo(String.format("Analyzed %s APKs in %s", _analysedFilesCount, _stopWatch));
@@ -165,7 +171,7 @@ public class AndroidProjectAnalysisQueue extends Task.Backgroundable{
         String className = affectedClass.getName();
 
         // For nested private classes we need to find the root container, which is always the first entry of any possible '$' delimiter.
-        String containerClass = className.split("$")[0];
+        String containerClass = className.split("\\$")[0];
         return sourceCodeJavaFiles.contains(containerClass);
     }
 }

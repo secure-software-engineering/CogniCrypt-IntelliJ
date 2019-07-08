@@ -3,6 +3,7 @@ package de.fraunhofer.iem.icognicrypt.results;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
+import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
 
 import java.io.File;
 import java.util.Collection;
@@ -55,5 +56,9 @@ public class ErrorProvider {
 
     public static Collection<String> getErrorClasses() {
         return errors.rowKeySet();
+    }
+
+    public static Table<String, Integer, Set<CogniCryptError>> GetErrors(){
+        return HashBasedTable.create(errors);
     }
 }

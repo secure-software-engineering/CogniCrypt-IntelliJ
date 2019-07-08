@@ -50,7 +50,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
             case 4:
                 return error.getClassName();
             case 5:
-                return "Line";
+                return error.getLine();
             default:
                 return null;
         }
@@ -80,7 +80,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
     @Override
     public CogniCryptError GetResultAt(int row)
     {
-        if (row < 0 || row > _results.size())
+        if (_results.size() < 0 && (row < 0 || row > _results.size()))
             return null;
         return _results.elementAt(row);
     }
@@ -88,8 +88,8 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
     @Override
     public void ClearErrors()
     {
-        for (int i = 0; i <= _results.size(); i++){
-            removeRow(i);
+        for (int i = getRowCount() - 1; i >= 0; i--) {
+            RemoveRow(i);
         }
     }
 
@@ -98,9 +98,15 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
         fireTableRowsInserted(row, row);
     }
 
-    private void removeRow(int row){
-        _results.removeElementAt(row);
-        fireTableRowsDeleted(row, row);
+    private void RemoveRow(int row){
+        try
+        {
+            _results.removeElementAt(row);
+            fireTableRowsDeleted(row, row);
+        }
+        catch (IndexOutOfBoundsException e){
+
+        }
     }
 
     public enum ResultTableColumn

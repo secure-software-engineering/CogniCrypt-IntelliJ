@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
 import com.intellij.util.containers.WeakList;
 
+import java.util.Map;
 import java.util.Set;
 
 public class ResultsProviderService implements IResultProvider
@@ -67,7 +68,22 @@ public class ResultsProviderService implements IResultProvider
         return errors.get(fullyQualifiedClassName, lineNumber) != null ? errors.get(fullyQualifiedClassName, lineNumber) : Sets.newHashSet();
     }
 
-    public Table<String, Integer, Set<CogniCryptError>> GetErrors(){
+    public Table<String, Integer, Set<CogniCryptError>> GetErrors()
+    {
         return HashBasedTable.create(errors);
+    }
+
+    public Set<CogniCryptError> FindErrors(String javaAbsolutFilePath, int lineNumber) {
+        Set<CogniCryptError> res = Sets.newHashSet();
+        for(String fullyQualifiedClassName : errors.rowKeySet()){
+            String path = javaAbsolutFilePath.replace(".java","").replace("/",".");
+            if(path.endsWith(fullyQualifiedClassName)){
+                Map<Integer, Set<CogniCryptError>> resultsInFile = errors.row(fullyQualifiedClassName);
+                if(resultsInFile.get(lineNumber) != null) {
+                    res.addAll(resultsInFile.get(lineNumber));
+                }
+            }
+        }
+        return res;
     }
 }

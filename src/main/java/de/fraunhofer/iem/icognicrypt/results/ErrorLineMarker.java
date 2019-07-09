@@ -3,6 +3,7 @@ package de.fraunhofer.iem.icognicrypt.results;
 import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProvider;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.openapi.project.Project;
@@ -23,9 +24,12 @@ public class ErrorLineMarker implements LineMarkerProvider {
 
         if (psiElement instanceof PsiStatement) {
 
+
+            IResultProvider resultProvider = ServiceManager.getService(psiElement.getProject(), IResultProvider.class);
+
             int lineNumber = getLineNumber(psiElement);
             //Check if an error exists for the line number that the element is located
-            Set<CogniCryptError> errors = ErrorProvider.findErrors(psiElement.getContainingFile().getVirtualFile().getPath(), lineNumber);
+            Set<CogniCryptError> errors = resultProvider.FindErrors(psiElement.getContainingFile().getVirtualFile().getPath(), lineNumber);
             if(!errors.isEmpty()){
                 return new LineMarkerInfo<>(psiElement,
                         psiElement.getTextRange(),

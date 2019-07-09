@@ -3,9 +3,6 @@ package de.fraunhofer.iem.icognicrypt.actions;
 import com.android.tools.idea.sdk.AndroidSdks;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.compiler.ex.CompilerPathsEx;
 import com.intellij.openapi.diagnostic.Logger;
@@ -15,7 +12,6 @@ import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
-import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.vfs.VirtualFile;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
@@ -25,7 +21,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.AndroidStudioOu
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
-import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysis;
+import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
@@ -119,7 +115,7 @@ public class RunCogniCryptAction extends CogniCryptAction {
                     }
                     String modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
                     logger.info("Module Output Path "+ modulePath);
-                    Task analysis = new JavaProjectAnalysis(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
+                    Task analysis = new JavaProjectAnalysisTask(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
                     ProgressManager.getInstance().run(analysis);
                 }
                 break;

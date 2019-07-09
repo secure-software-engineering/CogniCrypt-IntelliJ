@@ -29,72 +29,66 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CompilationListener implements ProjectComponent {
 
-    private MessageBusConnection connection;
-    private final Project project;
-    private static final Logger logger = Logger.getInstance(CompilationListener.class);
+// TODO: Revise class
+class CompilationListener {
+
+    private final Project _project;
 
     public CompilationListener(Project project) {
-        this.project = project;
+        _project = project;
     }
 
-    @Override
-    public void initComponent() {
-
-        logger.info("Initializing ICogniCrypt");
-
-        if(!Constants.AUTOMATIC_SCAN_ON_COMPILE){
-            return;
-        }
-
-        /*
-            Listens for Build notifications in Android Studio.
-        */
-        AndroidProjectBuildNotifications.subscribe(project, context -> {
-
-
-            if (context instanceof GradleBuildContext) {
-
-                GradleBuildContext gradleBuildContext = (GradleBuildContext) context;
-                GradleInvocationResult build = gradleBuildContext.getBuildResult();
-
-                if (build.isBuildSuccessful()) {
-
-                    for (String buildTask : build.getTasks()) {
-
-                        if (buildTask.equals("clean"))
-                            continue;
-
-                        //startAnalyser(IdeType.AndroidStudio, project);
-                    }
-                }
-            }
-        });
-
-
-        /*
-            Listens for Build notifications in IntelliJ.
-        */
-        connection = project.getMessageBus().connect();
-        connection.subscribe(CompilerTopics.COMPILATION_STATUS, new CompilationStatusListener() {
-
-            @Override
-            public void compilationFinished(boolean aborted, int errors, int warnings, CompileContext compileContext) {
-//                if (!aborted)
-//                    startAnalyser(IdeType.IntelliJ, compileContext.getProject());
-            }
-
-            @Override
-            public void automakeCompilationFinished(int errors, int warnings, CompileContext compileContext) {
-                //startAnalyser(IdeType.IntelliJ, compileContext.getProject());
-            }
-        });
-    }
-
-    public void disposeComponent() {
-        if(connection != null) {
-            connection.disconnect();
-        }
-    }
+//    @Override
+//    public void initComponent() {
+//
+//        logger.info("Initializing ICogniCrypt");
+//
+//        if(!Constants.AUTOMATIC_SCAN_ON_COMPILE){
+//            return;
+//        }
+//
+//        /*
+//            Listens for Build notifications in Android Studio.
+//        */
+//        AndroidProjectBuildNotifications.subscribe(project, context -> {
+//
+//
+//            if (context instanceof GradleBuildContext) {
+//
+//                GradleBuildContext gradleBuildContext = (GradleBuildContext) context;
+//                GradleInvocationResult build = gradleBuildContext.getBuildResult();
+//
+//                if (build.isBuildSuccessful()) {
+//
+//                    for (String buildTask : build.getTasks()) {
+//
+//                        if (buildTask.equals("clean"))
+//                            continue;
+//
+//                        //startAnalyser(IdeType.AndroidStudio, project);
+//                    }
+//                }
+//            }
+//        });
+//
+//
+//        /*
+//            Listens for Build notifications in IntelliJ.
+//        */
+//        connection = project.getMessageBus().connect();
+//        connection.subscribe(CompilerTopics.COMPILATION_STATUS, new CompilationStatusListener() {
+//
+//            @Override
+//            public void compilationFinished(boolean aborted, int errors, int warnings, CompileContext compileContext) {
+////                if (!aborted)
+////                    startAnalyser(IdeType.IntelliJ, compileContext.getProject());
+//            }
+//
+//            @Override
+//            public void automakeCompilationFinished(int errors, int warnings, CompileContext compileContext) {
+//                //startAnalyser(IdeType.IntelliJ, compileContext.getProject());
+//            }
+//        });
+//    }
 }

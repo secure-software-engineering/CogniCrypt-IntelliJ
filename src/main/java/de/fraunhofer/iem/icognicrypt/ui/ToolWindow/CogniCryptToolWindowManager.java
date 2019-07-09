@@ -1,6 +1,5 @@
-package de.fraunhofer.iem.icognicrypt.ui;
+package de.fraunhofer.iem.icognicrypt.ui.ToolWindow;
 
-import com.google.common.collect.MapMaker;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.wm.ToolWindow;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
@@ -8,11 +7,12 @@ import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
-public class CogniCryptToolWindowManagerEx implements ProjectComponent, ICogniCryptToolWindowManager
+public class CogniCryptToolWindowManager implements ProjectComponent, ICogniCryptToolWindowManager
 {
     private WeakReference<ToolWindow> _toolWindow;
+
+    public static final String CogniCryptWindowId = "ICogniCrypt.ToolWindow";
 
     // We cannot use weak references here because the model is nowhere is stored and therefore would get GCed.
     private final HashMap<Integer,ICogniCryptWindowBase> _models = new HashMap<>();

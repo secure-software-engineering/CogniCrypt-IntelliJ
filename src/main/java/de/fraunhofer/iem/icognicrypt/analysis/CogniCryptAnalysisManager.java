@@ -1,55 +1,12 @@
 package de.fraunhofer.iem.icognicrypt.analysis;
 
-import com.intellij.openapi.project.Project;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListener;
-import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
-import de.fraunhofer.iem.icognicrypt.results.ResultsProviderService;
-import kotlin.Lazy;
+import com.intellij.openapi.components.ProjectComponent;
 
-import java.util.WeakHashMap;
-
-//TODO: I'm not sure yet if this class will ever do something. Remove if it reveals no purpose
-public final class CogniCryptAnalysisManager extends CogniCryptProjectListener
+// TODO: I'm not sure yet if this class will ever do something. Remove if it reveals no purpose
+// Maybe here we can track previous analysis results and other relevant information.
+// Based on the Settings we can enable/disable compilation listening and other stuff.
+final class CogniCryptAnalysisManager implements ProjectComponent, ICogniCryptAnalysisManager
 {
-    private WeakHashMap<Project, Lazy<IResultProvider>> _projectResultsProviderMapping = new WeakHashMap<>();
 
-    public IResultProvider GetResultProvider(Project project){
-        if (_projectResultsProviderMapping.containsKey(project))
-            return _projectResultsProviderMapping.get(project).getValue();
-        return null;
-    }
-
-    @Override
-    public void OnProjectOpened(Project project)
-    {
-        super.OnProjectOpened(project);
-
-        Lazy<IResultProvider> lazy = new Lazy<IResultProvider>()
-        {
-            IResultProvider _value = null;
-
-            @Override
-            public IResultProvider getValue()
-            {
-                if (_value == null)
-                    _value = new ResultsProviderService();
-                return _value;
-            }
-
-            @Override
-            public boolean isInitialized()
-            {
-                return _value != null;
-            }
-        };
-
-        _projectResultsProviderMapping.put(project, lazy);
-    }
-
-    @Override
-    public void OnProjectClosed(Project project)
-    {
-        super.OnProjectClosed(project);
-        _projectResultsProviderMapping.remove(project);
-    }
 }
+

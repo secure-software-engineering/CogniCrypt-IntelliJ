@@ -1,17 +1,10 @@
 package de.fraunhofer.iem.icognicrypt.results.ui;
 
-import com.intellij.openapi.components.ServiceManager;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
-import de.fraunhofer.iem.icognicrypt.TestServiceB;
-import de.fraunhofer.iem.icognicrypt.TestServiceC;
-import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
-import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
 import de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

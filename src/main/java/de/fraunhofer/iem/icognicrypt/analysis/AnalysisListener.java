@@ -1,4 +1,4 @@
-package de.fraunhofer.iem.icognicrypt.results;
+package de.fraunhofer.iem.icognicrypt.analysis;
 
 import boomerang.BackwardQuery;
 import boomerang.Query;
@@ -27,7 +27,7 @@ import typestate.TransitionFunction;
 import java.util.Collection;
 import java.util.Set;
 
-public class AnalysisListener extends CrySLAnalysisListener {
+class AnalysisListener extends CrySLAnalysisListener {
 
     private static final Logger logger = LoggerFactory.getLogger(AnalysisListener.class);
     @Override

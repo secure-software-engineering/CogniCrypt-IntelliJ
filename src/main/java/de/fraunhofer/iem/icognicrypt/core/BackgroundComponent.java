@@ -1,9 +1,11 @@
 package de.fraunhofer.iem.icognicrypt.core;
 
 import com.intellij.openapi.components.BaseComponent;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
+import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BackgroundComponent implements BaseComponent
 {
+    protected final Logger Logger = com.intellij.openapi.diagnostic.Logger.getInstance(this.getClass());
     protected String Title = "";
     protected boolean CanCancelInit = true;
 
@@ -28,7 +31,7 @@ public class BackgroundComponent implements BaseComponent
         ProgressManager.getInstance().run(new PackageTask(this));
     }
 
-    protected void InitializeInBackground(ProgressIndicator indicator)
+    protected void InitializeInBackground(ProgressIndicator indicator) throws CogniCryptException
     {
     }
 
@@ -38,7 +41,6 @@ public class BackgroundComponent implements BaseComponent
 
     private class PackageTask extends Task.Backgroundable
     {
-
         private BackgroundComponent _owner;
 
         public PackageTask(BackgroundComponent owner)
@@ -50,7 +52,21 @@ public class BackgroundComponent implements BaseComponent
         @Override
         public void run(@NotNull ProgressIndicator indicator)
         {
-            _owner.InitializeInBackground(indicator);
+            try
+            {
+                _owner.InitializeInBackground(indicator);
+            }
+            catch (CogniCryptException e)
+            {
+
+            }
+        }
+
+        @Override
+        public void onThrowable(@NotNull Throwable error)
+        {
+            Logger.error(error);
+            super.onThrowable(error);
         }
 
         @Override

@@ -1,21 +1,10 @@
 package de.fraunhofer.iem.icognicrypt;
 
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.util.messages.MessageBusConnection;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListener;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
-import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager;
+import com.intellij.openapi.progress.ProgressIndicator;
+import de.fraunhofer.iem.icognicrypt.core.BackgroundComponent;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
 
-/**
- * This class gets initialized as soon as one project is loaded to the IDE.
- * It shall initialize global project-independent services.
- *
- * The attempt to create a second instance will cause an {@link CogniCryptException} to be thrown.
- *
- */
-public class CogniCryptPlugin
+public class CogniCryptPlugin extends BackgroundComponent
 {
     private static CogniCryptPlugin _instance;
 
@@ -33,24 +22,15 @@ public class CogniCryptPlugin
         if (_instance != null)
             throw new CogniCryptException("CogniCrypt already instanciated");
         _instance = this;
-        Initialize();
     }
 
-    public void Initialize() throws CogniCryptException
+    @Override
+    protected void InitializeInBackground(ProgressIndicator indicator) throws CogniCryptException
     {
         if (_initialized)
             throw new CogniCryptException("CogniCrypt already initialized");
-
-        //Priority: Plugin-Components -> Analysis-Components -> UI-Components
-
-        CogniCryptProjectManager projectManager = ServiceManager.getService(CogniCryptProjectManager.class);
-
-        CogniCryptProjectListener analysisManager = ServiceManager.getService(CogniCryptAnalysisManager.class);
-        projectManager.Subscribe(analysisManager);
-
-        CogniCryptProjectListener toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
-        projectManager.Subscribe(toolWindowManager);
-
         _initialized = true;
+
+        // TODO: If we have global initializations to make, do them here
     }
 }

@@ -1,10 +1,9 @@
 package de.fraunhofer.iem.icognicrypt.analysis;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.tree.IReparseableElementType;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListener;
 import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
-import de.fraunhofer.iem.icognicrypt.results.ResultsProvider;
+import de.fraunhofer.iem.icognicrypt.results.ResultsProviderService;
 import kotlin.Lazy;
 
 import java.util.WeakHashMap;
@@ -23,8 +22,6 @@ public final class CogniCryptAnalysisManager extends CogniCryptProjectListener
     @Override
     public void OnProjectOpened(Project project)
     {
-        System.out.println("Analysis");
-
         super.OnProjectOpened(project);
 
         Lazy<IResultProvider> lazy = new Lazy<IResultProvider>()
@@ -35,7 +32,7 @@ public final class CogniCryptAnalysisManager extends CogniCryptProjectListener
             public IResultProvider getValue()
             {
                 if (_value == null)
-                    _value = new ResultsProvider();
+                    _value = new ResultsProviderService();
                 return _value;
             }
 

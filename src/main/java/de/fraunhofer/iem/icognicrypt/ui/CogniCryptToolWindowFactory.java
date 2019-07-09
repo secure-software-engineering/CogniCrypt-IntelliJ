@@ -31,7 +31,7 @@ public final class CogniCryptToolWindowFactory
         List<ICogniCryptWindowBase> models =  new ArrayList<>();
 
         // Error Window
-        ICogniCryptWindowBase resultsWindow = CogniCryptResultWindowFactory.CreateWindow(toolWindow);
+        ICogniCryptWindowBase resultsWindow = CogniCryptResultWindowFactory.CreateWindow(toolWindow, project);
         Content errorWindowContent = ContentFactory.createContent(resultsWindow.GetContent(), "Analysis Results", false);
         toolWindow.getContentManager().addContent(errorWindowContent);
 

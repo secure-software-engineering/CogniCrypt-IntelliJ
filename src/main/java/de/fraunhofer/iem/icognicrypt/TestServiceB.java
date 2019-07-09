@@ -1,7 +1,6 @@
 package de.fraunhofer.iem.icognicrypt;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectTypeService;
 
 public class TestServiceB
 {

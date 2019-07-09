@@ -1,5 +1,10 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+
+import java.util.Set;
+
 public interface IResultProvider
 {
     void GetResults();
@@ -13,4 +18,11 @@ public interface IResultProvider
     void Subscribe(IResultsProviderListener listener);
 
     void Unsubscribe(IResultsProviderListener listener);
+
+
+
+    //Only for integration:
+    void AddResult(String fullyQualifiedClassName, int lineNumber, CogniCryptError error);
+
+    Table<String, Integer, Set<CogniCryptError>> GetErrors();
 }

@@ -6,7 +6,7 @@ public class TestServiceA
 {
     private final Project _project;
 
-    public TestServiceA(Project a){
+    public TestServiceA(TestServiceC c, Project a){
         _project = a;
     }
 }

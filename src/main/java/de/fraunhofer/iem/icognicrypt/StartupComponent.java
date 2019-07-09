@@ -5,7 +5,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.startup.StartupActivity;
-import de.fraunhofer.iem.icognicrypt.core.BackgroundPackage;
+import de.fraunhofer.iem.icognicrypt.core.BackgroundComponent;
 
 ;
 
@@ -17,11 +17,11 @@ import de.fraunhofer.iem.icognicrypt.core.BackgroundPackage;
  *
  * Do not use this class for anything else.
  */
-public class StartupPackage extends BackgroundPackage
+public class StartupComponent extends BackgroundComponent
 {
-    private static final Logger logger = Logger.getInstance(StartupPackage.class);
+    private static final Logger logger = Logger.getInstance(StartupComponent.class);
 
-    public StartupPackage(){
+    public StartupComponent(){
         Title = "CogniCrypt Bootstrapper";
         CanCancelInit = false;
     }

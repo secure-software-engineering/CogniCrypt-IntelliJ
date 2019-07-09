@@ -10,10 +10,10 @@ import org.jetbrains.annotations.NotNull;
  * Base class for Packages that shall run in Background. A package is considered to be an instance that contains routines to setup services which will
  * be used by the plugin.
  *
- * NOTE: When running a {@link BackgroundPackage} as a application-component pushing the modal dialog into background causes it to disappear from the
+ * NOTE: When running a {@link BackgroundComponent} as a application-component pushing the modal dialog into background causes it to disappear from the
  * background task window of the IDE.
  */
-public class BackgroundPackage implements BaseComponent
+public class BackgroundComponent implements BaseComponent
 {
     protected String Title = "";
     protected boolean CanCancelInit = true;
@@ -39,9 +39,9 @@ public class BackgroundPackage implements BaseComponent
     private class PackageTask extends Task.Backgroundable
     {
 
-        private BackgroundPackage _owner;
+        private BackgroundComponent _owner;
 
-        public PackageTask(BackgroundPackage owner)
+        public PackageTask(BackgroundComponent owner)
         {
             super(null, owner.Title, owner.CanCancelInit);
             _owner = owner;

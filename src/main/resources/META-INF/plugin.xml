@@ -80,6 +80,7 @@
 
         <component>
             <implementation-class>de.fraunhofer.iem.icognicrypt.CogniCryptComponent</implementation-class>
+            <interface-class>de.fraunhofer.iem.icognicrypt.ICogniCryptComponent</interface-class>
         </component>
 
         <component>

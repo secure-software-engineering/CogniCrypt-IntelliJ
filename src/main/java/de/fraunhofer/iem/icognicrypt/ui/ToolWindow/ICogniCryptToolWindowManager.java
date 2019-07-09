@@ -7,9 +7,9 @@ public interface ICogniCryptToolWindowManager
 {
     void RegisterToolWindow(ToolWindow window);
 
-    void RegisterModel(CogniCryptToolWindowManager.ToolWindowModelType type, ICogniCryptWindowBase model) throws CogniCryptException;
+    void RegisterModel(ToolWindowModelType type, ICogniCryptWindowBase model) throws CogniCryptException;
 
-    <T extends ICogniCryptWindowBase> T GetModel(CogniCryptToolWindowManager.ToolWindowModelType model, Class<T> type) throws CogniCryptException;
+    <T extends ICogniCryptWindowBase> T GetModel(ToolWindowModelType model, Class<T> type) throws CogniCryptException;
 
-    ICogniCryptWindowBase GetModel(CogniCryptToolWindowManager.ToolWindowModelType type) throws CogniCryptException;
+    ICogniCryptWindowBase GetModel(ToolWindowModelType type) throws CogniCryptException;
 }

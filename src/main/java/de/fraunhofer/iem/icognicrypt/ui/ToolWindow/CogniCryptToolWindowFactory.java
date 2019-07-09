@@ -1,5 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.ui.ToolWindow;
 
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -10,7 +11,7 @@ import de.fraunhofer.iem.icognicrypt.results.ui.CogniCryptResultWindowFactory;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import org.jetbrains.annotations.NotNull;
 
-public class CogniCryptToolWindowFactory implements ToolWindowFactory
+public class CogniCryptToolWindowFactory implements ToolWindowFactory, DumbAware
 {
     private static ContentFactory ContentFactory = com.intellij.ui.content.ContentFactory.SERVICE.getInstance();
 
@@ -31,7 +32,7 @@ public class CogniCryptToolWindowFactory implements ToolWindowFactory
 
         try
         {
-            toolWindowManager.RegisterModel(CogniCryptToolWindowManager.ToolWindowModelType.Results, resultsWindow);
+            toolWindowManager.RegisterModel(ToolWindowModelType.Results, resultsWindow);
         }
         catch (CogniCryptException e)
         {

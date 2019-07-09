@@ -8,14 +8,11 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CogniCryptToolWindowManager implements ProjectComponent, ICogniCryptToolWindowManager
+final class CogniCryptToolWindowManager implements ProjectComponent, ICogniCryptToolWindowManager
 {
-    private WeakReference<ToolWindow> _toolWindow;
-
-    public static final String CogniCryptWindowId = "ICogniCrypt.ToolWindow";
-
     // We cannot use weak references here because the model is nowhere is stored and therefore would get GCed.
     private final HashMap<Integer,ICogniCryptWindowBase> _models = new HashMap<>();
+    private WeakReference<ToolWindow> _toolWindow;
 
     public void RegisterToolWindow(ToolWindow window){
         _toolWindow = new WeakReference<>(window);
@@ -57,30 +54,6 @@ public class CogniCryptToolWindowManager implements ProjectComponent, ICogniCryp
         _models.clear();
         disposeComponent();
     }
-
-    public enum ToolWindowModelType{
-        Results(0);
-
-        private int _value;
-        private static Map _map = new HashMap<>();
-
-        ToolWindowModelType(int value) {
-            _value = value;
-        }
-
-        static {
-            for (ToolWindowModelType models : ToolWindowModelType.values()) {
-                _map.put(models._value, models);
-            }
-        }
-
-        public static ToolWindowModelType valueOf(int pageType) {
-            return (ToolWindowModelType) _map.get(pageType);
-        }
-
-        public int getValue() {
-            return _value;
-        }
-    }
 }
+
 

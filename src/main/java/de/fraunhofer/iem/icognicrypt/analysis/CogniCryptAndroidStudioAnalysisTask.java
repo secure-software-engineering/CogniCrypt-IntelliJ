@@ -17,9 +17,9 @@ import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.core.Java.JavaFileToClassNameResolver;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.results.*;
-import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.CogniCryptToolWindowManager;
 import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ICogniCryptToolWindowManager;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
+import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ToolWindowModelType;
 import org.jetbrains.annotations.NotNull;
 import soot.G;
 import soot.SootClass;
@@ -51,7 +51,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
         try
         {
-            _tableModel =  toolWindowManager.GetModel(CogniCryptToolWindowManager.ToolWindowModelType.Results, ICogniCryptResultWindow.class).GetTableModel();
+            _tableModel =  toolWindowManager.GetModel(ToolWindowModelType.Results, ICogniCryptResultWindow.class).GetTableModel();
         }
         catch (CogniCryptException e)
         {

@@ -10,6 +10,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.util.IconLoader;
@@ -35,7 +36,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RunCogniCryptAction extends CogniCryptAction {
+public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
+{
 
     private static final Logger logger = Logger.getInstance(RunCogniCryptAction.class);
 

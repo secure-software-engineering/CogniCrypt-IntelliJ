@@ -3,7 +3,7 @@ package de.fraunhofer.iem.icognicrypt;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
 
-class CogniCryptComponent implements ProjectComponent
+class CogniCryptComponent implements ProjectComponent, ICogniCryptComponent
 {
     private Project _project;
 
@@ -35,3 +35,4 @@ class CogniCryptComponent implements ProjectComponent
         super.finalize();
     }
 }
+

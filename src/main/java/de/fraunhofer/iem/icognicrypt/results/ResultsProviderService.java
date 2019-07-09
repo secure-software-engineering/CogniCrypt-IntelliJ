@@ -8,7 +8,7 @@ import com.intellij.util.containers.WeakList;
 import java.util.Map;
 import java.util.Set;
 
-public class ResultsProviderService implements IResultProvider
+class ResultsProviderService implements IResultProvider
 {
     WeakList<IResultsProviderListener> _listeners = new WeakList<>();
 
@@ -64,10 +64,6 @@ public class ResultsProviderService implements IResultProvider
         errors.put(fullyQualifiedClassName, lineNumber, s);
     }
 
-    private static Set<CogniCryptError> getErrors(String fullyQualifiedClassName, int lineNumber) {
-        return errors.get(fullyQualifiedClassName, lineNumber) != null ? errors.get(fullyQualifiedClassName, lineNumber) : Sets.newHashSet();
-    }
-
     public Table<String, Integer, Set<CogniCryptError>> GetErrors()
     {
         return HashBasedTable.create(errors);
@@ -86,4 +82,9 @@ public class ResultsProviderService implements IResultProvider
         }
         return res;
     }
+
+    private static Set<CogniCryptError> getErrors(String fullyQualifiedClassName, int lineNumber) {
+        return errors.get(fullyQualifiedClassName, lineNumber) != null ? errors.get(fullyQualifiedClassName, lineNumber) : Sets.newHashSet();
+    }
+
 }

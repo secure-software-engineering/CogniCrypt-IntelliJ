@@ -3,6 +3,7 @@ package de.fraunhofer.iem.icognicrypt.results;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
+import com.intellij.openapi.project.Project;
 import com.intellij.util.containers.WeakList;
 
 import java.util.Map;
@@ -15,6 +16,13 @@ class ResultsProviderService implements IResultProvider
     private static Table<String, Integer, Set<CogniCryptError>> errors = HashBasedTable.create();
 
     private static int errorCount = 0;
+
+    ResultsProviderService(Project project)
+    {
+        IResultsProviderListener[] listeners = IResultsProviderListener.EP_NAME.getExtensions(project);
+        for (IResultsProviderListener listener : listeners)
+            this.Subscribe(listener);
+    }
 
     @Override
     public void GetResults()

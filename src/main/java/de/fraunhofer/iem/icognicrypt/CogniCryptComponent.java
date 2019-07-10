@@ -7,7 +7,8 @@ class CogniCryptComponent implements ProjectComponent, ICogniCryptComponent
 {
     private Project _project;
 
-    public CogniCryptComponent(Project project){
+    public CogniCryptComponent(Project project)
+    {
         _project = project;
     }
 

@@ -16,8 +16,23 @@
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="183"/>
 
+    <extensionPoints>
+        <extensionPoint name="resultListener" interface="de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener"
+                        area="IDEA_PROJECT"/>
+    </extensionPoints>
+
+    <!-- Services -->
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
+
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.results.ResultsProviderService"
+                        serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>
+
+    </extensions>
+
+    <!-- Other Extensions -->
+    <extensions defaultExtensionNs="com.intellij">
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="de.fraunhofer.iem.icognicrypt.results.ErrorLineMarker"/>
 
@@ -29,13 +44,9 @@
     </extensions>
 
 
-    <extensions defaultExtensionNs="com.intellij">
-
-        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
-
-        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.results.ResultsProviderService"
-                        serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>
-
+    <!-- Testing purpose extensions -->
+    <extensions defaultExtensionNs="de.fraunhofer.iem.icognicrypt">
+        <resultListener implementation="de.fraunhofer.iem.icognicrypt.TestImpl"/>
     </extensions>
 
     <actions>

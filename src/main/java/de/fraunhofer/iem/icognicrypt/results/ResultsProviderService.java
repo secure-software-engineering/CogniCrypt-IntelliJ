@@ -79,6 +79,7 @@ class ResultsProviderService implements IResultProvider
 
     public Set<CogniCryptError> FindErrors(String javaAbsolutFilePath, int lineNumber) {
         Set<CogniCryptError> res = Sets.newHashSet();
+
         for(String fullyQualifiedClassName : errors.rowKeySet()){
             String path = javaAbsolutFilePath.replace(".java","").replace("/",".");
             if(path.endsWith(fullyQualifiedClassName)){

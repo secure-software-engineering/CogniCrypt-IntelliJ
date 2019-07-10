@@ -34,7 +34,7 @@
     <!-- Other Extensions -->
     <extensions defaultExtensionNs="com.intellij">
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="de.fraunhofer.iem.icognicrypt.results.ErrorLineMarker"/>
+                                        implementationClass="de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorLineMarker"/>
 
         <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"/>
 

@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.tree.java.ClassElement;
 import icons.PluginIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,34 +17,41 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public class ErrorLineMarker implements LineMarkerProvider {
-
+public class CogniCryptErrorLineMarker implements LineMarkerProvider
+{
     @Nullable
     @Override
-    public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
+    public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement)
+    {
 
-        if (psiElement instanceof PsiStatement) {
-
+        if (psiElement instanceof PsiStatement)
+        {
 
             IResultProvider resultProvider = ServiceManager.getService(psiElement.getProject(), IResultProvider.class);
 
             int lineNumber = getLineNumber(psiElement);
             //Check if an error exists for the line number that the element is located
-            Set<CogniCryptError> errors = resultProvider.FindErrors(psiElement.getContainingFile().getVirtualFile().getPath(), lineNumber);
-            if(!errors.isEmpty()){
-                return new LineMarkerInfo<>(psiElement,
-                        psiElement.getTextRange(),
-                        PluginIcons.ERROR,
-                        Pass.EXTERNAL_TOOLS,
-                        new TooltipProvider(getErrorsMessage(errors)),
-                        null,
-                        GutterIconRenderer.Alignment.LEFT);
-            }
+
+            String path = psiElement.getContainingFile().getVirtualFile().getPath();
+
+            Set<CogniCryptError> errors = resultProvider.FindErrors(path, lineNumber);
+            if (!errors.isEmpty())
+                return CreateNewMarker(psiElement, errors);
         }
         return null;
     }
 
-    private String getErrorsMessage(Set<CogniCryptError> errors) {
+    @Override
+    public void collectSlowLineMarkers(@NotNull List<PsiElement> list, @NotNull Collection<LineMarkerInfo> collection) {
+        int i = 0;
+    }
+
+    private LineMarkerInfo CreateNewMarker(PsiElement psiElement, Iterable<CogniCryptError> errors){
+        return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), PluginIcons.ERROR, Pass.EXTERNAL_TOOLS,
+                new TooltipProvider(getErrorsMessage(errors)), null, GutterIconRenderer.Alignment.LEFT);
+    }
+
+    private String getErrorsMessage(Iterable<CogniCryptError> errors) {
         String s = "";
         for(CogniCryptError e : errors){
             s += e.getErrorMessage() +"\n";
@@ -60,10 +68,5 @@ public class ErrorLineMarker implements LineMarkerProvider {
         int textOffset = psiElement.getTextOffset();
 
         return document.getLineNumber(textOffset);
-    }
-
-    @Override
-    public void collectSlowLineMarkers(@NotNull List<PsiElement> list, @NotNull Collection<LineMarkerInfo> collection) {
-
     }
 }

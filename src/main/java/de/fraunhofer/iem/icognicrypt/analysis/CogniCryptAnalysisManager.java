@@ -23,12 +23,6 @@ final class CogniCryptAnalysisManager implements ProjectComponent, ICogniCryptAn
     }
 
     @Override
-    public void projectClosed()
-    {
-        _resultsProvider = null;
-    }
-
-    @Override
     public void disposeComponent()
     {
         _resultsProvider = null;

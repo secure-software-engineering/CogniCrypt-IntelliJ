@@ -3,11 +3,8 @@ package de.fraunhofer.iem.icognicrypt.results;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
-import de.fraunhofer.iem.icognicrypt.core.Collections.IReadOnlyCollection;
 
-import java.io.File;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 

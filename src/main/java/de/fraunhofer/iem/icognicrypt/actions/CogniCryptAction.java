@@ -1,11 +1,10 @@
 package de.fraunhofer.iem.icognicrypt.actions;
 
-import com.intellij.ide.DataManager;
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.Presentation;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class CogniCryptAction extends AnAction
 {

@@ -6,7 +6,8 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IHasOutputManag
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IHasOutputs;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputManager;
 
-import java.nio.file.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 // TODO: There already is a Module implementation "ModuleImpl". Try to it with this.
 public class JavaModule implements IHasOutputManager

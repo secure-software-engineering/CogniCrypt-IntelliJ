@@ -1,6 +1,7 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
 import com.google.common.collect.Table;
+import de.fraunhofer.iem.icognicrypt.results.model.CogniCryptAnalysisResult;
 
 import java.util.Set;
 
@@ -8,7 +9,7 @@ public interface IResultProvider
 {
     void GetResults();
 
-    void AddResult();
+    void AddResult(CogniCryptAnalysisResult result);
 
     void RemoveResult();
 

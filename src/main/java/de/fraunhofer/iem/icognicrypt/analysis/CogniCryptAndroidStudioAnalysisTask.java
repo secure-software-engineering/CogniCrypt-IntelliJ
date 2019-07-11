@@ -17,12 +17,14 @@ import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.core.Java.JavaFileToClassNameResolver;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.results.*;
+import de.fraunhofer.iem.icognicrypt.results.model.CogniCryptAnalysisResult;
 import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ICogniCryptToolWindowManager;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ToolWindowModelType;
 import org.jetbrains.annotations.NotNull;
 import soot.G;
 import soot.SootClass;
+import soot.SootMethod;
 
 import java.util.Collection;
 import java.util.List;
@@ -93,10 +95,11 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
                         if(isIgnoredErrorType(abstractError))
                             continue;
-                        SootClass affectedClass = abstractError.getErrorLocation().getMethod().getDeclaringClass();
 
-                        String name = affectedClass.getName();
+                        String name = abstractError.getErrorLocation().getMethod().getDeclaringClass().getName();
                         int line = abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1;
+
+                        _resultProvider.AddResult(new CogniCryptAnalysisResult(abstractError));
 
                         _resultProvider.AddResult(name, line, new CogniCryptError(abstractError.toErrorMarkerString(), name, line));
                     }

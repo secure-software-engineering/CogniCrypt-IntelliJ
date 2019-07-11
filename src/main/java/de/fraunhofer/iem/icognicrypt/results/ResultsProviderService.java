@@ -5,13 +5,16 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.containers.WeakList;
+import de.fraunhofer.iem.icognicrypt.results.model.CogniCryptAnalysisResult;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 class ResultsProviderService implements IResultProvider
 {
-    WeakList<IResultsProviderListener> _listeners = new WeakList<>();
+    private final WeakList<IResultsProviderListener> _listeners = new WeakList<>();
+    private final HashSet<CogniCryptAnalysisResult> _results = new HashSet<>();
 
     private static Table<String, Integer, Set<CogniCryptError>> errors = HashBasedTable.create();
 
@@ -31,9 +34,13 @@ class ResultsProviderService implements IResultProvider
     }
 
     @Override
-    public void AddResult()
+    public void AddResult(CogniCryptAnalysisResult result)
     {
+        _results.add(result);
 
+
+//        for (IResultsProviderListener listener: _listeners)
+//            listener.OnResultAdded();
     }
 
     @Override

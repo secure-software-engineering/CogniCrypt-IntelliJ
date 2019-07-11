@@ -26,8 +26,15 @@ public class CogniCryptErrorLineMarker implements LineMarkerProvider
 
         if (psiElement instanceof PsiStatement)
         {
+            PsiStatement statement = (PsiStatement) psiElement;
+
+            PsiClass clazz = FindClass(statement);
+
+            boolean equals = clazz.equals("Test");
 
             IResultProvider resultProvider = ServiceManager.getService(psiElement.getProject(), IResultProvider.class);
+
+            String qualifiedName = clazz.getQualifiedName();
 
             int lineNumber = getLineNumber(psiElement);
             //Check if an error exists for the line number that the element is located
@@ -68,5 +75,13 @@ public class CogniCryptErrorLineMarker implements LineMarkerProvider
         int textOffset = psiElement.getTextOffset();
 
         return document.getLineNumber(textOffset);
+    }
+
+    private PsiClass FindClass(PsiElement element){
+        if (element instanceof PsiClass)
+            return (PsiClass) element;
+        if (element == null)
+            return null;
+        return FindClass(element.getParent());
     }
 }

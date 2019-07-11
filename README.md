@@ -43,7 +43,7 @@ To enable the debug functionality you need to add a run configuration in Intelli
 4. Download https://github.com/CROSSINGTUD/CryptoAnalysis/releases/download/2.3/CrySL-rulesets.zip and extract it to some folder <CRYSL-RULES>
 5. Go to `File > Settings > Other Settings > CogniCrypt` and set the CrySL Rules Directory to <CRYSL-RULES>/JavaCryptographicArchitecture
 6. To assure you don't recieve any Stackoverflow exceptions while the analysis is processing make sure the available stack size and allocated memory for Android Studio is sufficent.  
- Go to Help -> Edit custom VM options... and enter the lines `-Xmx4g -Xss100m`.
+ Go to `Help > Edit custom VM options...` and enter the lines `-Xmx4g -Xss100m`.
 
 ---
 

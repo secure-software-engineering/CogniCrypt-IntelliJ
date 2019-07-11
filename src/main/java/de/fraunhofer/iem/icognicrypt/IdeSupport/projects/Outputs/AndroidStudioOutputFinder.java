@@ -70,9 +70,9 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         result.addAll(GetModuleOutputs(projectRootPath, options));
         result.addAll(GetExportedOutputs(projectRootPath, options));
 
-        logger.info("Could not find any file. User is requested to choose one manually");
         if (result.isEmpty())
         {
+            logger.info("Could not find any file. User is requested to choose one manually");
             FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
             File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...",filter, projectRootPath);
             if (userSelectedFile == null) logger.info("User did not select any file.");

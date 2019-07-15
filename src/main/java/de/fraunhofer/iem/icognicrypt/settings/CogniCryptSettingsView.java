@@ -10,6 +10,17 @@ import javax.swing.*;
 class CogniCryptSettingsView implements Configurable
 {
     private JPanel _rootPanel;
+    private JButton _browseRules;
+    private JTextField _cryslRulesDirectory;
+    private JPanel _apkFindGroup;
+    private JCheckBox _findAutomatically;
+    private JComboBox _findBuildOption;
+    private JCheckBox _includeSignedBuilds;
+
+    CogniCryptSettingsView()
+    {
+        _apkFindGroup.setBorder(BorderFactory.createTitledBorder("Analyse Options"));
+    }
 
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
@@ -34,6 +45,5 @@ class CogniCryptSettingsView implements Configurable
     @Override
     public void apply() throws ConfigurationException
     {
-
     }
 }

@@ -10,64 +10,13 @@ import java.util.Set;
 
 class ResultsProviderService implements IResultProvider
 {
-//    private final WeakList<IResultsProviderListener> _listeners = new WeakList<>();
-//    private final HashSet<CogniCryptAnalysisResult> _results = new HashSet<>();
-
     private static Table<String, Integer, Set<CogniCryptError>> errors = HashBasedTable.create();
 
     private static int errorCount = 0;
 
     ResultsProviderService(Project project)
     {
-//        IResultsProviderListener[] listeners = IResultsProviderListener.EP_NAME.getExtensions(project);
-//        for (IResultsProviderListener listener : listeners)
-//            this.Subscribe(listener);
     }
-
-    /*
-    @Override
-    public void GetResults()
-    {
-
-    }
-
-    @Override
-    public void AddResult(CogniCryptAnalysisResult result)
-    {
-        _results.add(result);
-
-
-//        for (IResultsProviderListener listener: _listeners)
-//            listener.OnResultAdded();
-    }
-
-    @Override
-    public void RemoveResult()
-    {
-
-    }
-
-    @Override
-    public void RemoveAllResults()
-    {
-
-    }
-
-    @Override
-    public void Subscribe(IResultsProviderListener listener)
-    {
-        if (_listeners.contains(listener))
-            return;
-        _listeners.add(listener);
-    }
-
-    @Override
-    public void Unsubscribe(IResultsProviderListener listener)
-    {
-        _listeners.remove(listener);
-    }
-
-     */
 
     @Override
     public void AddResult(String fullyQualifiedClassName, int lineNumber, CogniCryptError error)

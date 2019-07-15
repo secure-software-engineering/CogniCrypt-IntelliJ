@@ -16,11 +16,6 @@
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="183"/>
 
-<!--    <extensionPoints>-->
-<!--        <extensionPoint name="resultListener" interface="de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener"-->
-<!--                        area="IDEA_PROJECT"/>-->
-<!--    </extensionPoints>-->
-
     <!-- Services -->
     <extensions defaultExtensionNs="com.intellij">
 
@@ -53,19 +48,6 @@
             <add-to-group group-id="AnalyzeMenu" anchor="last"/>
         </action>
 
-
-        <!-- Dedicated menu item for the IDE's main menu -->
-        <!--<group id="ICogniCryptMenu" text="CogniCr_ypt" popup="true">
-            <add-to-group group-id="MainMenu" anchor="after" relative-to-action="ToolsMenu"/>
-        </group>
-
-        <group id="ICogniCryptMenu.Tests">
-            <add-to-group group-id="ICogniCryptMenu" anchor="last"/>
-            <separator/>
-        </group>
-        -->
-
-        <!-- Test Actions -->
     </actions>
 
     <application-components>

@@ -17,7 +17,6 @@ import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.core.Java.JavaFileToClassNameResolver;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.results.*;
-import de.fraunhofer.iem.icognicrypt.results.model.CogniCryptAnalysisResult;
 import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ICogniCryptToolWindowManager;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ToolWindowModelType;
@@ -75,7 +74,6 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
         // TODO: Check on a few relevant points (maybe after each .apk analysis) if the process was canceled by the user
 
         // Remove errors before rerunning Cognicrypt
-        //_resultProvider.RemoveAllResults();
         _resultProvider.ClearErrors();
 
         int size = _analysisQueue.size();
@@ -99,8 +97,6 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
                         String name = abstractError.getErrorLocation().getMethod().getDeclaringClass().getName();
                         int line = abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1;
-
-                        //_resultProvider.AddResult(new CogniCryptAnalysisResult(abstractError));
 
                         _resultProvider.AddResult(name, line, new CogniCryptError(abstractError.toErrorMarkerString(), name, line));
                     }
@@ -141,8 +137,6 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
         // TODO: Remove quick and dirty code and create subscription to Error provider
         //TODO: Change CogniCryptError model
-
-
         for (Set<CogniCryptError> errorSet : _resultProvider.GetErrors().values())
         {
             for (CogniCryptError error : errorSet)

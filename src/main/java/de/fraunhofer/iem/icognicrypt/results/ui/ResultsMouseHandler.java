@@ -9,7 +9,7 @@ import com.intellij.openapi.fileEditor.TextEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectHelper;
 import de.fraunhofer.iem.icognicrypt.core.Java.JavaFileToClassNameResolver;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
@@ -36,8 +36,7 @@ public class ResultsMouseHandler extends MouseAdapter
         if (model == null)
             return;
         CogniCryptError error = model.GetResultAt(row);
-        Project project = CogniCryptProjectManager.GetProjectFromComponent(table);
-        System.out.println(project);
+        Project project = ProjectHelper.GetProjectFromComponent(table);
 
         String path = JavaFileToClassNameResolver.FindFileFromFullyQualifiedName(error.getClassName(), project);
         if (path == null)

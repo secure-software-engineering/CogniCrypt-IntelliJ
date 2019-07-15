@@ -1,6 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
-import de.fraunhofer.iem.icognicrypt.ui.ICogniCryptWindowBase;
+import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ICogniCryptWindowBase;
 
 public interface ICogniCryptResultWindow extends ICogniCryptWindowBase
 {

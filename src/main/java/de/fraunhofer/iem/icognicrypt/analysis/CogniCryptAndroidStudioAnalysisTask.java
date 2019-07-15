@@ -10,22 +10,21 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.wm.ToolWindow;
 import crypto.analysis.errors.AbstractError;
 import crypto.analysis.errors.IncompleteOperationError;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.core.Java.JavaFileToClassNameResolver;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
-import de.fraunhofer.iem.icognicrypt.results.ErrorProvider;
-import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
-import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
+import de.fraunhofer.iem.icognicrypt.results.*;
+import de.fraunhofer.iem.icognicrypt.results.model.CogniCryptAnalysisResult;
+import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ICogniCryptToolWindowManager;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
+import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ToolWindowModelType;
 import org.jetbrains.annotations.NotNull;
 import soot.G;
 import soot.SootClass;
+import soot.SootMethod;
 
 import java.util.Collection;
 import java.util.List;
@@ -43,20 +42,22 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
     private final List<String> sourceCodeJavaFiles;
 
+    private IResultProvider _resultProvider;
+
     public CogniCryptAndroidStudioAnalysisTask(Project p, Queue<CogniCryptAndroidAnalysis> analysisQueue){
         super(p, "Performing CogniCrypt Analysis");
         _analysisQueue = analysisQueue;
 
-        CogniCryptToolWindowManager toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
+        ICogniCryptToolWindowManager toolWindowManager = ServiceManager.getService(p, ICogniCryptToolWindowManager.class);
+        _resultProvider = ServiceManager.getService(p, IResultProvider.class);
 
         try
         {
-            ToolWindow toolWindow  = toolWindowManager.GetToolWindow(getProject());
-            _tableModel =  toolWindowManager.GetWindowModel(toolWindow, CogniCryptToolWindowManager.ResultsView, ICogniCryptResultWindow.class).GetTableModel();
+            _tableModel =  toolWindowManager.GetModel(ToolWindowModelType.Results, ICogniCryptResultWindow.class).GetTableModel();
         }
         catch (CogniCryptException e)
         {
-            e.printStackTrace();
+            logger.error(e);
         }
 
         if(Constants.WARNINGS_IN_SOURCECODECLASSES_ONLY) {
@@ -74,7 +75,8 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
         // TODO: Check on a few relevant points (maybe after each .apk analysis) if the process was canceled by the user
 
         // Remove errors before rerunning Cognicrypt
-        ErrorProvider.clearError();
+        //_resultProvider.RemoveAllResults();
+        _resultProvider.ClearErrors();
 
         int size = _analysisQueue.size();
 
@@ -94,12 +96,13 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
                         if(isIgnoredErrorType(abstractError))
                             continue;
-                        SootClass affectedClass = abstractError.getErrorLocation().getMethod().getDeclaringClass();
 
-                        String name = affectedClass.getName();
+                        String name = abstractError.getErrorLocation().getMethod().getDeclaringClass().getName();
                         int line = abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1;
 
-                        ErrorProvider.addError(name, line, new CogniCryptError(abstractError.toErrorMarkerString(), name, line));
+                        //_resultProvider.AddResult(new CogniCryptAnalysisResult(abstractError));
+
+                        _resultProvider.AddResult(name, line, new CogniCryptError(abstractError.toErrorMarkerString(), name, line));
                     }
                 }
             } catch (Throwable e){
@@ -123,7 +126,9 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
     public void onFinished()
     {
         super.onFinished();
+        _analysisQueue = null;
         _stopWatch = null;
+        _resultProvider = null;
     }
 
     @Override
@@ -138,7 +143,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
         //TODO: Change CogniCryptError model
 
 
-        for (Set<CogniCryptError> errorSet : ErrorProvider.GetErrors().values())
+        for (Set<CogniCryptError> errorSet : _resultProvider.GetErrors().values())
         {
             for (CogniCryptError error : errorSet)
             {

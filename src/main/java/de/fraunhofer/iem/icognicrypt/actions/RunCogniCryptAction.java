@@ -5,12 +5,14 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.compiler.ex.CompilerPathsEx;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.util.IconLoader;
@@ -22,7 +24,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.AndroidStudioOu
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
-import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysis;
+import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
@@ -36,7 +38,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RunCogniCryptAction extends CogniCryptAction {
+public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
+{
 
     private static final Logger logger = Logger.getInstance(RunCogniCryptAction.class);
 
@@ -116,7 +119,7 @@ public class RunCogniCryptAction extends CogniCryptAction {
                     }
                     String modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
                     logger.info("Module Output Path "+ modulePath);
-                    Task analysis = new JavaProjectAnalysis(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
+                    Task analysis = new JavaProjectAnalysisTask(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
                     ProgressManager.getInstance().run(analysis);
                 }
                 break;

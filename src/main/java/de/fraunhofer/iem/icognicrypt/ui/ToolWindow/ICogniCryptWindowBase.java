@@ -1,4 +1,4 @@
-package de.fraunhofer.iem.icognicrypt.ui;
+package de.fraunhofer.iem.icognicrypt.ui.ToolWindow;
 
 import javax.swing.*;
 

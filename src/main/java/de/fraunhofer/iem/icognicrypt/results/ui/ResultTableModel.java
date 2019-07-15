@@ -1,7 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.results.ui;
 
-import com.intellij.openapi.components.ServiceManager;
-import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 import de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener;
@@ -28,9 +26,6 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
     {
         _columns.addAll(Arrays.asList(ResultTableColumn.values()));
         fireTableStructureChanged();
-
-        CogniCryptAnalysisManager a = ServiceManager.getService(CogniCryptAnalysisManager.class);
-
     }
 
     @Override

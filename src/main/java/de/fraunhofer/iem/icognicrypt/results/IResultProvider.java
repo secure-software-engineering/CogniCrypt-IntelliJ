@@ -1,16 +1,30 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
+import com.google.common.collect.Table;
+import de.fraunhofer.iem.icognicrypt.results.model.CogniCryptAnalysisResult;
+
+import java.util.Set;
+
 public interface IResultProvider
 {
-    void GetResults();
+//    void GetResults();
+//
+//    void AddResult(CogniCryptAnalysisResult result);
+//
+//    void RemoveResult();
+//
+//    void RemoveAllResults();
+//
+//    void Subscribe(IResultsProviderListener listener);
+//
+//    void Unsubscribe(IResultsProviderListener listener);
 
-    void AddResult();
+    //Only for integration:
+    void AddResult(String fullyQualifiedClassName, int lineNumber, CogniCryptError error);
 
-    void RemoveResult();
+    Table<String, Integer, Set<CogniCryptError>> GetErrors();
 
-    void RemoveAllResults();
+    Set<CogniCryptError> FindErrors(String javaAbsolutFilePath, int lineNumber);
 
-    void Subscribe(IResultsProviderListener listener);
-
-    void Unsubscribe(IResultsProviderListener listener);
+    void ClearErrors();
 }

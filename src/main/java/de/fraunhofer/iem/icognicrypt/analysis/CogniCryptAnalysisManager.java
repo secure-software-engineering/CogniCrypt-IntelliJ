@@ -1,6 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.analysis;
 
-import com.android.tools.profiler.proto.IoProfiler;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;

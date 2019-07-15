@@ -1,7 +1,9 @@
 package de.fraunhofer.iem.icognicrypt.ui;
 
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.Configurable;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.settings.ICongniCryptSettings;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,6 +13,8 @@ import java.io.File;
 public class CogniCryptSettings implements Configurable {
     private JTextField rulesDirTextfield;
     private boolean isModified;
+
+    ICongniCryptSettings _settings;
 
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
@@ -28,9 +32,9 @@ public class CogniCryptSettings implements Configurable {
         JButton selectDirButton = new JButton("Browse...");
         contentPane.add(rulesDirTextfield);
         contentPane.add(selectDirButton);
-        CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();
-        rulesDirTextfield.setText(settings.getRulesDirectory());
-        selectDirButton.addActionListener(e -> rulesDirTextfield.setText(openFileChooserDialog(settings.getRulesDirectory(),contentPane)));
+        _settings = ServiceManager.getService(ICongniCryptSettings.class);
+        rulesDirTextfield.setText(_settings.getRulesDirectory());
+        selectDirButton.addActionListener(e -> rulesDirTextfield.setText(openFileChooserDialog(_settings.getRulesDirectory(),contentPane)));
         return contentPane;
     }
 
@@ -41,8 +45,7 @@ public class CogniCryptSettings implements Configurable {
 
     @Override
     public void apply() {
-        CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();
-        settings.setRulesDirectory(rulesDirTextfield.getText());
+        _settings.setRulesDirectory(rulesDirTextfield.getText());
     }
 
     //Accept users file or folder selection and send return value

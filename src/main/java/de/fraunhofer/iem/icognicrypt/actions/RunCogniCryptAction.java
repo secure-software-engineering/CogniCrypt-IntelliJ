@@ -5,8 +5,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.compiler.ex.CompilerPathsEx;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
@@ -26,8 +26,8 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOpt
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
+import de.fraunhofer.iem.icognicrypt.settings.ICongniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import org.jetbrains.annotations.NotNull;
 
@@ -147,7 +147,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
     }
 
     public static String getRulesDirectory() {
-        CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();
+        ICongniCryptSettings settings = ServiceManager.getService(ICongniCryptSettings.class);
         return settings.getRulesDirectory();
     }
 }

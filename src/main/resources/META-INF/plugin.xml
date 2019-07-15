@@ -19,7 +19,8 @@
     <!-- Services -->
     <extensions defaultExtensionNs="com.intellij">
 
-        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsPersistentComponent"
+                            serviceInterface="de.fraunhofer.iem.icognicrypt.settings.ICongniCryptSettings"/>
 
         <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.results.ResultsProviderService"
                         serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>
@@ -32,6 +33,8 @@
                                         implementationClass="de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorLineMarker"/>
 
         <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"/>
+        <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsView" groupId="root"/>
+
 
         <toolWindow factoryClass="de.fraunhofer.iem.icognicrypt.ui.ToolWindow.CogniCryptToolWindowFactory"
                     id="ICogniCrypt.ToolWindow" anchor="bottom" canCloseContents="false"  icon="/icons/cognicrypt.png"/>

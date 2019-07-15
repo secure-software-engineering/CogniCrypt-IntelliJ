@@ -25,9 +25,9 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
+import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.ICongniCryptSettings;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,7 +54,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
     }
 
     public static void RunAnalysis(IdeType ide, Project project) {
-        if(!CogniCryptSettings.isValidCrySLRuleDirectory(getRulesDirectory()))
+        if(!CrySLHelper.isValidCrySLRuleDirectory(getRulesDirectory()))
         {
             NotificationProvider.Warn("No valid CrySL rules found. Please go to \"File > Settings > Other Settings > CogniCrypt\" and select a valid directory.");
             return;

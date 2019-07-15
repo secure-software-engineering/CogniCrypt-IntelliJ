@@ -4,17 +4,14 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
 import com.intellij.openapi.project.Project;
-import com.intellij.util.containers.WeakList;
-import de.fraunhofer.iem.icognicrypt.results.model.CogniCryptAnalysisResult;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 class ResultsProviderService implements IResultProvider
 {
-    private final WeakList<IResultsProviderListener> _listeners = new WeakList<>();
-    private final HashSet<CogniCryptAnalysisResult> _results = new HashSet<>();
+//    private final WeakList<IResultsProviderListener> _listeners = new WeakList<>();
+//    private final HashSet<CogniCryptAnalysisResult> _results = new HashSet<>();
 
     private static Table<String, Integer, Set<CogniCryptError>> errors = HashBasedTable.create();
 
@@ -22,11 +19,12 @@ class ResultsProviderService implements IResultProvider
 
     ResultsProviderService(Project project)
     {
-        IResultsProviderListener[] listeners = IResultsProviderListener.EP_NAME.getExtensions(project);
-        for (IResultsProviderListener listener : listeners)
-            this.Subscribe(listener);
+//        IResultsProviderListener[] listeners = IResultsProviderListener.EP_NAME.getExtensions(project);
+//        for (IResultsProviderListener listener : listeners)
+//            this.Subscribe(listener);
     }
 
+    /*
     @Override
     public void GetResults()
     {
@@ -69,6 +67,8 @@ class ResultsProviderService implements IResultProvider
         _listeners.remove(listener);
     }
 
+     */
+
     @Override
     public void AddResult(String fullyQualifiedClassName, int lineNumber, CogniCryptError error)
     {
@@ -77,6 +77,11 @@ class ResultsProviderService implements IResultProvider
             errorCount++;
         }
         errors.put(fullyQualifiedClassName, lineNumber, s);
+    }
+
+    public void ClearErrors() {
+        errorCount = 0;
+        errors.clear();
     }
 
     public Table<String, Integer, Set<CogniCryptError>> GetErrors()
@@ -102,5 +107,4 @@ class ResultsProviderService implements IResultProvider
     private static Set<CogniCryptError> getErrors(String fullyQualifiedClassName, int lineNumber) {
         return errors.get(fullyQualifiedClassName, lineNumber) != null ? errors.get(fullyQualifiedClassName, lineNumber) : Sets.newHashSet();
     }
-
 }

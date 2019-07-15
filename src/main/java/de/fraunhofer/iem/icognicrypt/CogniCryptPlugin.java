@@ -1,7 +1,6 @@
 package de.fraunhofer.iem.icognicrypt;
 
 import com.intellij.openapi.components.ServiceManager;
-import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListener;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager;

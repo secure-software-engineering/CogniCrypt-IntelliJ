@@ -9,13 +9,17 @@ import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 
 import javax.naming.OperationNotSupportedException;
-import java.io.*;
-import java.util.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 public class AndroidStudioOutputFinder implements IOutputFinder
 {
@@ -66,9 +70,9 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         result.addAll(GetModuleOutputs(projectRootPath, options));
         result.addAll(GetExportedOutputs(projectRootPath, options));
 
-        logger.info("Could not find any file. User is requested to choose one manually");
         if (result.isEmpty())
         {
+            logger.info("Could not find any file. User is requested to choose one manually");
             FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
             File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...",filter, projectRootPath);
             if (userSelectedFile == null) logger.info("User did not select any file.");

@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import java.awt.event.MouseEvent;
 import java.util.Collections;
 
 class CogniCryptResultTable extends JBTable

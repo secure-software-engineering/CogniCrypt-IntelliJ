@@ -1,7 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.core.Helpers;
 
-import javax.naming.OperationNotSupportedException;
-
 // Copyright (c) .NET Foundation and Contributors
 public class StringTrimming
 {

@@ -35,6 +35,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -77,7 +78,8 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
                 try
                 {
                     // TODO: Add build type to settings
-                    Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), OutputFinderOptions.AnyBuildType);
+                    EnumSet<OutputFinderOptions.Flags> statusFlags =  EnumSet.of (OutputFinderOptions.Flags.IncludeSigned, OutputFinderOptions.Flags.AnyBuild);
+                    Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), statusFlags);
 
                     File projectDir = new File(path);
                     LinkedList<CogniCryptAndroidAnalysis> queue = Lists.newLinkedList();

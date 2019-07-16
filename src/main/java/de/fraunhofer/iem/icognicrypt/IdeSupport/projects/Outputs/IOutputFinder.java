@@ -6,14 +6,15 @@ import javax.naming.OperationNotSupportedException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.EnumSet;
 
 public interface IOutputFinder
 {
-    public Iterable<File> GetOutputFiles();
+    Iterable<File> GetOutputFiles();
 
-    public Iterable<File> GetOutputFiles(OutputFinderOptions options);
+    Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options);
 
-    public Iterable<File> GetOutputFiles(Path projectRootPath) throws CogniCryptException, IOException, OperationNotSupportedException;
+    Iterable<File> GetOutputFiles(Path projectRootPath) throws CogniCryptException, IOException, OperationNotSupportedException;
 
-    public Iterable<File> GetOutputFiles(Path projectRootPath, OutputFinderOptions options) throws CogniCryptException, IOException, OperationNotSupportedException;
+    Iterable<File> GetOutputFiles(Path projectRootPath, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException;
 }

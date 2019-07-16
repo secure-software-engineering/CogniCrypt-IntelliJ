@@ -2,6 +2,7 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.OutputJson;
 
+import java.util.EnumSet;
 import java.util.HashSet;
 
 public abstract class OutputManager implements IHasOutputs
@@ -14,16 +15,16 @@ public abstract class OutputManager implements IHasOutputs
     public abstract void InvalidateOutput();
 
     @Override
-    public Iterable<String> GetOutputs(OutputFinderOptions options)
+    public Iterable<String> GetOutputs(EnumSet<OutputFinderOptions.Flags> options)
     {
         HashSet<String> result = new HashSet<>();
 
-        if ((options == OutputFinderOptions.DebugOnly || options == OutputFinderOptions.AnyBuildType) && DebugJson != null)
+        if (OutputFinderOptions.contains(options, OutputFinderOptions.Flags.Debug)  && DebugJson != null)
         {
             result.add(GetDebugOutputPath());
         }
 
-        if ((options == OutputFinderOptions.ReleaseOnly || options == OutputFinderOptions.AnyBuildType) && ReleaseJson != null)
+        if (OutputFinderOptions.contains(options, OutputFinderOptions.Flags.Release) && ReleaseJson != null)
         {
             result.add(GetReleaseOutputPath());
         }

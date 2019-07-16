@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 class CogniCryptSettingsView implements Configurable
 {
@@ -29,6 +30,7 @@ class CogniCryptSettingsView implements Configurable
         _apkFindGroup.setBorder(BorderFactory.createTitledBorder("Analyse Options"));
         _cryslRulesDirectory.setText(_settings.getRulesDirectory());
         _browseRules.addActionListener(e -> _cryslRulesDirectory.setText(openFileChooserDialog(_settings.getRulesDirectory(), _rootPanel)));
+        _findAutomatically.addActionListener(e -> OnFindAutomaticallyChanged(e));
     }
 
     @Nls(capitalization = Nls.Capitalization.Title)
@@ -55,6 +57,10 @@ class CogniCryptSettingsView implements Configurable
     public void apply() throws ConfigurationException
     {
         _settings.setRulesDirectory(_browseRules.getText());
+    }
+
+    private void OnFindAutomaticallyChanged(ActionEvent e)
+    {
     }
 
     //Accept users file or folder selection and send return value

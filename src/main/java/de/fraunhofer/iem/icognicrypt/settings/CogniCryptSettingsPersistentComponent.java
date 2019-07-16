@@ -11,7 +11,9 @@ import org.jetbrains.annotations.Nullable;
 
 class CogniCryptSettingsPersistentComponent implements ICongniCryptSettings
 {
-    private String RULES_DIRECTORY = "./icognicrypt/resources/CrySLRules/JavaCryptographicArchitecture";
+    private String _rulesDirectory = "./icognicrypt/resources/CrySLRules/JavaCryptographicArchitecture";
+    private boolean _findAutomatically = true;
+    private boolean _includeSigned = false;
 
     @Nullable
     @Override
@@ -28,12 +30,48 @@ class CogniCryptSettingsPersistentComponent implements ICongniCryptSettings
 
     public String getRulesDirectory()
     {
-        return RULES_DIRECTORY;
+        return _rulesDirectory;
     }
 
     public void setRulesDirectory(String rulesDirectory)
     {
-        this.RULES_DIRECTORY = rulesDirectory;
+        _rulesDirectory = rulesDirectory;
+    }
+
+    @Override
+    public boolean getFindAutomatically()
+    {
+        return _findAutomatically;
+    }
+
+    @Override
+    public void setFindAutomatically(boolean findAutomatically)
+    {
+        _findAutomatically = findAutomatically;
+    }
+
+    @Override
+    public boolean getIncludeSigned()
+    {
+        return _includeSigned;
+    }
+
+    @Override
+    public void setIncludeSigned(boolean includeSigned)
+    {
+        _includeSigned = includeSigned;
+    }
+
+    @Override
+    public int getFindApkMode()
+    {
+        return 0;
+    }
+
+    @Override
+    public void setFindApkMode(int findApkMode)
+    {
+
     }
 }
 

@@ -7,6 +7,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectModuleManager;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
+import org.apache.commons.lang.NotImplementedException;
 
 import javax.naming.OperationNotSupportedException;
 import javax.swing.filechooser.FileFilter;
@@ -48,7 +49,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
     @Override
     public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options)
     {
-        return GetOutputFiles(options);
+        throw new NotImplementedException();
     }
 
     // TODO: If AS supports detecting when a project is load we can omit this method as we should always read paths directly from the IDE

@@ -1,6 +1,9 @@
 package de.fraunhofer.iem.icognicrypt.settings;
 
 import com.intellij.openapi.components.PersistentStateComponent;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
+
+import java.util.EnumSet;
 
 public interface ICongniCryptSettings extends PersistentStateComponent<CogniCryptSettingsPersistentComponent>
 {
@@ -8,15 +11,7 @@ public interface ICongniCryptSettings extends PersistentStateComponent<CogniCryp
 
     void setRulesDirectory(String rulesDirectory);
 
-    boolean getFindAutomatically();
+    EnumSet<OutputFinderOptions.Flags> getFindOutputOptions();
 
-    void setFindAutomatically(boolean findAutomatically);
-
-    boolean getIncludeSigned();
-
-    void setIncludeSigned(boolean includeSigned);
-
-    int getFindApkMode();
-
-    void setFindApkMode(int findApkMode);
+    void setFindOutputOptions(EnumSet<OutputFinderOptions.Flags> options);
 }

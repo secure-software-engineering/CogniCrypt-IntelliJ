@@ -3,8 +3,12 @@ package de.fraunhofer.iem.icognicrypt.settings;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 
 @State(name = "cogniCrypt", storages = {@Storage("cogniCrypt.xml")})
@@ -12,8 +16,7 @@ import org.jetbrains.annotations.Nullable;
 class CogniCryptSettingsPersistentComponent implements ICongniCryptSettings
 {
     private String _rulesDirectory = "./icognicrypt/resources/CrySLRules/JavaCryptographicArchitecture";
-    private boolean _findAutomatically = true;
-    private boolean _includeSigned = false;
+    private int _findOutputOptions;
 
     @Nullable
     @Override
@@ -39,39 +42,15 @@ class CogniCryptSettingsPersistentComponent implements ICongniCryptSettings
     }
 
     @Override
-    public boolean getFindAutomatically()
+    public EnumSet<OutputFinderOptions.Flags> getFindOutputOptions()
     {
-        return _findAutomatically;
+        return OutputFinderOptions.getStatusFlags(_findOutputOptions);
     }
 
     @Override
-    public void setFindAutomatically(boolean findAutomatically)
+    public void setFindOutputOptions(EnumSet<OutputFinderOptions.Flags> options)
     {
-        _findAutomatically = findAutomatically;
-    }
-
-    @Override
-    public boolean getIncludeSigned()
-    {
-        return _includeSigned;
-    }
-
-    @Override
-    public void setIncludeSigned(boolean includeSigned)
-    {
-        _includeSigned = includeSigned;
-    }
-
-    @Override
-    public int getFindApkMode()
-    {
-        return 0;
-    }
-
-    @Override
-    public void setFindApkMode(int findApkMode)
-    {
-
+        _findOutputOptions = OutputFinderOptions.getStatusValue(options);
     }
 }
 

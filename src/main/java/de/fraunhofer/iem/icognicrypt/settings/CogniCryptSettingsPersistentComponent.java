@@ -16,7 +16,7 @@ import java.util.Set;
 class CogniCryptSettingsPersistentComponent implements ICongniCryptSettings
 {
     private String _rulesDirectory = "./icognicrypt/resources/CrySLRules/JavaCryptographicArchitecture";
-    private int _findOutputOptions;
+    private int _findOutputOptions = 1;
 
     @Nullable
     @Override

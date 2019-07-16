@@ -25,7 +25,7 @@ class CogniCryptSettingsView implements Configurable
     private JButton _browseRules;
     private JTextField _cryslRulesDirectory;
     private JPanel _apkFindGroup;
-    private JCheckBox _findAutomatically;
+    private JCheckBox _findAutomaticallyBox;
     private JComboBox _findBuildOption;
     private JCheckBox _includeSignedBuilds;
     private JCheckBox _onlySigned;
@@ -34,13 +34,16 @@ class CogniCryptSettingsView implements Configurable
     private ICongniCryptSettings _settings;
     private boolean _isModified;
 
+    private boolean _findAutomatically = false;
+    private boolean _lastFindAutomatically = false;
+
     CogniCryptSettingsView()
     {
         _settings = ServiceManager.getService(ICongniCryptSettings.class);
         _apkFindGroup.setBorder(BorderFactory.createTitledBorder("Analyse Options"));
         _cryslRulesDirectory.setText(_settings.getRulesDirectory());
         _browseRules.addActionListener(e -> OnBrowseCrySlDirectoryPressed(e));
-        _findAutomatically.addActionListener(e -> OnFindAutomaticallyChanged(e));
+        _findAutomaticallyBox.addActionListener(e -> OnFindAutomaticallyChanged(e));
     }
 
     @Nls(capitalization = Nls.Capitalization.Title)
@@ -67,13 +70,22 @@ class CogniCryptSettingsView implements Configurable
     public void apply() throws ConfigurationException
     {
         _settings.setRulesDirectory(_browseRules.getText());
+        _settings.setFindOutputOptions(CreateFlags());
         _isModified = false;
+        _lastFindAutomatically = _findAutomatically;
     }
 
     private void OnFindAutomaticallyChanged(ActionEvent e)
     {
-        boolean enabled = _findAutomatically.isSelected();
+        boolean enabled = _findAutomaticallyBox.isSelected();
+        if (enabled == _findAutomatically)
+            return;
+
+        _findAutomatically = enabled;
         enableComponents(_apkFindOptionsGroup, enabled);
+        if (_lastFindAutomatically == _findAutomatically)
+            return;
+        _isModified = true;
     }
 
     private void OnBrowseCrySlDirectoryPressed(ActionEvent e)
@@ -99,7 +111,7 @@ class CogniCryptSettingsView implements Configurable
     private EnumSet<OutputFinderOptions.Flags> CreateFlags(){
         EnumSet<OutputFinderOptions.Flags> result = EnumSet.noneOf(OutputFinderOptions.Flags.class);
 
-        if (!_findAutomatically.isSelected())
+        if (!_findAutomaticallyBox.isSelected())
             return result;
 
         return result;

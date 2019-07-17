@@ -2,7 +2,6 @@ package de.fraunhofer.iem.icognicrypt.settings;
 
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurationException;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
@@ -51,25 +50,25 @@ class CogniCryptSettingsView implements Configurable
 
     private final Runnable _onFindAutomaticallyChanged = () ->
     {
-        boolean newValue = OnCheckBoxChanged(_findAutomaticallyBox, _oldState.getFindAutomatically(), _setFindOptionsGroupEnabled);
+        boolean newValue = OnCheckBoxChanged(_findAutomaticallyBox, _setFindOptionsGroupEnabled);
         _currentState.setFindAutomatically(newValue);
     };
 
     private final Runnable _onIncludeSignedChanged = () ->
     {
-        boolean newValue = OnCheckBoxChanged(_includeSignedBuildsBox, _oldState.getIncludeSigned(), _setSignedOnlyEnabled);
+        boolean newValue = OnCheckBoxChanged(_includeSignedBuildsBox, _setSignedOnlyEnabled);
         _currentState.setIncludeSigned(newValue);
     };
 
     private final Runnable _onSignedOnlyChanged = () ->
     {
-        boolean newValue = OnCheckBoxChanged(_onlySignedBox, _oldState.getSignedOnly(), null);
+        boolean newValue = OnCheckBoxChanged(_onlySignedBox, null);
         _currentState.setSignedOnly(newValue);
     };
 
     private final Runnable _onBuildTypeChanged = () ->
     {
-        OutputFinderOptions.Flags newValue = OnComboboxItemChanged(Linq.last(OutputFinderOptions.getStatusFlags(_currentState.getFinderBuildType())));
+        OutputFinderOptions.Flags newValue = OnComboboxItemChanged();
         _currentState.setFinderBuildType(newValue.getStatusFlagValue());
     };
 
@@ -103,7 +102,7 @@ class CogniCryptSettingsView implements Configurable
     }
 
     @Override
-    public void apply() throws ConfigurationException
+    public void apply()
     {
         IPersistableCogniCryptSettings settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
         settings.setRulesDirectory(_currentState.getRulesDirectory());
@@ -120,14 +119,14 @@ class CogniCryptSettingsView implements Configurable
         SetUiFromSettings(_oldState);
     }
 
-    protected boolean OnCheckBoxChanged(JCheckBox sender, boolean lastValue, Consumer<Boolean> setDependentEnabled)
+    protected boolean OnCheckBoxChanged(JCheckBox sender, Consumer<Boolean> setDependentEnabled)
     {
         boolean currentValue = sender.isSelected();
         if (setDependentEnabled != null) setDependentEnabled.accept(currentValue);
         return currentValue;
     }
 
-    protected  <T> T OnComboboxItemChanged(T lastValue)
+    protected  <T> T OnComboboxItemChanged()
     {
         T currentValue = (T) _findBuildOptionBox.getSelectedItem();
         return currentValue;

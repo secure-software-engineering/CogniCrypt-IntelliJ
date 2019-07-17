@@ -1,7 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.settings;
 
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
-import gnu.trove.Equality;
 
 import java.util.EnumSet;
 

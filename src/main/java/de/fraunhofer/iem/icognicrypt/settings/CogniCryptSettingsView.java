@@ -18,8 +18,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Consumer;
 
 
 // TODO: Implement a modified detection with a new value only class that overrides equals.
@@ -36,6 +36,8 @@ class CogniCryptSettingsView implements Configurable
     private JCheckBox _includeSignedBuildsBox;
     private JCheckBox _onlySignedBox;
     private JPanel _apkFindOptionsGroup;
+    private JPanel _signedOnlyGroup;
+    private JLabel _findBuildOptionLabel;
 
     private ICongniCryptSettings _settings;
     private boolean _isModified;
@@ -45,10 +47,26 @@ class CogniCryptSettingsView implements Configurable
     private boolean _lastSignedOnly = false;
     private OutputFinderOptions.Flags _lastBuildType = OutputFinderOptions.Flags.Debug;
 
-    private Runnable _onFindAutomaticallyChanged = () -> OnCheckBoxChanged(_findAutomaticallyBox, _apkFindOptionsGroup, _lastFindAutomatically);
-    private Runnable _onIncludeSignedChanged = () -> OnCheckBoxChanged(_includeSignedBuildsBox, _onlySignedBox, _lastIncludeSigned);
-    private Runnable _onSignedOnlyChanged = () -> OnCheckBoxChanged(_onlySignedBox, null, _lastSignedOnly);
-    private Runnable _onBuildTypeChanged = () -> OnComboboxItemChanged(_lastBuildType);
+    private final Consumer<Boolean> _setSignedOnlyEnabled = enabled -> {
+        _onlySignedBox.setEnabled(enabled);
+    };
+
+    private final Consumer<Boolean> _setFindOptionsGroupEnabled = enabled -> {
+        _findBuildOptionBox.setEnabled(enabled);
+        _includeSignedBuildsBox.setEnabled(enabled);
+        _findBuildOptionLabel.setEnabled(enabled);
+        if (!enabled)
+            _onlySignedBox.setEnabled(enabled);
+        else
+            _setSignedOnlyEnabled.accept(_includeSignedBuildsBox.isSelected());
+    };
+
+    private final Runnable _onFindAutomaticallyChanged = () -> OnCheckBoxChanged(_findAutomaticallyBox, _lastFindAutomatically, _setFindOptionsGroupEnabled);
+    private final Runnable _onIncludeSignedChanged = () -> OnCheckBoxChanged(_includeSignedBuildsBox, _lastIncludeSigned, _setSignedOnlyEnabled);
+    private final Runnable _onSignedOnlyChanged = () -> OnCheckBoxChanged(_onlySignedBox, _lastSignedOnly, null);
+    private final Runnable _onBuildTypeChanged = () -> OnComboboxItemChanged(_lastBuildType);
+
+
 
 
     CogniCryptSettingsView()
@@ -107,10 +125,11 @@ class CogniCryptSettingsView implements Configurable
         _isModified = false;
     }
 
-    protected void OnCheckBoxChanged(JCheckBox sender, Container dependedContainer, boolean lastValue)
+    protected void OnCheckBoxChanged(JCheckBox sender, boolean lastValue, Consumer<Boolean> setDependentEnabled)
     {
         boolean currentValue = sender.isSelected();
-        enableComponents(dependedContainer, currentValue);
+        if (setDependentEnabled != null)
+            setDependentEnabled.accept(currentValue);
         if (lastValue == currentValue)
             return;
         _isModified = true;
@@ -184,16 +203,13 @@ class CogniCryptSettingsView implements Configurable
                 JOptionPane.ERROR_MESSAGE, _rootPanel);
     }
 
-    private static void enableComponents(Container container, boolean enable) {
-        if (container == null)
+    private void enablePanel(JPanel panel, boolean enable){
+        if (panel == null)
             return;
-        container.setEnabled(enable);
-        Component[] components = container.getComponents();
+        panel.setEnabled(enable);
+        Component[] components = panel.getComponents();
         for (Component component : components) {
             component.setEnabled(enable);
-            if (component instanceof Container) {
-                enableComponents((Container)component, enable);
-            }
         }
     }
 }

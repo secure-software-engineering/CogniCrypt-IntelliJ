@@ -18,7 +18,8 @@ class CogniCryptSettingsPersistentComponent implements ICongniCryptSettings
     private boolean _findAutomatically = true;
     private boolean _includeSigned = false;
     private boolean _signedOnly = false;
-    private int _finderBuildType = 1;
+
+    private int _finderBuildType = OutputFinderOptions.Flags.Debug.getStatusFlagValue();
 
 
     @Nullable

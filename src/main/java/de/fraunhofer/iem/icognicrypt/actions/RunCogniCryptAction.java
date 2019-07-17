@@ -27,10 +27,9 @@ import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTas
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.settings.ICongniCryptSettings;
+import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import org.jetbrains.annotations.NotNull;
-import sun.util.resources.cldr.se.CurrencyNames_se;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -44,11 +43,11 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
 {
 
     private static final Logger logger = Logger.getInstance(RunCogniCryptAction.class);
-    private final ICongniCryptSettings _settings;
+    private final IPersistableCogniCryptSettings _settings;
 
     public RunCogniCryptAction() {
         super("CogniCrypt Analysis","Run CogniCrypt Analysis", IconLoader.getIcon("/icons/cognicrypt.png"));
-        _settings = ServiceManager.getService(ICongniCryptSettings.class);
+        _settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
 
     }
 
@@ -152,7 +151,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
     }
 
     public static String getRulesDirectory() {
-        ICongniCryptSettings settings = ServiceManager.getService(ICongniCryptSettings.class);
+        IPersistableCogniCryptSettings settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
         return settings.getRulesDirectory();
     }
 }

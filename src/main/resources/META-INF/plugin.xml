@@ -20,7 +20,7 @@
     <extensions defaultExtensionNs="com.intellij">
 
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsPersistentComponent"
-                            serviceInterface="de.fraunhofer.iem.icognicrypt.settings.ICongniCryptSettings"/>
+                            serviceInterface="de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings"/>
 
         <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.results.ResultsProviderService"
                         serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>

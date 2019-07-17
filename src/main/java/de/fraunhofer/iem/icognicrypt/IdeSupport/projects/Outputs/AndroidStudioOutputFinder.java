@@ -8,7 +8,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectModuleManager;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.settings.ICongniCryptSettings;
+import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import org.apache.commons.lang.NotImplementedException;
 
 import javax.naming.OperationNotSupportedException;
@@ -30,7 +30,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
     private static final Logger logger = Logger.getInstance(AndroidStudioOutputFinder.class);
 
     private static IOutputFinder _instance;
-    private final ICongniCryptSettings _settings;
+    private final IPersistableCogniCryptSettings _settings;
 
     public static IOutputFinder GetInstance()
     {
@@ -40,7 +40,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
 
     private AndroidStudioOutputFinder()
     {
-        _settings = ServiceManager.getService(ICongniCryptSettings.class);
+        _settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
     }
 
     public Iterable<File> GetOutputFiles()

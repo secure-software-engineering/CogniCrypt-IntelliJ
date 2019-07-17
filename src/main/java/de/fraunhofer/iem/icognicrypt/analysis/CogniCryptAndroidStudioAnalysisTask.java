@@ -23,7 +23,6 @@ import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ToolWindowModelType;
 import org.jetbrains.annotations.NotNull;
 import soot.G;
 import soot.SootClass;
-import soot.SootMethod;
 
 import java.util.Collection;
 import java.util.List;
@@ -52,7 +51,9 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
         try
         {
-            _tableModel =  toolWindowManager.GetModel(ToolWindowModelType.Results, ICogniCryptResultWindow.class).GetTableModel();
+            ICogniCryptResultWindow model = toolWindowManager.GetModel(ToolWindowModelType.Results, ICogniCryptResultWindow.class);
+            if (model != null)
+                _tableModel =  model.GetTableModel();
         }
         catch (CogniCryptException e)
         {

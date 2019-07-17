@@ -30,6 +30,7 @@ import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.ICongniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import org.jetbrains.annotations.NotNull;
+import sun.util.resources.cldr.se.CurrencyNames_se;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -43,9 +44,12 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
 {
 
     private static final Logger logger = Logger.getInstance(RunCogniCryptAction.class);
+    private final ICongniCryptSettings _settings;
 
     public RunCogniCryptAction() {
         super("CogniCrypt Analysis","Run CogniCrypt Analysis", IconLoader.getIcon("/icons/cognicrypt.png"));
+        _settings = ServiceManager.getService(ICongniCryptSettings.class);
+
     }
 
     @Override
@@ -54,7 +58,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         RunAnalysis(IdeType.AndroidStudio,p);
     }
 
-    public static void RunAnalysis(IdeType ide, Project project) {
+    public void RunAnalysis(IdeType ide, Project project) {
         if(!CrySLHelper.isValidCrySLRuleDirectory(getRulesDirectory()))
         {
             NotificationProvider.Warn("No valid CrySL rules found. Please go to \"File > Settings > Other Settings > CogniCrypt\" and select a valid directory.");
@@ -77,8 +81,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
                 IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
                 try
                 {
-                    // TODO: Add build type to settings
-                    EnumSet<OutputFinderOptions.Flags> statusFlags =  EnumSet.of (OutputFinderOptions.Flags.IncludeSigned, OutputFinderOptions.Flags.AnyBuild);
+                    EnumSet<OutputFinderOptions.Flags> statusFlags = _settings.GetFindOutputOptions();
                     Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), statusFlags);
 
                     File projectDir = new File(path);

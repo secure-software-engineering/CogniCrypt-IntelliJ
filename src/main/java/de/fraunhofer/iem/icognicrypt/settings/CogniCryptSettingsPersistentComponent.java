@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
-import java.util.Set;
 
 
 @State(name = "cogniCrypt", storages = {@Storage("cogniCrypt.xml")})
@@ -16,7 +15,11 @@ import java.util.Set;
 class CogniCryptSettingsPersistentComponent implements ICongniCryptSettings
 {
     private String _rulesDirectory = "./icognicrypt/resources/CrySLRules/JavaCryptographicArchitecture";
-    private int _findOutputOptions = 1;
+    private boolean _findAutomatically = true;
+    private boolean _includeSigned = false;
+    private boolean _signedOnly = false;
+    private int _finderBuildType = 1;
+
 
     @Nullable
     @Override
@@ -42,15 +45,68 @@ class CogniCryptSettingsPersistentComponent implements ICongniCryptSettings
     }
 
     @Override
-    public EnumSet<OutputFinderOptions.Flags> getFindOutputOptions()
+    public boolean getFindAutomatically()
     {
-        return OutputFinderOptions.getStatusFlags(_findOutputOptions);
+        return _findAutomatically;
     }
 
     @Override
-    public void setFindOutputOptions(EnumSet<OutputFinderOptions.Flags> options)
+    public void setFindAutomatically(boolean value)
     {
-        _findOutputOptions = OutputFinderOptions.getStatusValue(options);
+        _findAutomatically = value;
+    }
+
+    @Override
+    public int getFinderBuildType()
+    {
+        return _finderBuildType;
+    }
+
+    @Override
+    public void setFinderBuildType(int value)
+    {
+        //Correct and set to default
+        if (value <= 0 || value > 3)
+            value = 1;
+        _finderBuildType = value;
+    }
+
+    @Override
+    public boolean getIncludeSigned()
+    {
+        return _includeSigned;
+    }
+
+    @Override
+    public void setIncludeSigned(boolean value)
+    {
+        _includeSigned = value;
+    }
+
+    @Override
+    public boolean getSignedOnly()
+    {
+        return _signedOnly;
+    }
+
+    @Override
+    public void setSignedOnly(boolean value)
+    {
+        _signedOnly = value;
+    }
+
+
+    public EnumSet<OutputFinderOptions.Flags> GetFindOutputOptions(){
+        EnumSet<OutputFinderOptions.Flags> result = EnumSet.noneOf(OutputFinderOptions.Flags.class);
+        if (!_findAutomatically)
+            return result;
+        result.addAll(OutputFinderOptions.getStatusFlags(_finderBuildType));
+        if (!_includeSigned)
+            return result;
+        result.add(OutputFinderOptions.Flags.IncludeSigned);
+        if (_signedOnly)
+            result.add(OutputFinderOptions.Flags.SignedOnly);
+        return result;
     }
 }
 

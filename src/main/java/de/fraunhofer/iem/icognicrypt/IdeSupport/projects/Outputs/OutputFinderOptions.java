@@ -7,20 +7,34 @@ public class OutputFinderOptions
 {
     public enum Flags
     {
-        Debug(1),
-        Release(2),
-        AnyBuild(3),
+        Debug(1, "Debug"),
+        Release(2, "Release"),
+        AnyBuild(3, "Any Build Type"),
         IncludeSigned(4),
         SignedOnly(8);
 
         private final int _flagValue;
+        private final String _displayName;
 
         Flags(int value){
+            this(value, "");
+        }
+
+        Flags(int value, String displayName){
             _flagValue = value;
+            _displayName = displayName;
         }
 
         public int getStatusFlagValue(){
             return _flagValue;
+        }
+
+        @Override
+        public String toString()
+        {
+            if (!_displayName.equals(""))
+                return _displayName;
+            return super.toString();
         }
     }
 
@@ -52,7 +66,7 @@ public class OutputFinderOptions
         return contains(maskValue, flag);
     }
 
-    public static EnumSet<Flags> getStatusFlags(long statusValue) {
+    public static EnumSet<Flags> getStatusFlags(int statusValue) {
         EnumSet statusFlags = EnumSet.noneOf(Flags.class);
         for (Flags statusFlag : Flags.values())
         {

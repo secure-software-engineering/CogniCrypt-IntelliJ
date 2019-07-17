@@ -1,5 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
@@ -7,6 +8,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectModuleManager;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
+import de.fraunhofer.iem.icognicrypt.settings.ICongniCryptSettings;
 import org.apache.commons.lang.NotImplementedException;
 
 import javax.naming.OperationNotSupportedException;
@@ -28,6 +30,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
     private static final Logger logger = Logger.getInstance(AndroidStudioOutputFinder.class);
 
     private static IOutputFinder _instance;
+    private final ICongniCryptSettings _settings;
 
     public static IOutputFinder GetInstance()
     {
@@ -37,13 +40,12 @@ public class AndroidStudioOutputFinder implements IOutputFinder
 
     private AndroidStudioOutputFinder()
     {
+        _settings = ServiceManager.getService(ICongniCryptSettings.class);
     }
 
     public Iterable<File> GetOutputFiles()
     {
-        // TODO: Add from Settings
-        EnumSet<OutputFinderOptions.Flags> statusFlags = EnumSet.of(OutputFinderOptions.Flags.AnyBuild, OutputFinderOptions.Flags.IncludeSigned);
-        return GetOutputFiles(statusFlags);
+        return GetOutputFiles( _settings.GetFindOutputOptions());
     }
 
     @Override
@@ -55,9 +57,7 @@ public class AndroidStudioOutputFinder implements IOutputFinder
     // TODO: If AS supports detecting when a project is load we can omit this method as we should always read paths directly from the IDE
     public Iterable<File> GetOutputFiles(Path projectRootPath) throws CogniCryptException, IOException, OperationNotSupportedException
     {
-        // TODO: Add from Settings
-        EnumSet<OutputFinderOptions.Flags> statusFlags = EnumSet.of(OutputFinderOptions.Flags.AnyBuild, OutputFinderOptions.Flags.IncludeSigned);
-        return GetOutputFiles(projectRootPath, statusFlags);
+        return GetOutputFiles(projectRootPath, _settings.GetFindOutputOptions());
     }
 
     @Override

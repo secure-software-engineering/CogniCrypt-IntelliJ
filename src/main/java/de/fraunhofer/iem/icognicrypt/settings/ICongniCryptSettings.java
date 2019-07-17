@@ -11,7 +11,26 @@ public interface ICongniCryptSettings extends PersistentStateComponent<CogniCryp
 
     void setRulesDirectory(String rulesDirectory);
 
-    EnumSet<OutputFinderOptions.Flags> getFindOutputOptions();
 
-    void setFindOutputOptions(EnumSet<OutputFinderOptions.Flags> options);
+    boolean getFindAutomatically();
+
+    void setFindAutomatically(boolean value);
+
+
+    int getFinderBuildType();
+
+    void setFinderBuildType(int value);
+
+
+    boolean getIncludeSigned();
+
+    void setIncludeSigned(boolean value);
+
+
+    boolean getSignedOnly();
+
+    void setSignedOnly(boolean value);
+
+
+    EnumSet<OutputFinderOptions.Flags> GetFindOutputOptions();
 }

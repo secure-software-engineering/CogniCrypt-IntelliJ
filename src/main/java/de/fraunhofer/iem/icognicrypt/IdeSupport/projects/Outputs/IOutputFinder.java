@@ -14,7 +14,5 @@ public interface IOutputFinder
 
     Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options);
 
-    Iterable<File> GetOutputFiles(Path projectRootPath) throws CogniCryptException, IOException, OperationNotSupportedException;
-
     Iterable<File> GetOutputFiles(Path projectRootPath, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException;
 }

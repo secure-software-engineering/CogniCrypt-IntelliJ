@@ -54,19 +54,9 @@ public class AndroidStudioOutputFinder implements IOutputFinder
         throw new NotImplementedException();
     }
 
-    // TODO: If AS supports detecting when a project is load we can omit this method as we should always read paths directly from the IDE
-    public Iterable<File> GetOutputFiles(Path projectRootPath) throws CogniCryptException, IOException, OperationNotSupportedException
-    {
-        return GetOutputFiles(projectRootPath, _settings.GetFindOutputOptions());
-    }
-
     @Override
     public Iterable<File> GetOutputFiles(Path projectRootPath, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
     {
-        //TODO: Once we have this class created by the IDE instance (not in the CompilationListenerClass) we want to have the settings.gradle and workspace.xml models
-        // as a weak class field. It should be weak so the developer can delete the files safely without causing the reference kept alive by the GC. When the weak reference is gone we
-        // should check for a new file and invalidate this class aganin.
-
         logger.info("Try finding all built .apk files with options: " + options);
 
         if (!Files.exists(projectRootPath)) throw new CogniCryptException("Root path of the project does not exist.");

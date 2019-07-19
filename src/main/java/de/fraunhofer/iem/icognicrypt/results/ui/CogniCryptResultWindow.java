@@ -18,6 +18,7 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
     private CogniCryptResultTable _resultTable;
     private JComboBox _scopeComboBox;
     private JLabel _errorNumberLabel;
+    private JPanel _toolBarPanel;
 
     private WeakReference<ToolWindow> _toolWindow;
     private WeakReference<Project> _project;
@@ -32,6 +33,8 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
     {
         _toolWindow = new WeakReference<>(toolWindow);
         _project = new WeakReference<>(project);
+
+        _toolBarPanel.setVisible(false);
 
         IResultProvider service = ServiceManager.getService(project, IResultProvider.class);
         service.Subscribe(_tableModel);

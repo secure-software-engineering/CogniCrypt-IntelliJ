@@ -75,8 +75,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
         // TODO: Check on a few relevant points (maybe after each .apk analysis) if the process was canceled by the user
 
         // Remove errors before rerunning Cognicrypt
-        //_resultProvider.RemoveAllResults();
-        _resultProvider.ClearErrors();
+        _resultProvider.RemoveAllResults();
 
         int size = _analysisQueue.size();
 
@@ -100,7 +99,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
                         String name = abstractError.getErrorLocation().getMethod().getDeclaringClass().getName();
                         int line = abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1;
 
-                        //_resultProvider.AddResult(new CogniCryptAnalysisResult(abstractError));
+                        _resultProvider.AddResult(new CogniCryptAnalysisResult(abstractError));
 
                         _resultProvider.AddResult(name, line, new CogniCryptError(abstractError.toErrorMarkerString(), name, line));
                     }

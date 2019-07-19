@@ -1,9 +1,11 @@
 package de.fraunhofer.iem.icognicrypt.results.ui;
 
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
+import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
 
 import javax.swing.*;
 import java.lang.ref.WeakReference;
@@ -29,8 +31,8 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
         _toolWindow = new WeakReference<>(toolWindow);
         _project = new WeakReference<>(project);
 
-        //IResultProvider service = ServiceManager.getService(project, IResultProvider.class);
-        //service.Subscribe(_tableModel);
+        IResultProvider service = ServiceManager.getService(project, IResultProvider.class);
+        service.Subscribe(_tableModel);
     }
 
     @Override

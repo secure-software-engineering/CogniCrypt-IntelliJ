@@ -16,10 +16,10 @@
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="183"/>
 
-<!--    <extensionPoints>-->
-<!--        <extensionPoint name="resultListener" interface="de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener"-->
-<!--                        area="IDEA_PROJECT"/>-->
-<!--    </extensionPoints>-->
+    <extensionPoints>
+        <extensionPoint name="resultListener" interface="de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener"
+                        area="IDEA_PROJECT"/>
+    </extensionPoints>
 
     <!-- Services -->
     <extensions defaultExtensionNs="com.intellij">
@@ -41,6 +41,12 @@
         <toolWindow factoryClass="de.fraunhofer.iem.icognicrypt.ui.ToolWindow.CogniCryptToolWindowFactory"
                     id="ICogniCrypt.ToolWindow" anchor="bottom" canCloseContents="false"  icon="/icons/cognicrypt.png"/>
 
+    </extensions>
+
+
+    <!-- Testing purpose extensions -->
+    <extensions defaultExtensionNs="de.fraunhofer.iem.icognicrypt">
+        <resultListener implementation="de.fraunhofer.iem.icognicrypt.TestImpl"/>
     </extensions>
 
     <actions>

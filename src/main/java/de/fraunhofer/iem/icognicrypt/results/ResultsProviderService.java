@@ -55,6 +55,7 @@ class ResultsProviderService implements IResultProvider
 
     }
 
+
     @Override
     public void Subscribe(IResultsProviderListener listener)
     {

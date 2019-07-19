@@ -3,8 +3,10 @@ package de.fraunhofer.iem.icognicrypt.actions;
 import com.android.tools.idea.sdk.AndroidSdks;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.compiler.ex.CompilerPathsEx;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
@@ -23,9 +25,9 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
+import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
+import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +35,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,9 +43,12 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
 {
 
     private static final Logger logger = Logger.getInstance(RunCogniCryptAction.class);
+    private final IPersistableCogniCryptSettings _settings;
 
     public RunCogniCryptAction() {
         super("CogniCrypt Analysis","Run CogniCrypt Analysis", IconLoader.getIcon("/icons/cognicrypt.png"));
+        _settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
+
     }
 
     @Override
@@ -51,8 +57,8 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         RunAnalysis(IdeType.AndroidStudio,p);
     }
 
-    public static void RunAnalysis(IdeType ide, Project project) {
-        if(!CogniCryptSettings.isValidCrySLRuleDirectory(getRulesDirectory()))
+    public void RunAnalysis(IdeType ide, Project project) {
+        if(!CrySLHelper.isValidCrySLRuleDirectory(getRulesDirectory()))
         {
             NotificationProvider.Warn("No valid CrySL rules found. Please go to \"File > Settings > Other Settings > CogniCrypt\" and select a valid directory.");
             return;
@@ -74,8 +80,8 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
                 IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
                 try
                 {
-                    // TODO: Add build type to settings
-                    Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), OutputFinderOptions.AnyBuildType);
+                    EnumSet<OutputFinderOptions.Flags> statusFlags = _settings.GetFindOutputOptions();
+                    Iterable<File> files = outputFinder.GetOutputFiles(Paths.get(project.getBasePath()), statusFlags);
 
                     File projectDir = new File(path);
                     LinkedList<CogniCryptAndroidAnalysis> queue = Lists.newLinkedList();
@@ -145,7 +151,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
     }
 
     public static String getRulesDirectory() {
-        CogniCryptSettingsPersistentComponent settings = CogniCryptSettingsPersistentComponent.getInstance();
+        IPersistableCogniCryptSettings settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
         return settings.getRulesDirectory();
     }
 }

@@ -17,14 +17,12 @@ import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.core.Java.JavaFileToClassNameResolver;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.results.*;
-import de.fraunhofer.iem.icognicrypt.results.model.CogniCryptAnalysisResult;
 import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ICogniCryptToolWindowManager;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ToolWindowModelType;
 import org.jetbrains.annotations.NotNull;
 import soot.G;
 import soot.SootClass;
-import soot.SootMethod;
 
 import java.util.Collection;
 import java.util.List;
@@ -53,7 +51,9 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
         try
         {
-            _tableModel =  toolWindowManager.GetModel(ToolWindowModelType.Results, ICogniCryptResultWindow.class).GetTableModel();
+            ICogniCryptResultWindow model = toolWindowManager.GetModel(ToolWindowModelType.Results, ICogniCryptResultWindow.class);
+            if (model != null)
+                _tableModel =  model.GetTableModel();
         }
         catch (CogniCryptException e)
         {
@@ -76,6 +76,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
         // Remove errors before rerunning Cognicrypt
         _resultProvider.RemoveAllResults();
+        _resultProvider.ClearErrors();
 
         int size = _analysisQueue.size();
 
@@ -140,8 +141,6 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
 
         // TODO: Remove quick and dirty code and create subscription to Error provider
         //TODO: Change CogniCryptError model
-
-
         for (Set<CogniCryptError> errorSet : _resultProvider.GetErrors().values())
         {
             for (CogniCryptError error : errorSet)

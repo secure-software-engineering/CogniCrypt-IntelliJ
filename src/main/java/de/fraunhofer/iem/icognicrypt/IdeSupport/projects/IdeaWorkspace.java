@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.EnumSet;
 
 // TODO: This class is only tested for Android Studio. Validate for IntelliJ also
 public class IdeaWorkspace implements IHasOutputManager
@@ -105,9 +106,11 @@ public class IdeaWorkspace implements IHasOutputManager
         }
 
         @Override
-        public Iterable<String> GetOutputs(OutputFinderOptions options)
+        public Iterable<String> GetOutputs(EnumSet<OutputFinderOptions.Flags> options)
         {
             if (_apkPath == null || _apkPath.isEmpty())
+                return Collections.EMPTY_LIST;
+            if (!OutputFinderOptions.containsAny(options, OutputFinderOptions.Flags.IncludeSigned, OutputFinderOptions.Flags.SignedOnly))
                 return Collections.EMPTY_LIST;
             return super.GetOutputs(options);
         }

@@ -11,23 +11,6 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.Constants;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.AndroidStudioOutputFinder;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
-import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import org.apache.commons.io.FileUtils;
-
-
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 
 // TODO: Revise class

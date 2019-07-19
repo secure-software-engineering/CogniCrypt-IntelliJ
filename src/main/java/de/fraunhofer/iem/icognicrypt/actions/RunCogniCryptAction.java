@@ -1,6 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.actions;
 
-import com.android.tools.idea.sdk.AndroidSdks;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -18,13 +17,13 @@ import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.vfs.VirtualFile;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
-import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.IdeType;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.AndroidStudioOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
+import de.fraunhofer.iem.icognicrypt.core.android.AndroidPlatformLocator;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
@@ -41,7 +40,6 @@ import java.util.List;
 
 public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
 {
-
     private static final Logger logger = Logger.getInstance(RunCogniCryptAction.class);
     private final IPersistableCogniCryptSettings _settings;
 
@@ -58,7 +56,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
     }
 
     public void RunAnalysis(IdeType ide, Project project) {
-        if(!CrySLHelper.isValidCrySLRuleDirectory(getRulesDirectory()))
+        if(!CrySLHelper.isValidCrySLRuleDirectory(_settings.getRulesDirectory()))
         {
             NotificationProvider.Warn("No valid CrySL rules found. Please go to \"File > Settings > Other Settings > CogniCrypt\" and select a valid directory.");
             return;
@@ -71,7 +69,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         switch (ide) {
             case AndroidStudio:
 
-                Path platforms = getAndroidPlatformsLocation(project);
+                Path platforms = AndroidPlatformLocator.getAndroidPlatformsLocation(project);
 
                 String path = project.getBasePath();
                 logger.info("Evaluating compile path "+ path);
@@ -92,7 +90,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
                         String apkPath = file.getAbsolutePath();
                         logger.info("APK found in " + apkPath);
 
-                        CogniCryptAndroidAnalysis  analysis = new CogniCryptAndroidAnalysis(apkPath, platforms.toAbsolutePath().toString(), getRulesDirectory(), Lists.newArrayList());
+                        CogniCryptAndroidAnalysis  analysis = new CogniCryptAndroidAnalysis(apkPath, platforms.toAbsolutePath().toString(), _settings.getRulesDirectory(), Lists.newArrayList());
                         queue.add(analysis);
                     }
                     if (queue.isEmpty())
@@ -123,36 +121,11 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
                     }
                     String modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
                     logger.info("Module Output Path "+ modulePath);
-                    Task analysis = new JavaProjectAnalysisTask(modulePath, Joiner.on(":").join(classpath), getRulesDirectory());
+                    Task analysis = new JavaProjectAnalysisTask(modulePath, Joiner.on(":").join(classpath), _settings.getRulesDirectory());
                     ProgressManager.getInstance().run(analysis);
                 }
                 break;
         }
-
-    }
-
-    private static Path getAndroidPlatformsLocation(Project project) {
-        File androidSdkPath = AndroidSdks.getInstance().findPathOfSdkWithoutAddonsFolder(project);
-        String android_sdk_root;
-
-        if (androidSdkPath != null) {
-            android_sdk_root = androidSdkPath.getAbsolutePath();
-            logger.info("Choosing android sdk path automatically");
-        }
-        else {
-            android_sdk_root = System.getenv(Constants.ANDROID_SDK);
-            logger.info("Fallback for android sdk path to environment variable");
-        }
-
-        Path sdkPath = Paths.get(android_sdk_root);
-        if (android_sdk_root == null || android_sdk_root.equals("") || !sdkPath.toFile().exists())
-            throw new RuntimeException("Environment variable "+Constants.ANDROID_SDK+" not found!");
-        return sdkPath.resolve("platforms");
-    }
-
-    public static String getRulesDirectory() {
-        IPersistableCogniCryptSettings settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
-        return settings.getRulesDirectory();
     }
 }
 

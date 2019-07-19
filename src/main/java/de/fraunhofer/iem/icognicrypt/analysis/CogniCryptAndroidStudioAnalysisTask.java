@@ -66,6 +66,8 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
         _stopWatch.start();
         while(!_analysisQueue.isEmpty())
         {
+            indicator.checkCanceled();
+
             _analysedFilesCount++;
             indicator.setText(String.format("Performing CogniCrypt Analysis (APK %s of %s)", _analysedFilesCount, size));
             G.v().reset();
@@ -100,8 +102,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
     @Override
     public void onCancel()
     {
-        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "The Analysis was cancelled ", NotificationType.INFORMATION);
-        Notifications.Bus.notify(notification);
+        NotificationProvider.ShowInfo("The Analysis was cancelled");
     }
 
     @Override
@@ -122,9 +123,8 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
     @Override
     public void onThrowable(@NotNull Throwable error)
     {
-        Notification notification = new Notification("CogniCrypt", "CogniCrypt Info", "The analysis produced an unhandled exception. " +
-                "The operation will terminate now.", NotificationType.ERROR);
-        Notifications.Bus.notify(notification);
+        NotificationProvider.ShowError("The analysis produced an unhandled exception. " +
+                "The operation will terminate now.");
     }
 
     private boolean isIgnoredErrorType(AbstractError abstractError) {

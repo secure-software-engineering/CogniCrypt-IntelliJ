@@ -47,6 +47,12 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
     }
 
     @Override
+    public String GetDisplayName()
+    {
+        return "Analysis Results";
+    }
+
+    @Override
     public JPanel GetContent()
     {
         return _content;

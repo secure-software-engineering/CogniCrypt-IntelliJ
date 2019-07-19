@@ -16,16 +16,20 @@ public class CogniCryptToolWindowFactory implements ToolWindowFactory, DumbAware
     private static ContentFactory ContentFactory = com.intellij.ui.content.ContentFactory.SERVICE.getInstance();
 
     @Override
+    public void init(ToolWindow window)
+    {
+        window.setStripeTitle("CogniCrypt");
+    }
+
+    @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow)
     {
         ICogniCryptToolWindowManager toolWindowManager = project.getComponent(ICogniCryptToolWindowManager.class);
         toolWindowManager.RegisterToolWindow(toolWindow);
 
-        toolWindow.setStripeTitle("CogniCrypt");
-
         // Error Window
         ICogniCryptWindowBase resultsWindow = CogniCryptResultWindowFactory.CreateWindow(toolWindow, project);
-        Content resultsWindowContent = ContentFactory.createContent(resultsWindow.GetContent(), "Analysis Results", false);
+        Content resultsWindowContent = ContentFactory.createContent(resultsWindow.GetContent(), resultsWindow.GetDisplayName(), false);
         toolWindow.getContentManager().addContent(resultsWindowContent);
 
         //Other Windows below...

@@ -4,5 +4,7 @@ import javax.swing.*;
 
 public interface ICogniCryptWindowBase
 {
+    String GetDisplayName();
+
     JPanel GetContent();
 }

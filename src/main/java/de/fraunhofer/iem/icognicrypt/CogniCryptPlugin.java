@@ -2,35 +2,27 @@ package de.fraunhofer.iem.icognicrypt;
 
 import com.intellij.openapi.progress.ProgressIndicator;
 import de.fraunhofer.iem.icognicrypt.core.BackgroundComponent;
-import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
+import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLExtractor;
+import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 
 public class CogniCryptPlugin extends BackgroundComponent
 {
-    private static CogniCryptPlugin _instance;
+    private final CrySLExtractor _extractor;
+    private final IPersistableCogniCryptSettings _settings;
 
-    private boolean _initialized;
-
-    public static CogniCryptPlugin GetInstance() throws CogniCryptException
+    private CogniCryptPlugin(CrySLExtractor extractor, IPersistableCogniCryptSettings settings)
     {
-        if (_instance == null)
-            throw new CogniCryptException("CogniCrypt is not initialized.");
-        return _instance;
-    }
-
-    private CogniCryptPlugin() throws CogniCryptException
-    {
-        if (_instance != null)
-            throw new CogniCryptException("CogniCrypt already instanciated");
-        _instance = this;
+        _extractor = extractor;
+        _settings = settings;
     }
 
     @Override
-    protected void InitializeInBackground(ProgressIndicator indicator) throws CogniCryptException
+    protected void InitializeInBackground(ProgressIndicator indicator)
     {
-        if (_initialized)
-            throw new CogniCryptException("CogniCrypt already initialized");
-        _initialized = true;
-
-        // TODO: If we have global initializations to make, do them here
+        _extractor.ExtractIfRequired();
+        String path = _extractor.GetDefaultCrySLPath(CrySLExtractor.RulesTarget.JCA);
+        if (_settings.getRulesDirectory().equals(Constants.DummyCrySLPath) &&
+                !path.equals(Constants.DummyCrySLPath))
+            _settings.setRulesDirectory(path);
     }
 }

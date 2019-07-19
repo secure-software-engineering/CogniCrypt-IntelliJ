@@ -19,6 +19,8 @@
     <!-- Services -->
     <extensions defaultExtensionNs="com.intellij">
 
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.core.crySL.CrySLExtractor"/>
+
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsPersistentComponent"
                             serviceInterface="de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings"/>
 

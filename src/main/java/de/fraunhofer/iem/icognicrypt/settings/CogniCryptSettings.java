@@ -1,12 +1,13 @@
 package de.fraunhofer.iem.icognicrypt.settings;
 
+import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 
 import java.util.EnumSet;
 
 abstract class CogniCryptSettings implements ICogniCryptSettings
 {
-    protected String RulesDirectory = "./icognicrypt/resources/CrySLRules/JavaCryptographicArchitecture";
+    protected String RulesDirectory = Constants.DummyCrySLPath;
     protected boolean FindAutomatically = true;
     protected boolean IncludeSigned = false;
     protected boolean SignedOnly = false;

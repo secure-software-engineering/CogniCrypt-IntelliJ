@@ -32,6 +32,9 @@
         <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.results.ResultsProviderService"
                         serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>
 
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IntelliJPlatformOutputFinderWrapper"
+                            serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder"/>
+
     </extensions>
 
     <!-- Other Extensions -->

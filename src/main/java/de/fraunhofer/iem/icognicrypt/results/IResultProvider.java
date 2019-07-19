@@ -1,6 +1,7 @@
 package de.fraunhofer.iem.icognicrypt.results;
 
 import com.google.common.collect.Table;
+import de.fraunhofer.iem.icognicrypt.results.model.CogniCryptAnalysisResult;
 
 import java.util.Set;
 
@@ -26,6 +27,4 @@ public interface IResultProvider
     Table<String, Integer, Set<CogniCryptError>> GetErrors();
 
     Set<CogniCryptError> FindErrors(String javaAbsolutFilePath, int lineNumber);
-
-    void ClearErrors();
 }

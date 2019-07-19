@@ -117,9 +117,9 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
     }
 
     @Override
-    public void OnResultAdded()
+    public void OnResultAdded(CogniCryptError error)
     {
-
+        AddError(error);
     }
 
     @Override
@@ -131,7 +131,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
     @Override
     public void OnResultsCleared()
     {
-
+        ClearErrors();
     }
 
     public enum ResultTableColumn

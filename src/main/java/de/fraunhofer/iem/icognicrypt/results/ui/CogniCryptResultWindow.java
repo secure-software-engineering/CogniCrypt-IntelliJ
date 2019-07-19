@@ -3,12 +3,14 @@ package de.fraunhofer.iem.icognicrypt.results.ui;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
 import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
 
 import javax.swing.*;
 import java.lang.ref.WeakReference;
+import java.util.Set;
 
 class CogniCryptResultWindow implements ICogniCryptResultWindow
 {
@@ -33,6 +35,15 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
 
         IResultProvider service = ServiceManager.getService(project, IResultProvider.class);
         service.Subscribe(_tableModel);
+
+
+        for (Set<CogniCryptError> errorSet : service.GetErrors().values())
+        {
+            for (CogniCryptError error : errorSet)
+            {
+                _tableModel.AddError(error);
+            }
+        }
     }
 
     @Override

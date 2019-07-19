@@ -1,6 +1,7 @@
 package de.fraunhofer.iem.icognicrypt;
 
 import com.intellij.openapi.project.Project;
+import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener;
 
 public class TestImpl implements IResultsProviderListener
@@ -12,7 +13,7 @@ public class TestImpl implements IResultsProviderListener
     }
 
     @Override
-    public void OnResultAdded()
+    public void OnResultAdded(CogniCryptError error)
     {
 
     }

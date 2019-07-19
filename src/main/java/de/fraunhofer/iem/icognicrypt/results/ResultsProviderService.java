@@ -38,7 +38,6 @@ class ResultsProviderService implements IResultProvider
     {
         _results.add(result);
 
-
 //        for (IResultsProviderListener listener: _listeners)
 //            listener.OnResultAdded();
     }
@@ -52,7 +51,11 @@ class ResultsProviderService implements IResultProvider
     @Override
     public void RemoveAllResults()
     {
+        _results.clear();
+        errors.clear();
 
+        for (IResultsProviderListener listener: _listeners)
+            listener.OnResultsCleared();
     }
 
 
@@ -78,6 +81,9 @@ class ResultsProviderService implements IResultProvider
             errorCount++;
         }
         errors.put(fullyQualifiedClassName, lineNumber, s);
+
+        for (IResultsProviderListener listener: _listeners)
+            listener.OnResultAdded(error);
     }
 
     public Table<String, Integer, Set<CogniCryptError>> GetErrors()

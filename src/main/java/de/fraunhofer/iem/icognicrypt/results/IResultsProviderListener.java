@@ -6,7 +6,8 @@ public interface IResultsProviderListener
 {
     ExtensionPointName<IResultsProviderListener> EP_NAME = ExtensionPointName.create("de.fraunhofer.iem.icognicrypt.resultListener");
 
-    void OnResultAdded();
+    //TODO: Change to new model
+    void OnResultAdded(CogniCryptError error);
 
     void OnResultRemoved();
 

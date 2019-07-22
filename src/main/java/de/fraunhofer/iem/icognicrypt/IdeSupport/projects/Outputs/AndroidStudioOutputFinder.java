@@ -2,6 +2,7 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.Project;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
@@ -25,27 +26,19 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 
-public class AndroidStudioOutputFinder implements IOutputFinder
+class AndroidStudioOutputFinder implements IOutputFinder, IOutputFinderInternal
 {
     private static final Logger logger = Logger.getInstance(AndroidStudioOutputFinder.class);
-
-    private static IOutputFinder _instance;
     private final IPersistableCogniCryptSettings _settings;
 
-    public static IOutputFinder GetInstance()
-    {
-        if (_instance == null) _instance = new AndroidStudioOutputFinder();
-        return _instance;
-    }
-
-    private AndroidStudioOutputFinder()
+    AndroidStudioOutputFinder()
     {
         _settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
     }
 
     public Iterable<File> GetOutputFiles()
     {
-        return GetOutputFiles( _settings.GetFindOutputOptions());
+        throw new NotImplementedException();
     }
 
     @Override
@@ -55,24 +48,38 @@ public class AndroidStudioOutputFinder implements IOutputFinder
     }
 
     @Override
-    public Iterable<File> GetOutputFiles(Path projectRootPath, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
+    public Iterable<File> GetOutputFiles(Project project) throws OperationNotSupportedException, IOException, CogniCryptException
+    {
+        return GetOutputFiles(project, EnumSet.noneOf(OutputFinderOptions.Flags.class));
+    }
+
+    @Override
+    public Iterable<File> GetOutputFiles(Project project, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
+    {
+        Path path = Paths.get(project.getBasePath());
+        return GetOutputFiles(path, options);
+    }
+
+    @Override
+    public Iterable<File> GetOutputFiles(Path projectPath, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
     {
         logger.info("Try finding all built .apk files with options: " + options);
 
-        if (!Files.exists(projectRootPath)) throw new CogniCryptException("Root path of the project does not exist.");
+        if (!Files.exists(projectPath))
+            throw new CogniCryptException("Root path of the project does not exist.");
 
         HashSet<File> result = new HashSet<>();
 
         if (!options.isEmpty()){
-            result.addAll(GetModuleOutputs(projectRootPath, options));
-            result.addAll(GetExportedOutputs(projectRootPath, options));
+            result.addAll(GetModuleOutputs(projectPath, options));
+            result.addAll(GetExportedOutputs(projectPath, options));
         }
 
         if (result.isEmpty())
         {
             logger.info("Could not find any file. User is requested to choose one manually");
             FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
-            File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...", filter, projectRootPath);
+            File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...", filter, projectPath);
             if (userSelectedFile == null) logger.info("User did not select any file.");
             else
             {

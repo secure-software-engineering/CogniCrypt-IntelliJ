@@ -29,6 +29,9 @@
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsPersistentComponent"
                             serviceInterface="de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings"/>
 
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdePlatformProvider"
+            serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider"/>
+
         <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.results.ResultsProviderService"
                         serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>
 

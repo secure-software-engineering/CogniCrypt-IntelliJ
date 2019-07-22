@@ -13,7 +13,7 @@ public class Main
     public static void main(String[] args) throws IOException, OperationNotSupportedException, CogniCryptException
     {
         String tmpPath = "C:\\Users\\lrs\\AndroidStudioProjects\\HelloWorld";
-        IOutputFinder outputFinder = AndroidStudioOutputFinder.GetInstance();
+        IOutputFinderInternal outputFinder = new AndroidStudioOutputFinder();
 
         //EnumSet<OutputFinderOptions.Flags> statusFlags = EnumSet.noneOf(OutputFinderOptions.Flags.class);
         EnumSet<OutputFinderOptions.Flags> statusFlags = EnumSet.of(OutputFinderOptions.Flags.AnyBuild, OutputFinderOptions.Flags.SignedOnly);

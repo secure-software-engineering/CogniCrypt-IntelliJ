@@ -107,7 +107,7 @@ public class OutputJson
                 logger.info("Found and deserialized output.json: " + output);
                 return outputs[0];
             }
-            // TODO: I'm not sure if the Json-Array is ever filled with more than one entry. If so we need to change code here.
+            // I'm not sure if the Json-Array is ever filled with more than one entry. If so we need to change code here.
             throw new NotImplementedException();
         }
         catch (IOException e)

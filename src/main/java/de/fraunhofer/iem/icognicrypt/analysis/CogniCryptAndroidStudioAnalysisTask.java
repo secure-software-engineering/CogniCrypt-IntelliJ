@@ -56,8 +56,6 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
     @Override
     public void run(@NotNull ProgressIndicator indicator) {
 
-        // TODO: Check on a few relevant points (maybe after each .apk analysis) if the process was canceled by the user
-
         // Remove errors before rerunning Cognicrypt
         _resultProvider.RemoveAllResults();
 

@@ -65,7 +65,6 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             IOutputFinder outputFinder = ServiceManager.getService(project, IOutputFinder.class);
             files = outputFinder.GetOutputFiles(_settings.GetFindOutputOptions());
         }
-        // TODO: There should be a custom exception handling for the tool at some time (GUI, Report, etc.)
         catch (CogniCryptException ex)
         {
             logger.info("CogniCryptException was thrown: " + ex.getMessage());

@@ -36,7 +36,10 @@
                         serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>
 
         <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IntelliJPlatformOutputFinderWrapper"
-                            serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder"/>
+                            serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder"/>
+
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderCache"
+            serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinderCache"/>
 
     </extensions>
 
@@ -112,6 +115,10 @@
         <component>
             <implementation-class>de.fraunhofer.iem.icognicrypt.ui.ToolWindow.CogniCryptToolWindowManager</implementation-class>
             <interface-class>de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ICogniCryptToolWindowManager</interface-class>
+        </component>
+
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.IdeSupport.build.IntelliJPlatformBuildBroker</implementation-class>
         </component>
     </project-components>
 

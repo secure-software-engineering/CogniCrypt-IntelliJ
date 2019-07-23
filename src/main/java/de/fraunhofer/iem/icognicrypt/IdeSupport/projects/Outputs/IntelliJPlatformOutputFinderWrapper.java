@@ -11,9 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.EnumSet;
 
-public class IntelliJPlatformOutputFinderWrapper implements IOutputFinder, Disposable
+public class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Disposable
 {
-    private IOutputFinder _serviceProvider;
+    private IOutputFinderInternal _serviceProvider;
     private Project _project;
 
     private IntelliJPlatformOutputFinderWrapper(Project project, IIdePlatformProvider platformProvider) throws CogniCryptException
@@ -33,25 +33,13 @@ public class IntelliJPlatformOutputFinderWrapper implements IOutputFinder, Dispo
     @Override
     public Iterable<File> GetOutputFiles() throws OperationNotSupportedException, IOException, CogniCryptException
     {
-        return GetOutputFiles(_project);
+        return _serviceProvider.GetOutputFiles(_project);
     }
 
     @Override
     public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options) throws OperationNotSupportedException, IOException, CogniCryptException
     {
-        return GetOutputFiles(_project, options);
-    }
-
-    @Override
-    public Iterable<File> GetOutputFiles(Project project) throws OperationNotSupportedException, IOException, CogniCryptException
-    {
-        return _serviceProvider.GetOutputFiles(project);
-    }
-
-    @Override
-    public Iterable<File> GetOutputFiles(Project project, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
-    {
-        return _serviceProvider.GetOutputFiles(project, options);
+        return _serviceProvider.GetOutputFiles(_project, options);
     }
 
     @Override

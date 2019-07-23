@@ -19,12 +19,12 @@ import com.intellij.openapi.vfs.VirtualFile;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdeType;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinderCache;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
+import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
 import de.fraunhofer.iem.icognicrypt.core.android.AndroidPlatformLocator;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
-import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import org.jetbrains.annotations.NotNull;
@@ -59,24 +59,10 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             return;
         }
 
-        Iterable<File> files = null;
-        try
-        {
-            IOutputFinder outputFinder = ServiceManager.getService(project, IOutputFinder.class);
-            files = outputFinder.GetOutputFiles(_settings.GetFindOutputOptions());
-        }
-        catch (CogniCryptException ex)
-        {
-            logger.info("CogniCryptException was thrown: " + ex.getMessage());
-            ex.printStackTrace();
-        }
-        catch (Exception ex)
-        {
-            logger.info("Exception of type '" + ex.getClass() + "' was thrown: " + ex.getMessage());
-            ex.printStackTrace();
-        }
+        IOutputFinderCache cache = ServiceManager.getService(project, IOutputFinderCache.class);
+        Iterable<File> files = cache.GetOutputFiles(_settings.GetFindOutputOptions());
 
-        if (files == null)
+        if (files == null || !Linq.any(files))
         {
             NotificationProvider.ShowInfo("No files were analysed");
             return;

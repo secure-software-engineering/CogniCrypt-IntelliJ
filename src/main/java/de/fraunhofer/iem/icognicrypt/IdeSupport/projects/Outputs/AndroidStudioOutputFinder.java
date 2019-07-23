@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 
-class AndroidStudioOutputFinder implements IOutputFinder, IOutputFinderInternal
+class AndroidStudioOutputFinder implements IOutputFinderInternal
 {
     private static final Logger logger = Logger.getInstance(AndroidStudioOutputFinder.class);
     private final IPersistableCogniCryptSettings _settings;
@@ -36,21 +36,10 @@ class AndroidStudioOutputFinder implements IOutputFinder, IOutputFinderInternal
         _settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
     }
 
-    public Iterable<File> GetOutputFiles()
-    {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options)
-    {
-        throw new NotImplementedException();
-    }
-
     @Override
     public Iterable<File> GetOutputFiles(Project project) throws OperationNotSupportedException, IOException, CogniCryptException
     {
-        return GetOutputFiles(project, EnumSet.noneOf(OutputFinderOptions.Flags.class));
+        return GetOutputFiles(project, _settings.GetFindOutputOptions());
     }
 
     @Override

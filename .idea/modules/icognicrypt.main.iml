@@ -12,6 +12,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:CryptoAnalysis-Android:2.4" level="project" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:CryptoAnalysis:2.4" level="project" />
+    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-cmd:2.7.1" level="project" />
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
@@ -21,7 +22,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-cmd:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-android:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-summaries:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow:2.7.1" level="project" />
@@ -78,6 +78,9 @@
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:boomerangPDS:2.4-SNAPSHOT" level="project" />
     <orderEntry type="module-library" scope="PROVIDED">
       <library name="Gradle: com.jetbrains:ideaIC:2018.3.6">
+        <ANNOTATIONS>
+          <root url="jar://$MAVEN_REPOSITORY$/com/jetbrains/intellij/idea/ideaIU/2018.3.6/ideaIU-2018.3.6-annotations.zip!/" />
+        </ANNOTATIONS>
         <CLASSES>
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2018.3.6/be4a083c7dca1159d340fd6dcacc4a78646acfb4/ideaIC-2018.3.6/lib/aether-api-1.1.0.jar!/" />
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2018.3.6/be4a083c7dca1159d340fd6dcacc4a78646acfb4/ideaIC-2018.3.6/lib/aether-connector-basic-1.1.0.jar!/" />

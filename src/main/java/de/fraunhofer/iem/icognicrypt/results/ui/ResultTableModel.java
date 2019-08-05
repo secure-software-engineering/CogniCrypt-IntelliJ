@@ -1,9 +1,13 @@
 package de.fraunhofer.iem.icognicrypt.results.ui;
 
+import com.intellij.openapi.application.ApplicationManager;
+import com.sun.java.help.impl.SwingWorker;
+import de.fraunhofer.iem.icognicrypt.core.threading.ThreadHelper;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 import de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,7 +29,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
     public ResultTableModel()
     {
         _columns.addAll(Arrays.asList(ResultTableColumn.values()));
-        fireTableStructureChanged();
+        ThreadHelper.DeferOnUIThread(() -> fireTableStructureChanged());
     }
 
     @Override
@@ -102,14 +106,14 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
 
     private void insertRow(int row, CogniCryptError rowData) {
         _results.insertElementAt(rowData, row);
-        fireTableRowsInserted(row, row);
+        ThreadHelper.DeferOnUIThread(() -> fireTableRowsInserted(row, row));
     }
 
     private void RemoveRow(int row){
         try
         {
             _results.removeElementAt(row);
-            fireTableRowsDeleted(row, row);
+            ThreadHelper.DeferOnUIThread(() -> fireTableRowsDeleted(row, row));
         }
         catch (IndexOutOfBoundsException e){
 
@@ -119,7 +123,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
     @Override
     public void OnResultAdded(CogniCryptError error)
     {
-        AddError(error);
+            AddError(error);
     }
 
     @Override

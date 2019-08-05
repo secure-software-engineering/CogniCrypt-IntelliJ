@@ -36,7 +36,7 @@ public class CogniCryptErrorLineMarker implements LineMarkerProvider
 
             String qualifiedName = clazz.getQualifiedName();
 
-            int lineNumber = getLineNumber(psiElement);
+            int lineNumber = getLineNumber(psiElement) + 1;
             //Check if an error exists for the line number that the element is located
 
             String path = psiElement.getContainingFile().getVirtualFile().getPath();

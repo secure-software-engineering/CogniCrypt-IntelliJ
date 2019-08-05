@@ -81,7 +81,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
                             continue;
 
                         String name = abstractError.getErrorLocation().getMethod().getDeclaringClass().getName();
-                        int line = abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber() - 1;
+                        int line = abstractError.getErrorLocation().getUnit().get().getJavaSourceStartLineNumber();
 
                         //_resultProvider.AddResult(new CogniCryptAnalysisResult(abstractError));
                         _resultProvider.AddResult(name, line, new CogniCryptError(abstractError.toErrorMarkerString(), name, line));

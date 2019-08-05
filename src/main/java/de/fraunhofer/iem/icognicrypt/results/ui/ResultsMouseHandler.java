@@ -46,7 +46,8 @@ public class ResultsMouseHandler extends MouseAdapter
         if (fileEditor == null)
             return;
         Editor editorModel = ((TextEditor) fileEditor).getEditor();
-        editorModel.getCaretModel().moveToLogicalPosition(new LogicalPosition(error.getLine(), 0));
+        int line = error.getLine() -1;
+        editorModel.getCaretModel().moveToLogicalPosition(new LogicalPosition(line, 0));
         editorModel.getScrollingModel().scrollToCaret(ScrollType.CENTER);
     }
 

@@ -52,8 +52,3 @@ To enable the debug functionality you need to add a run configuration in Intelli
 1. Build your `.apk` and make sure it successfully produces an `.apk` file within your project folder.
 2. Go to `Analyze > Run CogniCrypt`
 3. Wait till analysis process terminates.
-
----
-
-# Known Bugs
-- A tool window must be open before starting the analysis to show results

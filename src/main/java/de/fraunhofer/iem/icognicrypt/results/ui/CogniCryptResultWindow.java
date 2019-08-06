@@ -1,11 +1,16 @@
 package de.fraunhofer.iem.icognicrypt.results.ui;
 
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultWindow;
+import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
 
 import javax.swing.*;
 import java.lang.ref.WeakReference;
+import java.util.Set;
 
 class CogniCryptResultWindow implements ICogniCryptResultWindow
 {
@@ -13,8 +18,10 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
     private CogniCryptResultTable _resultTable;
     private JComboBox _scopeComboBox;
     private JLabel _errorNumberLabel;
+    private JPanel _toolBarPanel;
 
     private WeakReference<ToolWindow> _toolWindow;
+    private WeakReference<Project> _project;
 
     private ICogniCryptResultTableModel _tableModel;
 
@@ -22,9 +29,30 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
         return _tableModel;
     }
 
-    public CogniCryptResultWindow(ToolWindow toolWindow)
+    public CogniCryptResultWindow(ToolWindow toolWindow, Project project)
     {
         _toolWindow = new WeakReference<>(toolWindow);
+        _project = new WeakReference<>(project);
+
+        _toolBarPanel.setVisible(false);
+
+        IResultProvider service = ServiceManager.getService(project, IResultProvider.class);
+        service.Subscribe(_tableModel);
+
+
+        for (Set<CogniCryptError> errorSet : service.GetErrors().values())
+        {
+            for (CogniCryptError error : errorSet)
+            {
+                _tableModel.AddError(error);
+            }
+        }
+    }
+
+    @Override
+    public String GetDisplayName()
+    {
+        return "Analysis Results";
     }
 
     @Override

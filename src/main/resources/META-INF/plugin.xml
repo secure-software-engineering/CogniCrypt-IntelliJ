@@ -16,25 +16,50 @@
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="183"/>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-        <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="de.fraunhofer.iem.icognicrypt.results.ErrorLineMarker"/>
-        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettingsPersistentComponent"/>
-        <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.ui.CogniCryptSettings"/>
+    <extensionPoints>
+        <extensionPoint name="resultListener" interface="de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener"
+                        area="IDEA_PROJECT"/>
+    </extensionPoints>
 
-        <!-- The CogniCrypt ToolWindow is handled separately to ensure a synced lifecycle with it's project and the initialization of the plugin itself.
-             See icognicrypt.CogniCryptToolWindowManager::OnProjectOpened how it's done here.
-             If we ever need a tool window that does not require such a strict synchronisation we can declare them in this file again. -->
+    <!-- Services -->
+    <extensions defaultExtensionNs="com.intellij">
+
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.core.crySL.CrySLExtractor"/>
+
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsPersistentComponent"
+                            serviceInterface="de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings"/>
+
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdePlatformProvider"
+            serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider"/>
+
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.results.ResultsProviderService"
+                        serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>
+
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IntelliJPlatformOutputFinderWrapper"
+                            serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder"/>
+
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderCache"
+            serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinderCache"/>
+
+    </extensions>
+
+    <!-- Other Extensions -->
+    <extensions defaultExtensionNs="com.intellij">
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorLineMarker"/>
+
+        <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsView" groupId="root"/>
+
+
+        <toolWindow factoryClass="de.fraunhofer.iem.icognicrypt.ui.ToolWindow.CogniCryptToolWindowFactory"
+                    id="ICogniCrypt.ToolWindow" anchor="bottom" canCloseContents="false"  icon="/icons/cognicrypt.png"/>
 
     </extensions>
 
 
-    <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.CogniCryptPlugin"/>
-        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager"/>
-        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager"/>
-        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager"/>
+    <!-- Testing purpose extensions -->
+    <extensions defaultExtensionNs="de.fraunhofer.iem.icognicrypt">
+        <resultListener implementation="de.fraunhofer.iem.icognicrypt.TestImpl"/>
     </extensions>
 
     <actions>
@@ -63,14 +88,37 @@
     </actions>
 
     <application-components>
+
         <component>
-            <implementation-class>de.fraunhofer.iem.icognicrypt.StartupPackage</implementation-class>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.CogniCryptPlugin</implementation-class>
         </component>
+
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager</implementation-class>
+            <interface-class>de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ICogniCryptProjectManager</interface-class>
+        </component>
+
     </application-components>
 
     <project-components>
+
         <component>
-            <implementation-class>de.fraunhofer.iem.icognicrypt.analysis.CompilationListener</implementation-class>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.CogniCryptComponent</implementation-class>
+            <interface-class>de.fraunhofer.iem.icognicrypt.ICogniCryptComponent</interface-class>
+        </component>
+
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager</implementation-class>
+            <interface-class>de.fraunhofer.iem.icognicrypt.analysis.ICogniCryptAnalysisManager</interface-class>
+        </component>
+
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.ui.ToolWindow.CogniCryptToolWindowManager</implementation-class>
+            <interface-class>de.fraunhofer.iem.icognicrypt.ui.ToolWindow.ICogniCryptToolWindowManager</interface-class>
+        </component>
+
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.IdeSupport.build.IntelliJPlatformBuildBroker</implementation-class>
         </component>
     </project-components>
 

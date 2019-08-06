@@ -1,15 +1,20 @@
 package de.fraunhofer.iem.icognicrypt.results.ui;
 
+import com.intellij.openapi.application.ApplicationManager;
+import com.sun.java.help.impl.SwingWorker;
+import de.fraunhofer.iem.icognicrypt.core.threading.ThreadHelper;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
+import de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTableModel
+class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTableModel, IResultsProviderListener
 {
     private static final int EmptyColumnIndex = 0;
     private static final int SeverityColumnIndex = 1;
@@ -24,7 +29,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
     public ResultTableModel()
     {
         _columns.addAll(Arrays.asList(ResultTableColumn.values()));
-        fireTableStructureChanged();
+        ThreadHelper.DeferOnUIThread(() -> fireTableStructureChanged());
     }
 
     @Override
@@ -101,18 +106,36 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
 
     private void insertRow(int row, CogniCryptError rowData) {
         _results.insertElementAt(rowData, row);
-        fireTableRowsInserted(row, row);
+        ThreadHelper.DeferOnUIThread(() -> fireTableRowsInserted(row, row));
     }
 
     private void RemoveRow(int row){
         try
         {
             _results.removeElementAt(row);
-            fireTableRowsDeleted(row, row);
+            ThreadHelper.DeferOnUIThread(() -> fireTableRowsDeleted(row, row));
         }
         catch (IndexOutOfBoundsException e){
 
         }
+    }
+
+    @Override
+    public void OnResultAdded(CogniCryptError error)
+    {
+            AddError(error);
+    }
+
+    @Override
+    public void OnResultRemoved()
+    {
+
+    }
+
+    @Override
+    public void OnResultsCleared()
+    {
+        ClearErrors();
     }
 
     public enum ResultTableColumn

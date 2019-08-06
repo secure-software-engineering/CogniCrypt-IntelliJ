@@ -5,7 +5,6 @@ import com.intellij.openapi.project.Project;
 
 public abstract class CogniCryptProjectListener implements ICogniCryptProjectListener, Disposable
 {
-
     @Override
     public void dispose()
     {

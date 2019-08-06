@@ -1,52 +1,30 @@
 package de.fraunhofer.iem.icognicrypt;
 
+import com.intellij.openapi.application.Application;
 import com.intellij.openapi.components.ServiceManager;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectListener;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager;
-import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAnalysisManager;
-import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
-import de.fraunhofer.iem.icognicrypt.ui.CogniCryptToolWindowManager;
+import com.intellij.openapi.progress.ProgressIndicator;
+import de.fraunhofer.iem.icognicrypt.core.BackgroundComponent;
+import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLExtractor;
+import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 
-/**
- * This class gets initialized as soon as one project is loaded to the IDE.
- * It shall initialize global project-independent services.
- *
- * The attempt to create a second instance will cause an {@link CogniCryptException} to be thrown.
- *
- */
-public class CogniCryptPlugin
+public class CogniCryptPlugin extends BackgroundComponent
 {
-    private static CogniCryptPlugin _instance;
+    private final CrySLExtractor _extractor;
+    private final IPersistableCogniCryptSettings _settings;
 
-    private boolean _initialized;
-
-    public static CogniCryptPlugin GetInstance() throws CogniCryptException
+    private CogniCryptPlugin(CrySLExtractor extractor, IPersistableCogniCryptSettings settings)
     {
-        if (_instance == null)
-            throw new CogniCryptException("CogniCrypt is not initialized.");
-        return _instance;
+        _extractor = extractor;
+        _settings = settings;
     }
 
-    private CogniCryptPlugin() throws CogniCryptException
+    @Override
+    protected void InitializeInBackground(ProgressIndicator indicator)
     {
-        if (_instance != null)
-            throw new CogniCryptException("CogniCrypt already instanciated");
-        _instance = this;
-        Initialize();
-    }
-
-    public void Initialize() throws CogniCryptException
-    {
-        if (_initialized)
-            throw new CogniCryptException("CogniCrypt already initialized");
-
-        CogniCryptProjectManager projectManager = ServiceManager.getService(CogniCryptProjectManager.class);
-        CogniCryptProjectListener toolWindowManager = ServiceManager.getService(CogniCryptToolWindowManager.class);
-        CogniCryptProjectListener analysisManager = ServiceManager.getService(CogniCryptAnalysisManager.class);
-
-        projectManager.Subscribe(toolWindowManager);
-        projectManager.Subscribe(analysisManager);
-
-        _initialized = true;
+        _extractor.ExtractIfRequired();
+        String path = _extractor.GetDefaultCrySLPath(CrySLExtractor.RulesTarget.JCA);
+        if (_settings.getRulesDirectory().equals(Constants.DummyCrySLPath) &&
+                !path.equals(Constants.DummyCrySLPath))
+            _settings.setRulesDirectory(path);
     }
 }

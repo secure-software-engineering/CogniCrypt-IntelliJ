@@ -88,5 +88,5 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
-icognicrypt.main.iml
-icognicrypt.test.iml
+.idea/modules/icognicrypt.main.iml
+.idea/modules/icognicrypt.test.iml

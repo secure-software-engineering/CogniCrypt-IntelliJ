@@ -32,7 +32,6 @@
  .idea/modules
  *.iml
  *.ipr
- icognicrypt/.idea/modules/*.iml
 
 # CMake
 cmake-build-*/
@@ -87,6 +86,3 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
-
-.idea/modules/icognicrypt.main.iml
-.idea/modules/icognicrypt.test.iml

@@ -7,8 +7,10 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.SystemUtils;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,10 +28,9 @@ public class JavaFileToClassNameResolver
      */
     public static String FindFileFromFullyQualifiedName(String fullyQualifiedName, Project project)
     {
-
         String relativeContainerPath = fullyQualifiedName.split("\\$")[0];
-        String relativePath = relativeContainerPath.replace(".","\\") + ".java";
-
+        char separator = File.separatorChar;
+        String relativePath = relativeContainerPath.replace('.',separator) + ".java";
         List<VirtualFile> sourceRoots = getSourceRoots(project);
 
         for(VirtualFile m : sourceRoots)
@@ -55,8 +56,12 @@ public class JavaFileToClassNameResolver
 
     private static String convertToFullyQualifiedClassName(File javaFile, String sourceCodeBasePath) {
         String withoutFileending = javaFile.getAbsolutePath().replace(".java","");
-        String replaceWindowsStrings = withoutFileending.replace("\\","/");
-        String stripBasePath = replaceWindowsStrings.replace(sourceCodeBasePath,"");
+
+        if (SystemUtils.IS_OS_WINDOWS){
+            withoutFileending = withoutFileending.replace(File.separator,"/");
+        }
+
+        String stripBasePath = withoutFileending.replace(sourceCodeBasePath,"");
         String slashesToDots = stripBasePath.replace("/",".");
         return slashesToDots.replaceFirst(".","");
     }

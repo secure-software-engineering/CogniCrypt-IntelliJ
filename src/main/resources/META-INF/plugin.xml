@@ -32,6 +32,8 @@
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdePlatformProvider"
             serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider"/>
 
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguagesUtils"/>
+
         <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.results.ResultsProviderService"
                         serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>
 

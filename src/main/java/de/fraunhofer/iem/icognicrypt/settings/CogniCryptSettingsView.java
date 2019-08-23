@@ -6,6 +6,7 @@ import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
+import de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguage;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
 import org.jetbrains.annotations.Nls;
@@ -30,6 +31,8 @@ class CogniCryptSettingsView implements Configurable
     private JCheckBox _includeSignedBuildsBox;
     private JCheckBox _onlySignedBox;
     private JLabel _findBuildOptionLabel;
+    private JPanel _generalGroup;
+    private JComboBox _optimizedLanguageComboBox;
 
     private ICogniCryptSettings _oldState;
     private ICogniCryptSettings _currentState;
@@ -68,8 +71,14 @@ class CogniCryptSettingsView implements Configurable
 
     private final Runnable _onBuildTypeChanged = () ->
     {
-        OutputFinderOptions.Flags newValue = OnComboboxItemChanged();
+        OutputFinderOptions.Flags newValue = OnComboboxItemChanged(_findBuildOptionBox);
         _currentState.setFinderBuildType(newValue.getStatusFlagValue());
+    };
+
+    private final Runnable _onOptimizationChanged = () ->
+    {
+        SupportedLanguage newValue = OnComboboxItemChanged(_optimizedLanguageComboBox);
+        _currentState.setOptimizedLanguage(newValue);
     };
 
 
@@ -85,7 +94,7 @@ class CogniCryptSettingsView implements Configurable
     @Override
     public String getDisplayName()
     {
-        return "CongiCrypt";
+        return "CogniCrypt";
     }
 
     @Nullable
@@ -110,6 +119,7 @@ class CogniCryptSettingsView implements Configurable
         settings.setFinderBuildType(_currentState.getFinderBuildType());
         settings.setIncludeSigned(_currentState.getIncludeSigned());
         settings.setSignedOnly(_currentState.getSignedOnly());
+        settings.setOptimizedLanguage(_currentState.getOptimizedLanguage());
         _oldState = new CachedSettingsState(settings);
     }
 
@@ -126,9 +136,9 @@ class CogniCryptSettingsView implements Configurable
         return currentValue;
     }
 
-    protected  <T> T OnComboboxItemChanged()
+    protected  <T> T OnComboboxItemChanged(JComboBox comboBox)
     {
-        T currentValue = (T) _findBuildOptionBox.getSelectedItem();
+        T currentValue = (T) comboBox.getSelectedItem();
         return currentValue;
     }
 
@@ -156,9 +166,11 @@ class CogniCryptSettingsView implements Configurable
 
     private void SetupUi()
     {
-        _apkFindGroup.setBorder(BorderFactory.createTitledBorder("Analyse Options"));
-        Set<OutputFinderOptions.Flags> set = EnumSet.of(OutputFinderOptions.Flags.Debug, OutputFinderOptions.Flags.Release, OutputFinderOptions.Flags.AnyBuild);
-        _findBuildOptionBox.setModel(new DefaultComboBoxModel(set.toArray()));
+        _apkFindGroup.setBorder(BorderFactory.createTitledBorder("Analyze Options"));
+        _generalGroup.setBorder(BorderFactory.createTitledBorder("General"));
+        Set<OutputFinderOptions.Flags> outputOptions = EnumSet.of(OutputFinderOptions.Flags.Debug, OutputFinderOptions.Flags.Release, OutputFinderOptions.Flags.AnyBuild);
+        _findBuildOptionBox.setModel(new DefaultComboBoxModel(outputOptions.toArray()));
+        _optimizedLanguageComboBox.setModel(new DefaultComboBoxModel(SupportedLanguage.values()));
         SetUiFromSettings(_oldState);
     }
 
@@ -169,6 +181,7 @@ class CogniCryptSettingsView implements Configurable
         _includeSignedBuildsBox.addActionListener(e -> _onIncludeSignedChanged.run());
         _onlySignedBox.addActionListener(e -> _onSignedOnlyChanged.run());
         _findBuildOptionBox.addActionListener(e -> _onBuildTypeChanged.run());
+        _optimizedLanguageComboBox.addActionListener(e -> _onOptimizationChanged.run());
     }
 
 
@@ -181,6 +194,7 @@ class CogniCryptSettingsView implements Configurable
             _onlySignedBox.setSelected(settings.getSignedOnly());
             OutputFinderOptions.Flags buildType = Linq.last(OutputFinderOptions.getStatusFlags(settings.getFinderBuildType()));
             _findBuildOptionBox.setSelectedItem(buildType);
+            _optimizedLanguageComboBox.setSelectedItem(settings.getOptimizedLanguage());
         }
         finally
         {
@@ -188,6 +202,7 @@ class CogniCryptSettingsView implements Configurable
             _onFindAutomaticallyChanged.run();
             _onIncludeSignedChanged.run();
             _onSignedOnlyChanged.run();
+            _onOptimizationChanged.run();
         }
     }
 

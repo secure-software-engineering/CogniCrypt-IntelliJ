@@ -16,4 +16,6 @@ interface IOutputFinderInternal
     Iterable<File> GetOutputFiles(Project project) throws OperationNotSupportedException, IOException, CogniCryptException;
 
     Iterable<File> GetOutputFiles(Project project, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException;
+
+    Iterable<File> GetOutputFilesFromDialog(Project project);
 }

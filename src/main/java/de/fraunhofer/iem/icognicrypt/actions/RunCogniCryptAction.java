@@ -19,7 +19,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdeType;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinderCache;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
@@ -32,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,8 +61,16 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             return;
         }
 
-        IOutputFinderCache cache = ServiceManager.getService(project, IOutputFinderCache.class);
-        Iterable<File> files = cache.GetOutputFiles(_settings.GetFindOutputOptions());
+        IProjectOutputFinder outputFinder = ServiceManager.getService(project, IProjectOutputFinder.class);
+
+        EnumSet<OutputFinderOptions.Flags> options = _settings.GetFindOutputOptions();
+        Iterable<File> files = outputFinder.GetOutputFiles(options);
+
+        if (!Linq.any(files) && Linq.any(options))
+        {
+            logger.info("No .apk file was found. User is requested to choose one manually");
+            files = outputFinder.GetOutputFilesFromDialog();
+        }
 
         if (files == null || !Linq.any(files))
         {
@@ -116,7 +126,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         List<String> classpath = new ArrayList<>();
         for (Module module : ModuleManager.getInstance(project).getModules())
         {
-            //Add classpath jars from Java, Android and Gradle to list
+            //Add classpath jars from Language, Android and Gradle to list
             for (VirtualFile file : OrderEnumerator.orderEntries(module).recursively().getClassesRoots())
             {
                 classpath.add(file.getPath());

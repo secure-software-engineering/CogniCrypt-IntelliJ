@@ -1,7 +1,10 @@
 package de.fraunhofer.iem.icognicrypt.settings;
 
+import com.intellij.openapi.components.ServiceManager;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
+import de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguage;
+import de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguagesUtils;
 
 import java.util.EnumSet;
 
@@ -11,6 +14,7 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
     protected boolean FindAutomatically = true;
     protected boolean IncludeSigned = false;
     protected boolean SignedOnly = false;
+    protected SupportedLanguage OptimizedLanguage = SupportedLanguage.Java;
 
     protected int FinderBuildType = OutputFinderOptions.Flags.Debug.getStatusFlagValue();
 
@@ -25,6 +29,7 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
         setFinderBuildType(other.getFinderBuildType());
         setIncludeSigned(other.getIncludeSigned());
         setSignedOnly(other.getSignedOnly());
+        setOptimizedLanguage(other.getOptimizedLanguage());
     }
 
     public String getRulesDirectory()
@@ -88,6 +93,17 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
         SignedOnly = value;
     }
 
+    @Override
+    public SupportedLanguage getOptimizedLanguage()
+    {
+        return OptimizedLanguage;
+    }
+
+    @Override
+    public void setOptimizedLanguage(SupportedLanguage optimizedLanguage)
+    {
+        OptimizedLanguage = optimizedLanguage;
+    }
 
     public EnumSet<OutputFinderOptions.Flags> GetFindOutputOptions(){
         EnumSet<OutputFinderOptions.Flags> result = EnumSet.noneOf(OutputFinderOptions.Flags.class);
@@ -125,6 +141,8 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
         if (IncludeSigned != other.getIncludeSigned())
             return false;
         if (SignedOnly != other.getSignedOnly())
+            return false;
+        if (OptimizedLanguage != other.getOptimizedLanguage())
             return false;
         return true;
     }

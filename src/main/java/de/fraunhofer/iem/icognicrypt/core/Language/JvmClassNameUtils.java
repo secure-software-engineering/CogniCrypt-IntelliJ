@@ -1,23 +1,32 @@
-package de.fraunhofer.iem.icognicrypt.core.Java;
+package de.fraunhofer.iem.icognicrypt.core.Language;
 
 import com.google.common.collect.Lists;
+import com.intellij.lang.Language;
+import com.intellij.lang.LanguageUtil;
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
+import com.intellij.openapi.vfs.VirtualFileSystem;
+import com.intellij.openapi.vfs.ex.VirtualFileManagerEx;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.SystemUtils;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 // TODO: Optimize, optimize, optimize!!!
-public class JavaFileToClassNameResolver
+public class JvmClassNameUtils
 {
 
     //TODO: Currently we cannot find private classes or package-private classes which are in the same file and the public class.
@@ -43,34 +52,49 @@ public class JavaFileToClassNameResolver
     }
 
     //TODO: Currently we cannot find private classes not package-private classes which are in the same file and the public class.
-    public static List<String> findFullyQualifiedJavaClassNames(Project project)
+    public static List<String> findFullyQualifiedClassNames(Project project)
     {
         List<String> results = Lists.newArrayList();
         List<VirtualFile> sourceRoots = getSourceRoots(project);
-        for(VirtualFile m : sourceRoots){
-            results.addAll(FileUtils.listFiles(new File(m.getPath()), new String[]{"java"}, true).stream().map(f -> convertToFullyQualifiedClassName(f, m.getPath())
-            ).distinct().collect(Collectors.toList()));
+        SupportedLanguagesUtils languagesUtils = ServiceManager.getService(SupportedLanguagesUtils.class);
+
+        for (VirtualFile root : sourceRoots)
+        {
+            String path = root.getPath();
+            Collection<File> supportedFiles = languagesUtils.GetSupportedSourceFiles(root);
+            results.addAll(supportedFiles.stream().map(f -> convertToFullyQualifiedClassName(f, path)).distinct().collect(Collectors.toList()));
         }
         return results;
     }
 
     private static String convertToFullyQualifiedClassName(File javaFile, String sourceCodeBasePath) {
-        String withoutFileending = javaFile.getAbsolutePath().replace(".java","");
+        String withoutFileEnding = FilenameUtils.removeExtension(javaFile.getAbsolutePath());
 
         if (SystemUtils.IS_OS_WINDOWS){
-            withoutFileending = withoutFileending.replace(File.separator,"/");
+            withoutFileEnding = withoutFileEnding.replace(File.separator,"/");
         }
 
-        String stripBasePath = withoutFileending.replace(sourceCodeBasePath,"");
+        String stripBasePath = withoutFileEnding.replace(sourceCodeBasePath,"");
         String slashesToDots = stripBasePath.replace("/",".");
         return slashesToDots.replaceFirst(".","");
     }
+
     private static List<VirtualFile> getSourceRoots(Project project) {
+        return getSourceRoots(project, false, false);
+    }
+
+    private static List<VirtualFile> getSourceRoots(Project project, boolean includeTests, boolean includeGeneratedCode)
+    {
         List<VirtualFile> res = Lists.newArrayList();
-        for(Module m : ModuleManager.getInstance(project).getModules()){
+        for (Module m : ModuleManager.getInstance(project).getModules())
+        {
             ModuleRootManager mgr = ModuleRootManager.getInstance(m);
-            for(VirtualFile f : mgr.getSourceRoots(false)) {
-                res.add(f);
+            for (VirtualFile file : mgr.getSourceRoots(includeTests))
+            {
+                boolean pathFromGenerated = file.getPath().contains("build/generated");
+
+                if (!pathFromGenerated || (pathFromGenerated && includeGeneratedCode))
+                    res.add(file);
             }
         }
         return res;

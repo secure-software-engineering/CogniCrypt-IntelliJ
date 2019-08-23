@@ -46,7 +46,7 @@ public class JavaModule implements IHasOutputManager
         @Override
         public void InvalidateOutput()
         {
-            _owner.logger.info("Invalidating Java Module " + _path);
+            _owner.logger.info("Invalidating Language Module " + _path);
             String debugPath = CreateOutputFilePath("debug");
             String releasePath = CreateOutputFilePath("release");
             DebugJson = OutputJson.Deserialize(debugPath);

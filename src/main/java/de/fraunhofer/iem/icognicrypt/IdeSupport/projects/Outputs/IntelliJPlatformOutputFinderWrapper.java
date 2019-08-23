@@ -4,19 +4,18 @@ import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
+import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.naming.OperationNotSupportedException;
 import java.io.File;
-import java.io.IOException;
 import java.util.EnumSet;
 
-public class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Disposable
+class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Disposable
 {
     private IOutputFinderInternal _serviceProvider;
-    private Project _project;
+    private IOutputFinderCache _cache;
 
-    private IntelliJPlatformOutputFinderWrapper(Project project, IIdePlatformProvider platformProvider) throws CogniCryptException
+    private IntelliJPlatformOutputFinderWrapper(Project project, IIdePlatformProvider platformProvider, IPersistableCogniCryptSettings settings) throws CogniCryptException
     {
         switch (platformProvider.GetRunningPlatform())
         {
@@ -27,24 +26,35 @@ public class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder
             case AndroidStudio:
                 _serviceProvider = new AndroidStudioOutputFinder();
         }
-        _project = project;
+        _cache = new OutputFinderCache(project, _serviceProvider, settings);
     }
 
     @Override
-    public Iterable<File> GetOutputFiles() throws OperationNotSupportedException, IOException, CogniCryptException
+    public Iterable<File> GetOutputFiles()
     {
-        return _serviceProvider.GetOutputFiles(_project);
+        return _cache.GetOutputFiles();
     }
 
     @Override
-    public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options) throws OperationNotSupportedException, IOException, CogniCryptException
+    public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options)
     {
-        return _serviceProvider.GetOutputFiles(_project, options);
+        return _cache.GetOutputFiles(options);
+    }
+
+    @Override
+    public Iterable<File> GetOutputFilesFromDialog()
+    {
+        return _cache.GetOutputFilesFromDialog();
+    }
+
+    public IOutputFinderCache GetCache(){
+        return _cache;
     }
 
     @Override
     public void dispose()
     {
         _serviceProvider = null;
+        _cache = null;
     }
 }

@@ -7,10 +7,10 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectModuleManager;
+import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
-import org.apache.commons.lang.NotImplementedException;
 
 import javax.naming.OperationNotSupportedException;
 import javax.swing.filechooser.FileFilter;
@@ -21,10 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
+import java.util.*;
 
 class AndroidStudioOutputFinder implements IOutputFinderInternal
 {
@@ -65,18 +62,28 @@ class AndroidStudioOutputFinder implements IOutputFinderInternal
         }
 
         if (result.isEmpty())
-        {
-            logger.info("Could not find any file. User is requested to choose one manually");
-            FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
-            File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...", filter, projectPath);
-            if (userSelectedFile == null) logger.info("User did not select any file.");
-            else
-            {
-                logger.info("Added manual file: " + userSelectedFile.getAbsolutePath());
-                result.add(userSelectedFile);
-            }
-        }
+            logger.info("Could not find any file");
+        return result;
+    }
 
+    public Iterable<File> GetOutputFilesFromDialog(Project project)
+    {
+        Path projectPath = Paths.get(project.getBasePath());
+        return GetOutputFilesFromDialogInternal(projectPath);
+    }
+
+    // TODO: Currently no multi selection supported
+    private Iterable<File> GetOutputFilesFromDialogInternal(Path projectPath){
+        Collection<File> result = new ArrayList<>();
+        FileFilter filter = new FileNameExtensionFilter("Android Apps", "apk");
+        File userSelectedFile = DialogHelper.ChooseSingleFileFromDialog("Choose an .apk File to analyze...", filter, projectPath);
+        if (userSelectedFile == null)
+            logger.info("User did not select any file.");
+        else
+        {
+            logger.info("Added manual file: " + userSelectedFile.getAbsolutePath());
+            result.add(userSelectedFile);
+        }
         return result;
     }
 

@@ -10,7 +10,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectHelper;
-import de.fraunhofer.iem.icognicrypt.core.Java.JavaFileToClassNameResolver;
+import de.fraunhofer.iem.icognicrypt.core.Language.JvmClassNameUtils;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
 
@@ -38,7 +38,7 @@ public class ResultsMouseHandler extends MouseAdapter
         CogniCryptError error = model.GetResultAt(row);
         Project project = ProjectHelper.GetProjectFromComponent(table);
 
-        String path = JavaFileToClassNameResolver.FindFileFromFullyQualifiedName(error.getClassName(), project);
+        String path = JvmClassNameUtils.FindFileFromFullyQualifiedName(error.getClassName(), project);
         if (path == null)
             return;
         VirtualFile f = VfsUtil.findFile(Paths.get(path), false);

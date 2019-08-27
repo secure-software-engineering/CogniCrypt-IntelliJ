@@ -2,7 +2,6 @@ package de.fraunhofer.iem.icognicrypt.core.Collections;
 
 import com.google.common.collect.Iterables;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Function;
 
@@ -44,6 +43,14 @@ public class Linq
         return false;
     }
 
+    public static <T> boolean any(Iterable<T> collection){
+        if (collection == null)
+            throw new IllegalArgumentException();
+        if (collection instanceof Collection)
+            return ((Collection<T>)collection).size() != 0;
+        return collection.iterator().hasNext();
+    }
+
     public static <T> boolean all(Iterable<T> collection, Function<T, Boolean> predicate){
         if (collection == null || predicate == null)
             throw new IllegalArgumentException();
@@ -56,12 +63,6 @@ public class Linq
         return true;
     }
 
-    public static <T> boolean any(Iterable<T> collection){
-        if (collection == null)
-            throw new IllegalArgumentException();
-        return collection.iterator().hasNext();
-    }
-
     public static <T> List<T> toList(Iterable<T> iterable)
     {
         if (iterable instanceof List)
@@ -71,5 +72,14 @@ public class Linq
         while (iterable.iterator().hasNext())
             list.add(iterable.iterator().next());
         return list;
+    }
+
+    public static <T, R> Iterable<R> select(Iterable<T> source, Function<T, R> selector){
+        if (source == null || selector == null)
+            throw new IllegalArgumentException();
+        Collection<R> result = new ArrayList<>();
+        for (T item : source)
+            result.add(selector.apply(item));
+        return result;
     }
 }

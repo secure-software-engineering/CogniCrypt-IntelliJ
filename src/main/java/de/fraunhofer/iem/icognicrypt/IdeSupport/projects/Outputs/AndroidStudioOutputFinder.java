@@ -7,10 +7,10 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ProjectModuleManager;
-import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
+import org.jetbrains.annotations.NotNull;
 
 import javax.naming.OperationNotSupportedException;
 import javax.swing.filechooser.FileFilter;
@@ -34,12 +34,14 @@ class AndroidStudioOutputFinder implements IOutputFinderInternal
     }
 
     @Override
+    @NotNull
     public Iterable<File> GetOutputFiles(Project project) throws OperationNotSupportedException, IOException, CogniCryptException
     {
         return GetOutputFiles(project, _settings.GetFindOutputOptions());
     }
 
     @Override
+    @NotNull
     public Iterable<File> GetOutputFiles(Project project, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
     {
         Path path = Paths.get(project.getBasePath());
@@ -47,6 +49,7 @@ class AndroidStudioOutputFinder implements IOutputFinderInternal
     }
 
     @Override
+    @NotNull
     public Iterable<File> GetOutputFiles(Path projectPath, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
     {
         logger.info("Try finding all built .apk files with options: " + options);
@@ -66,6 +69,8 @@ class AndroidStudioOutputFinder implements IOutputFinderInternal
         return result;
     }
 
+    @NotNull
+    @Override
     public Iterable<File> GetOutputFilesFromDialog(Project project)
     {
         Path projectPath = Paths.get(project.getBasePath());

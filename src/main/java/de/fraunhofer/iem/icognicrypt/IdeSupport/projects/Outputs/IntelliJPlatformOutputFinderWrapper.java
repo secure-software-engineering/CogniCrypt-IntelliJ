@@ -9,6 +9,7 @@ import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
 import org.apache.commons.io.FilenameUtils;
+import org.jetbrains.annotations.NotNull;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.File;
@@ -40,16 +41,16 @@ class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Dispo
     }
 
     @Override
+    @NotNull
     public Iterable<File> GetOutputFiles()
     {
-        return _cache.GetOutputFiles(_settings.GetFindOutputOptions());
+        return GetOutputFiles(_settings.GetFindOutputOptions());
     }
 
     @Override
+    @NotNull
     public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options)
     {
-        if (options == null || !Linq.any(options))
-            return GetOutputFilesFromDialog();
         return _cache.GetOutputFiles(options);
     }
 

@@ -1,6 +1,7 @@
 package de.fraunhofer.iem.icognicrypt.core.Collections;
 
 import com.google.common.collect.Iterables;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Function;

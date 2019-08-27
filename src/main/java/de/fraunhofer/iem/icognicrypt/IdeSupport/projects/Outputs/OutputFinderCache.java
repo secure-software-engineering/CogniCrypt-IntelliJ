@@ -7,6 +7,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.build.IIntelliJPlatformBuildList
 import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Collections.ReadOnlyCollection;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.*;
@@ -40,6 +41,7 @@ class OutputFinderCache implements Disposable, IOutputFinderCache
     }
 
     @Override
+    @NotNull
     public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options)
     {
         int settingsValue = OutputFinderOptions.getStatusValue(options);

@@ -108,7 +108,6 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         else ProgressManager.getInstance().run(new CogniCryptAndroidStudioAnalysisTask(project, queue));
     }
 
-    // TODO: Do we really want to analyze each module output? Does this include all available .jars?
     private void RunIntelliJAnalysis(Project project, Iterable<File> filesToAnalyze)
     {
         logger.info("Running IntelliJ Analysis");
@@ -132,7 +131,14 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         IProjectOutputFinder outputFinder = ServiceManager.getService(project, IProjectOutputFinder.class);
 
         EnumSet<OutputFinderOptions.Flags> options = _settings.GetFindOutputOptions();
+
+        if (options == null || !Linq.any(options))
+            return outputFinder.GetOutputFilesFromDialog();
+
         Iterable<File> files = outputFinder.GetOutputFiles(options);
+
+        if (files == null)
+            return null;
 
         if (!Linq.any(files) && Linq.any(options))
         {

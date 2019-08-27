@@ -61,17 +61,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             return;
         }
 
-        IProjectOutputFinder outputFinder = ServiceManager.getService(project, IProjectOutputFinder.class);
-
-        EnumSet<OutputFinderOptions.Flags> options = _settings.GetFindOutputOptions();
-        Iterable<File> files = outputFinder.GetOutputFiles(options);
-
-        if (!Linq.any(files) && Linq.any(options))
-        {
-            logger.info("No .apk file was found. User is requested to choose one manually");
-            files = outputFinder.GetOutputFilesFromDialog();
-        }
-
+        Iterable<File> files = GetFilesToAnalyze(project);
         if (files == null || !Linq.any(files))
         {
             NotificationProvider.ShowInfo("No files were analysed");
@@ -136,6 +126,20 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             Task analysis = new JavaProjectAnalysisTask(modulePath, Joiner.on(":").join(classpath), _settings.getRulesDirectory());
             ProgressManager.getInstance().run(analysis);
         }
+    }
+
+    private Iterable<File> GetFilesToAnalyze(Project project){
+        IProjectOutputFinder outputFinder = ServiceManager.getService(project, IProjectOutputFinder.class);
+
+        EnumSet<OutputFinderOptions.Flags> options = _settings.GetFindOutputOptions();
+        Iterable<File> files = outputFinder.GetOutputFiles(options);
+
+        if (!Linq.any(files) && Linq.any(options))
+        {
+            logger.info("No .apk file was found. User is requested to choose one manually");
+            files = outputFinder.GetOutputFilesFromDialog();
+        }
+        return files;
     }
 }
 

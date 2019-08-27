@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
-  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="de.fraunhofer" externalSystemModuleType="sourceSet" externalSystemModuleVersion="0.2.3" linkedProjectId="icognicrypt:test" linkedProjectPath="$MODULE_DIR$/../.." rootProjectPath="$MODULE_DIR$/../.." />
+  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="de.fraunhofer" externalSystemModuleType="sourceSet" externalSystemModuleVersion="0.2.5" linkedProjectId="icognicrypt:test" linkedProjectPath="$MODULE_DIR$/../.." rootProjectPath="$MODULE_DIR$/../.." />
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output-test url="file://$MODULE_DIR$/../../out/test/classes" />
     <exclude-output />
@@ -13,6 +13,7 @@
     <orderEntry type="module" module-name="icognicrypt.main" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:CryptoAnalysis-Android:2.4" level="project" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:CryptoAnalysis:2.4" level="project" />
+    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-cmd:2.7.1" level="project" />
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
@@ -22,7 +23,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-cmd:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-android:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-summaries:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow:2.7.1" level="project" />
@@ -219,15 +219,15 @@
     <orderEntry type="library" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.7" level="project" />
     <orderEntry type="library" name="Gradle: org.glassfish.jaxb:txw2:2.4.0-b180830.0438" level="project" />
     <orderEntry type="library" name="Gradle: javax.activation:javax.activation-api:1.2.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm:7.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:7.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-analysis:7.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.11.0" level="project" />
     <orderEntry type="library" name="Gradle: javax.xml.bind:jaxb-api:2.4.0-b180830.0359" level="project" />
     <orderEntry type="library" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.4.0-b180830.0438" level="project" />
     <orderEntry type="library" name="Gradle: javax.annotation:javax.annotation-api:1.3.2" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-util:7.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-commons:7.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm:7.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:7.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-analysis:7.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-commons:7.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-util:7.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.11.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.5" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
@@ -243,7 +243,7 @@
     <orderEntry type="library" name="Gradle: pxb.android:axml:2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: net.sf.trove4j:trove4j:3.0.3" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.21" level="project" />
-    <orderEntry type="library" name="Gradle: ca.mcgill.sable:jasmin:3.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: ca.mcgill.sable:jasmin:3.0.2-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: ca.mcgill.sable:polyglot:2006" level="project" />
     <orderEntry type="library" name="Gradle: de.upb.cs.swt:axml:2.0.0" level="project" />
     <orderEntry type="library" name="Gradle: xmlpull:xmlpull:1.1.3.4d_b4_min" level="project" />
@@ -253,12 +253,12 @@
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-simple:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:25.1-jre" level="project" />
+    <orderEntry type="library" name="Gradle: de.upb.cs.swt:heros:1.2.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: org.smali:dexlib2:2.2.7" level="project" />
+    <orderEntry type="library" name="Gradle: ca.mcgill.sable:soot-j9:4.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:PathExpression:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:WPDS:2.4-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: heros:heros:1.0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: de.upb.cs.swt:heros:1.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.smali:dexlib2:2.2.5" level="project" />
-    <orderEntry type="library" name="Gradle: ca.mcgill.sable:soot-j9:4.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:synchronizedPDS:2.4-SNAPSHOT" level="project" />

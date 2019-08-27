@@ -1,7 +1,7 @@
+// Copyright (c) .NET Foundation and Contributors
 package de.fraunhofer.iem.icognicrypt.core.Collections;
 
 import com.google.common.collect.Iterables;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Function;
@@ -70,8 +70,9 @@ public class Linq
             return (List) iterable;
 
         List<T> list = new ArrayList<>();
-        while (iterable.iterator().hasNext())
-            list.add(iterable.iterator().next());
+        Iterator<T> iterator = iterable.iterator();
+        while (iterator.hasNext())
+            list.add(iterator.next());
         return list;
     }
 
@@ -82,5 +83,22 @@ public class Linq
         for (T item : source)
             result.add(selector.apply(item));
         return result;
+    }
+
+    public static <T> int count(Iterable<T> source)
+    {
+        if (source == null)
+            throw new NullPointerException();
+
+        if (source instanceof Collection)
+            return ((Collection) source).size();
+
+        int count = 0;
+
+        Iterator<T> iterator = source.iterator();
+        while (iterator.hasNext())
+            iterator.next();
+            count++;
+        return count;
     }
 }

@@ -137,7 +137,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
 
         Iterable<File> files = outputFinder.GetOutputFiles(options);
 
-        if (files == null)
+        if (files == null || Linq.count(files))
             return null;
 
         if (!Linq.any(files) && Linq.any(options))

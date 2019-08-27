@@ -40,27 +40,12 @@ class OutputFinderCache implements Disposable, IOutputFinderCache
     }
 
     @Override
-    public Iterable<File> GetOutputFiles()
-    {
-        return GetOutputFiles(_settings.GetFindOutputOptions());
-    }
-
-    @Override
     public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options)
     {
         int settingsValue = OutputFinderOptions.getStatusValue(options);
-
-        if (settingsValue == 0)
-            return GetOutputFilesFromDialog();
-
-        if (!_cache.containsKey(settingsValue))
+        if (!_cache.containsKey(settingsValue) || Linq.any(_cache.get(settingsValue), file -> !file.exists()))
             Invalidate(options);
 
-        Iterable<File> files = _cache.get(settingsValue);
-        if (Linq.all(files, file -> file.exists())){
-            return files;
-        }
-        Invalidate(options);
         return _cache.get(settingsValue);
     }
 
@@ -96,19 +81,29 @@ class OutputFinderCache implements Disposable, IOutputFinderCache
         }
     }
 
-    @Override
-    public Iterable<File> GetOutputFilesFromDialog()
-    {
-        ReadOnlyCollection<String> cachedFiles = GetCachedDialogOutputs();
-
-
-
-        return _serviceProvider.GetOutputFilesFromDialog(_project);
-    }
-
     public ReadOnlyCollection<String> GetCachedDialogOutputs()
     {
         return new ReadOnlyCollection<>(_cachedDialogFiles);
+    }
+
+    @Override
+    public void InvalidateDialogOutput()
+    {
+        _cachedDialogFiles.clear();
+    }
+
+    @Override
+    public void SetDialogFiles(Iterable<File> selectedFiles)
+    {
+        if (selectedFiles == null || !Linq.any(selectedFiles))
+            return;
+        else
+        {
+            InvalidateDialogOutput();
+            for (File file: selectedFiles)
+                _cachedDialogFiles.add(file.getAbsolutePath());
+        }
+
     }
 
     @Override

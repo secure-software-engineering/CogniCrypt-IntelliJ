@@ -208,7 +208,8 @@ class CogniCryptSettingsView implements Configurable
 
     private void showDownloadCrySLRulesDialog(String newPath)
     {
-        MessageBox.Show("No .cryptslbin files found in " + newPath + " \nYou can download them here:\n" + Constants.CRYSL_RULES_DOWNLOADLINK, JOptionPane.ERROR_MESSAGE, _rootPanel);
+        MessageBox.Show(_rootPanel, "No .cryptslbin files found in " + newPath + " \nYou can download them here:\n" + Constants.CRYSL_RULES_DOWNLOADLINK,
+                        MessageBox.MessageBoxButton.OK, MessageBox.MessageBoxType.Error);
     }
 
     private class CachedSettingsState extends CogniCryptSettings

@@ -97,6 +97,10 @@
             <interface-class>de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ICogniCryptProjectManager</interface-class>
         </component>
 
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.ui.LookAndFeel</implementation-class>
+        </component>
+
     </application-components>
 
     <project-components>

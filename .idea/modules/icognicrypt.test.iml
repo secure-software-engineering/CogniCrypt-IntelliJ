@@ -27,6 +27,7 @@
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow-summaries:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: de.tud.sse:soot-infoflow:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: ca.mcgill.sable:soot:3.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.swinglabs.swingx:swingx-all:1.6.4" level="project" />
     <orderEntry type="module-library">
       <library name="Gradle: com.jetbrains:ideaIC:2018.3.6">
         <ANNOTATIONS>

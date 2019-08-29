@@ -4,13 +4,14 @@ import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.build.IIntelliJPlatformBuildListener;
-import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
+import javaLinq.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Collections.ReadOnlyCollection;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.*;
+import java.util.function.Function;
 
 class OutputFinderCache implements Disposable, IOutputFinderCache
 {
@@ -22,6 +23,7 @@ class OutputFinderCache implements Disposable, IOutputFinderCache
     private final Hashtable<Integer, Iterable<File>> _cache = new Hashtable<>();
 
     private HashSet<String> _cachedDialogFiles = new HashSet<>();
+    private HashSet<String> _cachedMultipleFileSelection = new HashSet<>();
 
     OutputFinderCache(Project project, IOutputFinderInternal serviceProvider, IPersistableCogniCryptSettings settings)
     {
@@ -97,15 +99,25 @@ class OutputFinderCache implements Disposable, IOutputFinderCache
     @Override
     public void SetDialogFiles(Iterable<File> selectedFiles)
     {
-        if (selectedFiles == null || !Linq.any(selectedFiles))
-            return;
-        else
-        {
-            InvalidateDialogOutput();
-            for (File file: selectedFiles)
-                _cachedDialogFiles.add(file.getAbsolutePath());
-        }
+        SetCache(selectedFiles, _cachedDialogFiles, file -> file.getAbsolutePath(), this::InvalidateDialogOutput);
+    }
 
+    @Override
+    public ReadOnlyCollection<String> GetCachedMultipleFileSelection()
+    {
+        return new ReadOnlyCollection<>(_cachedMultipleFileSelection);
+    }
+
+    @Override
+    public void SetMultipleFileSelection(Iterable<File> filePaths)
+    {
+        SetCache(filePaths, _cachedMultipleFileSelection, file -> file.getAbsolutePath(), this::InvalidateMultipleSelectedFiles);
+    }
+
+    @Override
+    public void InvalidateMultipleSelectedFiles()
+    {
+        _cachedMultipleFileSelection.clear();
     }
 
     @Override
@@ -116,6 +128,16 @@ class OutputFinderCache implements Disposable, IOutputFinderCache
         _serviceProvider = null;
         _project = null;
         _settings = null;
+    }
+
+    private  <T, R> void SetCache(Iterable<T> source, Collection cache, Function<T, R> transform, Runnable invalidate)
+    {
+        if (source == null || !Linq.any(source))
+            return;
+
+        invalidate.run();
+        for (T item : source)
+            cache.add(transform.apply(item));
     }
 }
 

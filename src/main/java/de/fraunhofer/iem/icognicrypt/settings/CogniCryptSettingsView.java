@@ -4,7 +4,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.Configurable;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
-import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
+import javaLinq.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguage;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;

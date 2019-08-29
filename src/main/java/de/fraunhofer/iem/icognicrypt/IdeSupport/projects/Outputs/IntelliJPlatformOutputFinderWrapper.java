@@ -3,7 +3,7 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
-import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
+import javaLinq.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Helpers.StringTrimming;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;

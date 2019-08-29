@@ -5,7 +5,7 @@ import com.intellij.lang.LanguageUtil;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
+import javaLinq.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Collections.ReadOnlyPriorityList;
 import org.apache.commons.io.FileUtils;
 

@@ -1,18 +1,15 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.build;
 
 import com.android.tools.idea.gradle.project.build.*;
-import com.android.tools.idea.gradle.project.build.invoker.GradleBuildInvoker;
 import com.android.tools.idea.project.AndroidProjectBuildNotifications;
-import com.android.tools.idea.project.IndexingSuspender;
 import com.intellij.compiler.server.BuildManagerListener;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.messages.MessageBus;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
-import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
+import javaLinq.Linq;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 

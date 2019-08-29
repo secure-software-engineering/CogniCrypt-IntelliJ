@@ -1,7 +1,13 @@
 package de.fraunhofer.iem.icognicrypt.ui.multipleOutputFilesDialog;
 
-import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
+import com.intellij.openapi.application.Application;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.wm.WindowManager;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
+import javaLinq.Linq;
 import org.jdesktop.swingx.JXLabel;
+import org.jetbrains.android.dom.manifest.ApplicationComponent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,9 +15,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
+import java.util.List;
 
 public class MultipleOutputFilesDialog extends JDialog
 {
@@ -41,7 +46,7 @@ public class MultipleOutputFilesDialog extends JDialog
         return _result;
     }
 
-    public MultipleOutputFilesDialog(Iterable<File> files, Iterable<Integer> preSelectedIndices){
+    public MultipleOutputFilesDialog(Iterable<File> files, Iterable<String> preSelectedFiles){
         this();
         DefaultListModel model = new DefaultListModel();
         _filesListBox.setModel(model);
@@ -49,11 +54,17 @@ public class MultipleOutputFilesDialog extends JDialog
         for (File file : files)
             model.addElement(file);
 
-        if (!Linq.any(preSelectedIndices))
+        if (!Linq.any(preSelectedFiles))
             _filesListBox.getSelectionModel().addSelectionInterval(0, Linq.count(files) -1);
         else
         {
-            //var t = new HashSet<Integer>(Linq.toList(preSelectedIndices));
+            _saveCheckBox.setSelected(true);
+            Iterable<File> existingPreselectedFiles = Linq.where(files, file -> Linq.contains(preSelectedFiles, file.getAbsolutePath()));
+            List<File> filesList = Linq.toList(files);
+            for (File file : existingPreselectedFiles){
+                int index = filesList.indexOf(file);
+                _filesListBox.getSelectionModel().addSelectionInterval(index, index);
+            }
         }
     }
 
@@ -65,12 +76,14 @@ public class MultipleOutputFilesDialog extends JDialog
 
     MultipleOutputFilesDialog()
     {
+        super(WindowManager.getInstance().findVisibleFrame(), true);
+        setLocationRelativeTo(WindowManager.getInstance().findVisibleFrame());
         setPreferredSize(_sizeConstraint);
         setResizable(false);
         setModal(true);
-
         setContentPane(contentPane);
         getRootPane().setDefaultButton(_buttonOK);
+
 
         setTitle("CogniCrypt");
         _filesListBox.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -141,7 +154,10 @@ public class MultipleOutputFilesDialog extends JDialog
         files.add(new File("C:\\Test.txt"));
         files.add(new File("C:\\Test2.txt"));
 
-        MultipleOutputFilesDialog dialog = new MultipleOutputFilesDialog(files);
+        Collection<String> cache = new ArrayList<>();
+        cache.add("C:\\Test2.txt");
+
+        MultipleOutputFilesDialog dialog = new MultipleOutputFilesDialog(files, cache);
         OutputFilesDialogResult result = dialog.ShowDialog();
         Iterable<File> f = dialog.GetSelectedFiles();
         System.exit(0);

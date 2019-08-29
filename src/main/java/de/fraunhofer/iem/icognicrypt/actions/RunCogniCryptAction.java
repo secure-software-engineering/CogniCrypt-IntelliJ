@@ -23,7 +23,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputF
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
-import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
+import javaLinq.Linq;
 import de.fraunhofer.iem.icognicrypt.core.android.AndroidPlatformLocator;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
@@ -135,13 +135,12 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
 
         Iterable<File> files = outputFinder.GetOutputFiles(options);
 
-        boolean saveFlag = false;
         boolean dialogFlag = false;
         boolean abortFlag = false;
 
         if (Linq.count(files) > 1)
         {
-            MultipleOutputFilesDialog dialog = new MultipleOutputFilesDialog(files);
+            MultipleOutputFilesDialog dialog = new MultipleOutputFilesDialog(files, outputFinder.GetCache().GetCachedMultipleFileSelection());
             MultipleOutputFilesDialog.OutputFilesDialogResult result = dialog.ShowDialog();
 
             if (result == MultipleOutputFilesDialog.OutputFilesDialogResult.ChooseManually)
@@ -149,7 +148,10 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             else if (result == MultipleOutputFilesDialog.OutputFilesDialogResult.OK)
             {
                 files = dialog.GetSelectedFiles();
-                saveFlag = dialog.GetSaveChoice();
+                if (dialog.GetSaveChoice())
+                    outputFinder.GetCache().SetMultipleFileSelection(files);
+                else
+                    outputFinder.GetCache().InvalidateMultipleSelectedFiles();
             }
             else{
                 files = Collections.EMPTY_LIST;

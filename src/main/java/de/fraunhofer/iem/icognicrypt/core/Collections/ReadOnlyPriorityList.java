@@ -9,11 +9,13 @@ import java.util.LinkedList;
 
 public class ReadOnlyPriorityList<T> implements Iterable<T>
 {
-    private LinkedList<T> _innerList = new LinkedList<>();
+    private final Iterator<T> _iterator;
+    private final LinkedList<T> _innerList = new LinkedList<>();
 
     public ReadOnlyPriorityList(Collection<T> list)
     {
         _innerList.addAll(list);
+        _iterator = _innerList.iterator();;
     }
 
     public ReadOnlyPriorityList(T[] list)

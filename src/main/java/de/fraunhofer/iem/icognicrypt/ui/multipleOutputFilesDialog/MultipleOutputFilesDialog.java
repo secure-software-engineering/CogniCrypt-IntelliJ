@@ -8,12 +8,14 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
 import javaLinq.Linq;
 import org.jdesktop.swingx.JXLabel;
 import org.jetbrains.android.dom.manifest.ApplicationComponent;
+import polyglot.ast.Do;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Console;
 import java.io.File;
 import java.util.*;
 import java.util.List;
@@ -46,6 +48,11 @@ public class MultipleOutputFilesDialog extends JDialog
         return _result;
     }
 
+    public MultipleOutputFilesDialog(Iterable<File> files)
+    {
+        this(files, Collections.EMPTY_LIST);
+    }
+
     public MultipleOutputFilesDialog(Iterable<File> files, Iterable<String> preSelectedFiles){
         this();
         DefaultListModel model = new DefaultListModel();
@@ -66,12 +73,6 @@ public class MultipleOutputFilesDialog extends JDialog
                 _filesListBox.getSelectionModel().addSelectionInterval(index, index);
             }
         }
-    }
-
-
-    public MultipleOutputFilesDialog(Iterable<File> files)
-    {
-        this(files, Collections.EMPTY_LIST);
     }
 
     MultipleOutputFilesDialog()
@@ -158,8 +159,6 @@ public class MultipleOutputFilesDialog extends JDialog
         cache.add("C:\\Test2.txt");
 
         MultipleOutputFilesDialog dialog = new MultipleOutputFilesDialog(files, cache);
-        OutputFilesDialogResult result = dialog.ShowDialog();
-        Iterable<File> f = dialog.GetSelectedFiles();
         System.exit(0);
     }
 }

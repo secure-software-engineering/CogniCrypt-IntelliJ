@@ -44,7 +44,7 @@ class OutputFinderCache implements Disposable, IOutputFinderCache
 
     @Override
     @NotNull
-    public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options)
+    public Iterable<File> GetOutputFiles(Set<OutputFinderOptions.Flags> options)
     {
         int settingsValue = OutputFinderOptions.getStatusValue(options);
         if (!_cache.containsKey(settingsValue) || Linq.any(_cache.get(settingsValue), file -> !file.exists()))
@@ -64,7 +64,7 @@ class OutputFinderCache implements Disposable, IOutputFinderCache
     }
 
     @Override
-    public void Invalidate(EnumSet<OutputFinderOptions.Flags> options)
+    public void Invalidate(Set<OutputFinderOptions.Flags> options)
     {
         if (!Linq.any(options))
             return;

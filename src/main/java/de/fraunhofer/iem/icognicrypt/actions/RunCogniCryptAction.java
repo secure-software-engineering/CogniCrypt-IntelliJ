@@ -19,6 +19,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdeType;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
@@ -30,6 +31,7 @@ import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import de.fraunhofer.iem.icognicrypt.ui.multipleOutputFilesDialog.MultipleOutputFilesDialog;
 import org.jetbrains.annotations.NotNull;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -125,19 +127,36 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         }
     }
 
-    private Iterable<File> GetFilesToAnalyze(Project project){
+    private Iterable<File> GetFilesToAnalyze(Project project)
+    {
         IProjectOutputFinder outputFinder = ServiceManager.getService(project, IProjectOutputFinder.class);
-
         EnumSet<OutputFinderOptions.Flags> options = _settings.GetFindOutputOptions();
 
+        switch (_ideType){
+
+            case Unknown:
+                return Collections.EMPTY_LIST;
+            case IntelliJ:
+                throw new NotImplementedException();
+            case AndroidStudio:
+                return GetFilesForAndroidStudio(outputFinder, options);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    private Iterable<File> GetFilesForAndroidStudio(IProjectOutputFinder outputFinder, Set<OutputFinderOptions.Flags> options)
+    {
+        // If not options are given we directly show the 'Select Files' dialog.
         if (options == null || !Linq.any(options))
             return outputFinder.GetOutputFilesFromDialog();
 
+        // Get possible files
         Iterable<File> files = outputFinder.GetOutputFiles(options);
 
         boolean dialogFlag = false;
         boolean abortFlag = false;
 
+        // If there are multiple files, ask the user which ones to analyse
         if (Linq.count(files) > 1)
         {
             MultipleOutputFilesDialog dialog = new MultipleOutputFilesDialog(files, outputFinder.GetCache().GetCachedMultipleFileSelection());
@@ -159,11 +178,12 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             }
         }
 
+        // If the user requested to choose the files manually, or no files have been found but the procedure was not aborted
+        // show the 'Select File' dialog
         if (dialogFlag || (!Linq.any(files) && Linq.any(options))  && !abortFlag)
         {
             files = outputFinder.GetOutputFilesFromDialog(!dialogFlag);
         }
-
 
         return files;
     }

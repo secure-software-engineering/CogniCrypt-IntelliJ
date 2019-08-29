@@ -4,12 +4,13 @@ import de.fraunhofer.iem.icognicrypt.core.Collections.ReadOnlyCollection;
 
 import java.io.File;
 import java.util.EnumSet;
+import java.util.Set;
 
 public interface IOutputFinderCache extends IOutputFinder
 {
     void Invalidate();
 
-    void Invalidate(EnumSet<OutputFinderOptions.Flags> options);
+    void Invalidate(Set<OutputFinderOptions.Flags> options);
 
 
     ReadOnlyCollection<String> GetCachedDialogOutputs();

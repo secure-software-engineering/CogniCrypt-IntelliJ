@@ -23,12 +23,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-class AndroidStudioOutputFinder implements IOutputFinderInternal
+class AndroidStudioOutputFinderInternal implements IOutputFinderInternal
 {
-    private static final Logger logger = Logger.getInstance(AndroidStudioOutputFinder.class);
+    private static final Logger logger = Logger.getInstance(AndroidStudioOutputFinderInternal.class);
     private final IPersistableCogniCryptSettings _settings;
 
-    AndroidStudioOutputFinder()
+    AndroidStudioOutputFinderInternal()
     {
         _settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
     }
@@ -42,7 +42,7 @@ class AndroidStudioOutputFinder implements IOutputFinderInternal
 
     @Override
     @NotNull
-    public Iterable<File> GetOutputFiles(Project project, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
+    public Iterable<File> GetOutputFiles(Project project, Set<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
     {
         Path path = Paths.get(project.getBasePath());
         return GetOutputFiles(path, options);
@@ -50,7 +50,7 @@ class AndroidStudioOutputFinder implements IOutputFinderInternal
 
     @Override
     @NotNull
-    public Iterable<File> GetOutputFiles(Path projectPath, EnumSet<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
+    public Iterable<File> GetOutputFiles(Path projectPath, Set<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException
     {
         logger.info("Try finding all built .apk files with options: " + options);
 
@@ -92,7 +92,7 @@ class AndroidStudioOutputFinder implements IOutputFinderInternal
         return result;
     }
 
-    private Collection<File> GetExportedOutputs(Path projectRootPath, EnumSet<OutputFinderOptions.Flags> options) throws IOException
+    private Collection<File> GetExportedOutputs(Path projectRootPath, Set<OutputFinderOptions.Flags> options) throws IOException
     {
         logger.info("Get exported .apks from workspace cache");
 
@@ -109,7 +109,7 @@ class AndroidStudioOutputFinder implements IOutputFinderInternal
         }
     }
 
-    private Collection<File> GetModuleOutputs(Path projectRootPath, EnumSet<OutputFinderOptions.Flags> options) throws IOException, OperationNotSupportedException
+    private Collection<File> GetModuleOutputs(Path projectRootPath, Set<OutputFinderOptions.Flags> options) throws IOException, OperationNotSupportedException
     {
         logger.info("Get .apks from project modules");
         GradleSettings settings = new GradleSettings(projectRootPath);
@@ -127,7 +127,7 @@ class AndroidStudioOutputFinder implements IOutputFinderInternal
         return result;
     }
 
-    private Collection<File> GetOutputs(IHasOutputs outputManager, EnumSet<OutputFinderOptions.Flags> options) throws IOException
+    private Collection<File> GetOutputs(IHasOutputs outputManager, Set<OutputFinderOptions.Flags> options) throws IOException
     {
         HashSet<File> result = new HashSet<>();
         for (String output : outputManager.GetOutputs(options))

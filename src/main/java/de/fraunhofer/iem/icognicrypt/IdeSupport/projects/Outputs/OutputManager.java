@@ -4,6 +4,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Json.OutputJson;
 
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.Set;
 
 public abstract class OutputManager implements IHasOutputs
 {
@@ -15,7 +16,7 @@ public abstract class OutputManager implements IHasOutputs
     public abstract void InvalidateOutput();
 
     @Override
-    public Iterable<String> GetOutputs(EnumSet<OutputFinderOptions.Flags> options)
+    public Iterable<String> GetOutputs(Set<OutputFinderOptions.Flags> options)
     {
         HashSet<String> result = new HashSet<>();
 

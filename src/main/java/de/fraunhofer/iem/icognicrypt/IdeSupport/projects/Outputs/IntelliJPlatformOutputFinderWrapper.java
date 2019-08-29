@@ -14,7 +14,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.File;
 import java.util.Collections;
-import java.util.EnumSet;
+import java.util.Set;
 
 class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Disposable
 {
@@ -33,7 +33,7 @@ class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Dispo
             case IntelliJ:
                 throw new NotImplementedException();
             case AndroidStudio:
-                _serviceProvider = new AndroidStudioOutputFinder();
+                _serviceProvider = new AndroidStudioOutputFinderInternal();
         }
         _cache = new OutputFinderCache(project, _serviceProvider, settings);
         _project = project;
@@ -49,7 +49,7 @@ class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Dispo
 
     @Override
     @NotNull
-    public Iterable<File> GetOutputFiles(EnumSet<OutputFinderOptions.Flags> options)
+    public Iterable<File> GetOutputFiles(Set<OutputFinderOptions.Flags> options)
     {
         return _cache.GetOutputFiles(options);
     }

@@ -33,6 +33,7 @@ dependencies {
     compile group: 'de.tud.sse', name: 'soot-infoflow', version: '2.7.1'
     compile group: 'de.tud.sse', name: 'soot-infoflow-android', version: '2.7.1'
     compile group: 'de.tud.sse', name: 'soot-infoflow-cmd', version: '2.7.1'
+    compile group: 'org.swinglabs.swingx', name: 'swingx-all', version: '1.6.4'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/gradle

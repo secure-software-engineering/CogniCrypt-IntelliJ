@@ -9,6 +9,8 @@ public interface IProjectOutputFinder extends IOutputFinder
     Iterable<File> GetOutputFiles();
 
     Iterable<File> GetOutputFilesFromDialog();
+
+    Iterable<File> GetOutputFilesFromDialog(boolean useCaching);
 }
 
 

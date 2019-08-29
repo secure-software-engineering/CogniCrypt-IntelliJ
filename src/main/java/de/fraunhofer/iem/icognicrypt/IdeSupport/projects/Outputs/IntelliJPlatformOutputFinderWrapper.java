@@ -57,12 +57,19 @@ class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Dispo
     @Override
     public Iterable<File> GetOutputFilesFromDialog()
     {
+        return GetOutputFilesFromDialog(true);
+    }
+
+    @Override
+    public Iterable<File> GetOutputFilesFromDialog(boolean useCaching)
+    {
         Iterable<String> cachedFiles = _cache.GetCachedDialogOutputs();
-        if (Linq.any(cachedFiles) && Linq.all(cachedFiles, file -> new File(file).exists()))
+        if (useCaching && Linq.any(cachedFiles) && Linq.all(cachedFiles, file -> new File(file).exists()))
         {
             String message = GenerateDialogCachedMessage(cachedFiles);
 
-            MessageBox.MessageBoxResult result = MessageBox.Show(null, message, MessageBox.MessageBoxButton.YesNo, MessageBox.MessageBoxType.Question, MessageBox.MessageBoxResult.YesOK);
+            MessageBox.MessageBoxResult result = MessageBox.Show(null, message, MessageBox.MessageBoxButton.YesNo,
+                MessageBox.MessageBoxType.Question, MessageBox.MessageBoxResult.YesOK);
             if (result == MessageBox.MessageBoxResult.YesOK)
                 return Linq.select(cachedFiles, file -> new File(file));
             else if (result == MessageBox.MessageBoxResult.Cancel)

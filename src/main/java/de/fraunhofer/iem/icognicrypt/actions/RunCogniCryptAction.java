@@ -28,14 +28,12 @@ import de.fraunhofer.iem.icognicrypt.core.android.AndroidPlatformLocator;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
+import de.fraunhofer.iem.icognicrypt.ui.multipleOutputFilesDialog.MultipleOutputFilesDialog;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
 {
@@ -137,14 +135,34 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
 
         Iterable<File> files = outputFinder.GetOutputFiles(options);
 
-        if (files == null || Linq.count(files))
-            return null;
+        boolean saveFlag = false;
+        boolean dialogFlag = false;
+        boolean abortFlag = false;
 
-        if (!Linq.any(files) && Linq.any(options))
+        if (Linq.count(files) > 1)
         {
-            logger.info("No .apk file was found. User is requested to choose one manually");
-            files = outputFinder.GetOutputFilesFromDialog();
+            MultipleOutputFilesDialog dialog = new MultipleOutputFilesDialog(files);
+            MultipleOutputFilesDialog.OutputFilesDialogResult result = dialog.ShowDialog();
+
+            if (result == MultipleOutputFilesDialog.OutputFilesDialogResult.ChooseManually)
+                dialogFlag = true;
+            else if (result == MultipleOutputFilesDialog.OutputFilesDialogResult.OK)
+            {
+                files = dialog.GetSelectedFiles();
+                saveFlag = dialog.GetSaveChoice();
+            }
+            else{
+                files = Collections.EMPTY_LIST;
+                abortFlag = true;
+            }
         }
+
+        if (dialogFlag || (!Linq.any(files) && Linq.any(options))  && !abortFlag)
+        {
+            files = outputFinder.GetOutputFilesFromDialog(!dialogFlag);
+        }
+
+
         return files;
     }
 }

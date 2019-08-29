@@ -58,7 +58,8 @@ class IntelliJPlatformBuildBroker implements ProjectComponent {
                         GradleBuildContext gradleBuildContext = (GradleBuildContext) context;
 
                         if (Linq.any(gradleBuildContext.getBuildResult().getTasks(), task -> {
-                            if(task.contains(":assemble") || task.equals("clean"))
+                            // TODO: Check if :assemble is a 3.5 thing
+                            if(task.contains("assemble") || task.equals("clean"))
                                 return true;
                             return false;
                         }))

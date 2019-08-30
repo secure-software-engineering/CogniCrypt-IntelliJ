@@ -23,7 +23,6 @@ public class CogniCryptErrorLineMarker implements LineMarkerProvider
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement)
     {
-
         if (psiElement instanceof PsiStatement)
         {
             PsiStatement statement = (PsiStatement) psiElement;
@@ -54,7 +53,7 @@ public class CogniCryptErrorLineMarker implements LineMarkerProvider
     }
 
     private LineMarkerInfo CreateNewMarker(PsiElement psiElement, Iterable<CogniCryptError> errors){
-        return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), PluginIcons.ERROR, Pass.EXTERNAL_TOOLS,
+        return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), PluginIcons.ERROR, Pass.LINE_MARKERS,
                 new TooltipProvider(getErrorsMessage(errors)), null, GutterIconRenderer.Alignment.LEFT);
     }
 

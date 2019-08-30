@@ -44,7 +44,7 @@
 
     <!-- Other Extensions -->
     <extensions defaultExtensionNs="com.intellij">
-        <codeInsight.lineMarkerProvider language="JAVA"
+        <codeInsight.lineMarkerProvider language="JVM"
                                         implementationClass="de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorLineMarker"/>
 
         <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsView" groupId="root"/>
@@ -56,13 +56,7 @@
     </extensions>
 
 
-    <!-- Testing purpose extensions -->
-    <extensions defaultExtensionNs="de.fraunhofer.iem.icognicrypt">
-        <resultListener implementation="de.fraunhofer.iem.icognicrypt.TestImpl"/>
-    </extensions>
-
     <actions>
-
         <!-- Add your actions here -->
         <action id="ICognicrypt.ExecuteAnalysis"
                 class="de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction"

@@ -144,7 +144,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
 //        Severity(SeverityColumnIndex),
         Id(IdColumnIndex),
         Description(DescriptionColumnIndex),
-        File(FileColumnIndex),
+        Class(FileColumnIndex),
         Line(LineColumnIndex);
 
         private int value;

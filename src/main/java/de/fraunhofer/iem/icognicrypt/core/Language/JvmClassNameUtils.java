@@ -14,6 +14,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.openapi.vfs.VirtualFileSystem;
 import com.intellij.openapi.vfs.ex.VirtualFileManagerEx;
+import com.intellij.util.PathUtil;
+import com.intellij.util.io.fs.FilePath;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.SystemUtils;
@@ -39,14 +41,23 @@ public class JvmClassNameUtils
     {
         String relativeContainerPath = fullyQualifiedName.split("\\$")[0];
         char separator = File.separatorChar;
-        String relativePath = relativeContainerPath.replace('.',separator) + ".java";
+        String relativePath = relativeContainerPath.replace('.',separator);
         List<VirtualFile> sourceRoots = getSourceRoots(project);
+
+        SupportedLanguagesUtils languagesUtils = ServiceManager.getService(SupportedLanguagesUtils.class);
+        Iterable<SupportedLanguage> supportedLanguages = languagesUtils.SupportedLanguages;
 
         for(VirtualFile m : sourceRoots)
         {
-            File javaFile = Paths.get(m.getPath(), relativePath).toFile();
-            if (javaFile.exists())
-                return javaFile.getAbsolutePath();
+            String absolutePathWithoutFileName = Paths.get(m.getPath(), relativePath).toString();
+
+            for (SupportedLanguage language : supportedLanguages)
+            {
+                String absolutePath = PathUtil.makeFileName(absolutePathWithoutFileName, languagesUtils.GetFileExtension(language));
+                File sourceFile = new File(absolutePath);
+                if (sourceFile.exists())
+                    return sourceFile.getAbsolutePath();
+            }
         }
         return null;
     }

@@ -12,13 +12,19 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 public class SupportedLanguagesUtils
 {
     public ReadOnlyPriorityList<SupportedLanguage> SupportedLanguages = new ReadOnlyPriorityList<>(SupportedLanguage.values());
 
+    private final HashMap<String, String> _supportedLanguageExtensionMapping = new HashMap<>();
+
     private SupportedLanguagesUtils()
     {
+        for (SupportedLanguage supportedLanguage : SupportedLanguages){
+            _supportedLanguageExtensionMapping.put(supportedLanguage.GetId(), GetFileExtensionInternal(supportedLanguage, true));
+        }
     }
 
     public boolean IsSupported(Language language)
@@ -39,12 +45,23 @@ public class SupportedLanguagesUtils
         {
             FileType ft = FileTypeManager.getInstance().getFileTypeByFileName(file.getName());
             Language language = LanguageUtil.getFileTypeLanguage(ft);
-
             if (!IsSupported(language))
                 continue;
             result.add(file);
         }
         return result;
+    }
+
+    public String GetFileExtension(SupportedLanguage supportedLanguage){
+        return GetFileExtensionInternal(supportedLanguage, false);
+    }
+
+    private String GetFileExtensionInternal(SupportedLanguage supportedLanguage, boolean initializing)
+    {
+        if (!initializing)
+            return _supportedLanguageExtensionMapping.get(supportedLanguage.GetId());
+        Language language = Language.findLanguageByID(supportedLanguage.GetId());
+        return language.getAssociatedFileType().getDefaultExtension();
     }
 }
 

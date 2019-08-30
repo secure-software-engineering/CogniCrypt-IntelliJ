@@ -4,8 +4,9 @@ import com.intellij.openapi.externalSystem.service.execution.NotSupportedExcepti
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
+import java.util.function.Function;
 
-public class Query<T> implements IQuery, Iterable<T>
+public class Query<T> implements Iterable<T>, IQuery
 {
     private final Iterable _source;
 
@@ -22,10 +23,30 @@ public class Query<T> implements IQuery, Iterable<T>
     @NotNull
     @Override
     public Iterator<T> iterator()
-    { return _source.iterator(); }
+    {
+        return _source.iterator();
+    }
 
     public static <T> IQuery from(Iterable<T> source){
         return new Query(source);
+    }
+
+    @Override
+    public boolean any()
+    {
+        return Linq.any(_source);
+    }
+
+    @Override
+    public <T> boolean any(Function<T, Boolean> predicate)
+    {
+        return Linq.any(_source, predicate);
+    }
+
+    @Override
+    public <T> boolean all(Function<T, Boolean> predicate)
+    {
+        return Linq.all(_source, predicate);
     }
 }
 

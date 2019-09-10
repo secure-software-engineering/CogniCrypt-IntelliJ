@@ -21,8 +21,6 @@ class IntelliJPlatformBuildBroker implements ProjectComponent {
     private MessageBus _messageBus;
     private MessageBusConnection _connection;
 
-    private int _gradleCount;
-
     public IntelliJPlatformBuildBroker(Project project, IIdePlatformProvider platformProvider)
     {
         _platformProvider = platformProvider;

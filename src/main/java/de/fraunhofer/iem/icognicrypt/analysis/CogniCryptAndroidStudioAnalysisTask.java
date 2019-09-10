@@ -88,7 +88,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
                     }
                 }
             } catch (Throwable e){
-                Notification notification = new Notification("CogniCrypt", "CogniCrypt", String.format("Crashed on %s", curr), NotificationType.INFORMATION);
+                Notification notification = new Notification("CogniCrypt", "CogniCrypt", String.format("Crashed on %s", curr), NotificationType.ERROR);
                 logger.error(e);
                 Notifications.Bus.notify(notification);
             }

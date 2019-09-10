@@ -3,14 +3,14 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
-import javaLinq.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Helpers.StringTrimming;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
+import javaLinq.Linq;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.File;
 import java.util.Collections;
@@ -86,11 +86,10 @@ class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Dispo
     {
         if (files == null)
             return "";
-        String message = "Do you want to analyze the last files again:\r\n\r\n";
+        var message = "Do you want to analyze the last files again:\r\n\r\n";
         for (String file : files)
             message += FilenameUtils.getName(file) + "\r\n";
-        StringTrimming.TrimEnd(message, "\r\n");
-        return message;
+        return StringTrimming.TrimEnd(message, "\r\n");
     }
 
     public IOutputFinderCache GetCache(){

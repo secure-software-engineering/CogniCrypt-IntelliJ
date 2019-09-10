@@ -2,7 +2,7 @@ import org.apache.tools.ant.taskdefs.condition.Os;
 
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.8'
+    id 'org.jetbrains.intellij' version '0.4.10'
     id 'maven'
 }
 
@@ -13,7 +13,7 @@ apply plugin: 'java'
 group 'de.fraunhofer'
 version '0.2.5'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -39,7 +39,7 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/gradle
 intellij {
     plugins 'android'
-    version '2018.3.6'
+    version '2019.1.2'
     updateSinceUntilBuild false
 
     if (Os.isFamily(Os.FAMILY_MAC)){

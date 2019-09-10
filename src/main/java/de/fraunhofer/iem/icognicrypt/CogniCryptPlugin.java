@@ -5,6 +5,8 @@ import de.fraunhofer.iem.icognicrypt.core.BackgroundComponent;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLExtractor;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 
+import java.io.Console;
+
 public class CogniCryptPlugin extends BackgroundComponent
 {
     private final CrySLExtractor _extractor;

@@ -1,8 +1,7 @@
-// Copyright (c) .NET Foundation and Contributors
+//Inspired by the .NET Foundation and Contributors under MIT License
 package javaLinq;
 
 import com.google.common.collect.Iterables;
-import org.apache.commons.lang.ObjectUtils;
 
 import java.util.*;
 import java.util.function.Function;

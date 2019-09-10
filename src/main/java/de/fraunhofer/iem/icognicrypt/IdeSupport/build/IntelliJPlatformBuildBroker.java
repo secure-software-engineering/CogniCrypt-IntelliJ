@@ -61,9 +61,7 @@ class IntelliJPlatformBuildBroker implements ProjectComponent {
                             return false;
                         }))
                         {
-                            // TODO: Remove if statement once update to newer AS version. The fire bug twice is fixed in newer builds
-                            if (++_gradleCount % 2 == 0)
-                                Publish();
+                            Publish();
                         }
                     }
                 });

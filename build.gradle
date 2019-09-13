@@ -13,10 +13,11 @@ apply plugin: 'java'
 group 'de.fraunhofer'
 version '0.2.5'
 
-sourceCompatibility = 11
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         url "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-snapshot/"
     }
@@ -27,8 +28,8 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis-Android', version: '2.4'
-    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.4'
+    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis-Android', version: '2.5'
+    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.5'
     compile group: 'ca.mcgill.sable', name: 'soot', version: '3.3.0'
     compile group: 'de.tud.sse', name: 'soot-infoflow', version: '2.7.1'
     compile group: 'de.tud.sse', name: 'soot-infoflow-android', version: '2.7.1'
@@ -38,18 +39,19 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/gradle
 intellij {
-    plugins 'android'
-    version '2019.1.2'
+    plugins 'android', 'java'
+    //version '2019.2.2'
     updateSinceUntilBuild false
 
     if (Os.isFamily(Os.FAMILY_MAC)){
         alternativeIdePath '/Applications/Android Studio 3.5 Beta.app/'
     }
     else if (Os.isFamily(Os.FAMILY_WINDOWS)){
-        //alternativeIdePath 'D:\\Portables\\Android Studio\\3.5\\android-studio'
-        alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
+        //alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
     }
 }
+
+
 
 runIde {
     jvmArgs '-Xmx4G'
@@ -61,6 +63,8 @@ runIde {
 }
 
 patchPluginXml {
+    sinceBuild '191'
+    untilBuild '193.*'
     changeNotes """
       Add change notes here.<br>
       <em>most HTML tags may be used</em>"""

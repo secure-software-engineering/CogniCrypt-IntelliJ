@@ -86,7 +86,7 @@ class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Dispo
     {
         if (files == null)
             return "";
-        var message = "Do you want to analyze the last files again:\r\n\r\n";
+        String message = "Do you want to analyze the last files again:\r\n\r\n";
         for (String file : files)
             message += FilenameUtils.getName(file) + "\r\n";
         return StringTrimming.TrimEnd(message, "\r\n");

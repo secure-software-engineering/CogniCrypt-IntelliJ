@@ -16,9 +16,11 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.vfs.VirtualFile;
+import crypto.analysis.errors.AbstractError;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdeType;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
@@ -31,6 +33,7 @@ import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import de.fraunhofer.iem.icognicrypt.ui.multipleOutputFilesDialog.MultipleOutputFilesDialog;
 import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
+import soot.G;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -52,6 +55,29 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
     @Override
     public void actionPerformed(@NotNull AnActionEvent e)
     {
+        try
+        {
+            String apkPath = "C:\\Users\\lrs\\Desktop\\Test-1.0.apk";
+            String rulePath = "D:\\CogniCrypt\\CrySL-rulesets\\rulessets\\JavaCryptographicArchitecture";
+            String aSdk = "C:\\Android\\sdk\\platforms";
+
+            CogniCryptAndroidAnalysis analysis = new CogniCryptAndroidAnalysis(apkPath, aSdk, rulePath, Lists.newArrayList());
+
+            G.v().reset();
+            Collection<AbstractError> results = analysis.run();
+
+            for(AbstractError abstractError : results)
+            {
+                System.out.println(abstractError.toErrorMarkerString());
+            }
+            //*/
+
+        }
+        catch (Throwable ex){
+            System.out.println(ex);
+        }
+
+        /*
         Project project = e.getDataContext().getData(PlatformDataKeys.PROJECT);
 
         if (!CrySLHelper.isValidCrySLRuleDirectory(_settings.getRulesDirectory()))
@@ -79,6 +105,8 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
                 NotificationProvider.ShowError("Could not run the Analysis on the current IDE platform");
                 break;
         }
+
+         */
     }
 
     private void RunAndroidAnalysis(Project project, Iterable<File> filesToAnalyze)

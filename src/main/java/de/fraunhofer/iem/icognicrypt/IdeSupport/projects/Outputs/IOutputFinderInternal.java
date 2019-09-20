@@ -12,8 +12,6 @@ import java.util.Set;
 
 interface IOutputFinderInternal
 {
-    @NotNull Iterable<File> GetOutputFiles(Path projectPath, Set<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException;
-
     @NotNull Iterable<File> GetOutputFiles(Project project) throws OperationNotSupportedException, IOException, CogniCryptException;
 
     @NotNull Iterable<File> GetOutputFiles(Project project, Set<OutputFinderOptions.Flags> options) throws CogniCryptException, IOException, OperationNotSupportedException;

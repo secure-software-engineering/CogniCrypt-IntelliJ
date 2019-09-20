@@ -23,6 +23,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdeType;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
+import de.fraunhofer.iem.icognicrypt.analysis.AndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
 import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
 import javaLinq.Linq;
@@ -76,38 +77,12 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
                 RunIntelliJAnalysis(project, files);
                 break;
             case AndroidStudio:
-                RunAndroidAnalysis(project, files);
+                AndroidAnalysis.RunAndroidAnalysis(project, files);
                 break;
             default:
                 NotificationProvider.ShowError("Could not run the Analysis on the current IDE platform");
                 break;
         }
-    }
-
-    private void RunAndroidAnalysis(Project project, Iterable<File> filesToAnalyze)
-    {
-        logger.info("Running Android Analysis");
-
-        Path androidPlatformPath = AndroidPlatformLocator.getAndroidPlatformsLocation(project).toAbsolutePath();
-        String projectBasePath = project.getBasePath();
-
-        logger.info("Evaluating compile path " + projectBasePath);
-
-        File projectDir = new File(projectBasePath);
-        if (!projectDir.exists()) return;
-
-        LinkedList<CogniCryptAndroidAnalysis> queue = Lists.newLinkedList();
-
-        for (File file : filesToAnalyze)
-        {
-            String apkPath = file.getAbsolutePath();
-            logger.info("APK found in " + apkPath);
-
-            CogniCryptAndroidAnalysis analysis = new CogniCryptAndroidAnalysis(apkPath, androidPlatformPath.toString(), _settings.getRulesDirectory(), Lists.newArrayList());
-            queue.add(analysis);
-        }
-        if (queue.isEmpty()) NotificationProvider.ShowInfo("No APK file detected. Run Build > Make Project assemble an APK and trigger the analysis again.");
-        else ProgressManager.getInstance().run(new CogniCryptAndroidStudioAnalysisTask(project, queue));
     }
 
     private void RunIntelliJAnalysis(Project project, Iterable<File> filesToAnalyze)
@@ -141,53 +116,9 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             case IntelliJ:
                 throw new NotImplementedException();
             case AndroidStudio:
-                return GetFilesForAndroidStudio(outputFinder, options);
+                return AndroidAnalysis.GetFilesForAndroidStudio(outputFinder, options);
         }
         return Collections.EMPTY_LIST;
-    }
-
-    private Iterable<File> GetFilesForAndroidStudio(IProjectOutputFinder outputFinder, Set<OutputFinderOptions.Flags> options)
-    {
-        // If not options are given we directly show the 'Select Files' dialog.
-        if (options == null || !Linq.any(options))
-            return outputFinder.GetOutputFilesFromDialog();
-
-        // Get possible files
-        Iterable<File> files = outputFinder.GetOutputFiles(options);
-
-        boolean dialogFlag = false;
-        boolean abortFlag = false;
-
-        // If there are multiple files, ask the user which ones to analyse
-        if (Linq.count(files) > 1)
-        {
-            MultipleOutputFilesDialog dialog = new MultipleOutputFilesDialog(files, outputFinder.GetCache().GetCachedMultipleFileSelection());
-            MultipleOutputFilesDialog.OutputFilesDialogResult result = dialog.ShowDialog();
-
-            if (result == MultipleOutputFilesDialog.OutputFilesDialogResult.ChooseManually)
-                dialogFlag = true;
-            else if (result == MultipleOutputFilesDialog.OutputFilesDialogResult.OK)
-            {
-                files = dialog.GetSelectedFiles();
-                if (dialog.GetSaveChoice())
-                    outputFinder.GetCache().SetMultipleFileSelection(files);
-                else
-                    outputFinder.GetCache().InvalidateMultipleSelectedFiles();
-            }
-            else{
-                files = Collections.EMPTY_LIST;
-                abortFlag = true;
-            }
-        }
-
-        // If the user requested to choose the files manually, or no files have been found but the procedure was not aborted
-        // show the 'Select File' dialog
-        if (dialogFlag || (!Linq.any(files) && Linq.any(options))  && !abortFlag)
-        {
-            files = outputFinder.GetOutputFilesFromDialog(!dialogFlag);
-        }
-
-        return files;
     }
 }
 

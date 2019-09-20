@@ -9,7 +9,6 @@ import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
 import javaLinq.Linq;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

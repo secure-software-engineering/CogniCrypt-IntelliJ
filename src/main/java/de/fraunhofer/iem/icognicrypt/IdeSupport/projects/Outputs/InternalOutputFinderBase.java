@@ -58,8 +58,6 @@ abstract class InternalOutputFinderBase implements IOutputFinderInternal
 
     protected abstract Iterable<File> GetOutputFilesFromDialogInternal(Project project);
 
-
-
     @NotNull
     protected final Iterable<File> GetOutputFilesInternal(Project project, Set<OutputFinderOptions.Flags> options)
             throws CogniCryptException, IOException, OperationNotSupportedException
@@ -70,6 +68,9 @@ abstract class InternalOutputFinderBase implements IOutputFinderInternal
 
         if (!Files.exists(projectPath))
             throw new CogniCryptException("Root path of the project does not exist.");
+
+        if (!ValidateProject(project))
+            throw new CogniCryptException("The project is not valid or supported by this IDE");
 
         HashSet<File> result = new HashSet<>();
 
@@ -83,5 +84,10 @@ abstract class InternalOutputFinderBase implements IOutputFinderInternal
         if (result.isEmpty())
             logger.info("Could not find any file");
         return result;
+    }
+
+    protected boolean ValidateProject(Project project)
+    {
+        return true;
     }
 }

@@ -2,6 +2,8 @@ package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectType;
+import com.intellij.openapi.project.ProjectTypeService;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.gradle.GradleSettings;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.IdeaWorkspace;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.JavaModule;
@@ -79,6 +81,15 @@ class AndroidStudioOutputFinderInternal extends InternalOutputFinderBase
             result.add(userSelectedFile);
         }
         return result;
+    }
+
+    @Override
+    protected boolean ValidateProject(Project project)
+    {
+        ProjectType projectType = ProjectTypeService.getProjectType(project);
+        if (!projectType.getId().equals("Android"))
+            return false;
+        return true;
     }
 
     private Collection<File> GetOutputs(IHasOutputs outputManager, Set<OutputFinderOptions.Flags> options) throws IOException

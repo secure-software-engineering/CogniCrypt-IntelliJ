@@ -17,7 +17,6 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven {
         url "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-snapshot/"
     }
@@ -29,7 +28,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis-Android', version: '2.5'
-    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.5'
+    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.6-SNAPSHOT'
     compile group: 'ca.mcgill.sable', name: 'soot', version: '3.3.0'
     compile group: 'de.tud.sse', name: 'soot-infoflow', version: '2.7.1'
     compile group: 'de.tud.sse', name: 'soot-infoflow-android', version: '2.7.1'
@@ -39,7 +38,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/gradle
 intellij {
-    plugins 'android', 'java'
+    plugins 'android', 'java', 'maven', 'gradle'
     //version '2019.2.2'
     updateSinceUntilBuild false
 
@@ -47,7 +46,7 @@ intellij {
         alternativeIdePath '/Applications/Android Studio 3.5 Beta.app/'
     }
     else if (Os.isFamily(Os.FAMILY_WINDOWS)){
-        //alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
+        alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
     }
 }
 

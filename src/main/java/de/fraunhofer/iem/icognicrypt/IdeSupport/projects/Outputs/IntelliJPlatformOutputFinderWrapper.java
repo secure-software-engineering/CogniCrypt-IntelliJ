@@ -31,7 +31,7 @@ class IntelliJPlatformOutputFinderWrapper implements IProjectOutputFinder, Dispo
             case Unknown:
                 throw new CogniCryptException("Target IDE is not supported");
             case IntelliJ:
-                throw new NotImplementedException();
+                _serviceProvider = new IntelliJOutputFinderInternal();
             case AndroidStudio:
                 _serviceProvider = new AndroidStudioOutputFinderInternal();
         }

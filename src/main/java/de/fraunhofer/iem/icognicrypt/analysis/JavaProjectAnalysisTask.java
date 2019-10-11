@@ -2,8 +2,14 @@ package de.fraunhofer.iem.icognicrypt.analysis;
 
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
+import crypto.HeadlessCryptoScanner;
 import crypto.analysis.CrySLAnalysisListener;
+import crypto.analysis.CrySLRulesetSelector;
+import crypto.rules.CryptSLRule;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.util.List;
 
 public class JavaProjectAnalysisTask extends Task.Backgroundable {
 
@@ -48,10 +54,18 @@ public class JavaProjectAnalysisTask extends Task.Backgroundable {
             }
 
             @Override
-            protected String getRulesDirectory() {
-                return rulesDirectory;
+            protected List<CryptSLRule> getRules()
+            {
+                return CrySLRulesetSelector.makeFromPath(new File(rulesDirectory), CrySLRulesetSelector.RuleFormat.BINARY);
             }
         };
-        scanner.exec();
+        try
+        {
+            scanner.exec();
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+
     }
 }

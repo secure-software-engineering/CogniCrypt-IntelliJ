@@ -1,44 +1,28 @@
 package de.fraunhofer.iem.icognicrypt.actions;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.compiler.ex.CompilerPathsEx;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.util.IconLoader;
-import com.intellij.openapi.vfs.VirtualFile;
-import crypto.analysis.errors.AbstractError;
-import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdeType;
-import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.analysis.AndroidAnalysis;
-import de.fraunhofer.iem.icognicrypt.analysis.CogniCryptAndroidStudioAnalysisTask;
-import de.fraunhofer.iem.icognicrypt.analysis.JavaProjectAnalysisTask;
-import javaLinq.Linq;
-import de.fraunhofer.iem.icognicrypt.core.android.AndroidPlatformLocator;
+import de.fraunhofer.iem.icognicrypt.analysis.IntelliJAnalysis;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
-import de.fraunhofer.iem.icognicrypt.ui.multipleOutputFilesDialog.MultipleOutputFilesDialog;
-import org.apache.commons.lang.NotImplementedException;
+import javaLinq.Linq;
 import org.jetbrains.annotations.NotNull;
-import soot.G;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
 
 public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
 {
@@ -65,7 +49,8 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         }
 
         Iterable<File> files = GetFilesToAnalyze(project);
-        if (files == null || !Linq.any(files))
+        // TODO: Remove ide type
+        if (_ideType == IdeType.AndroidStudio && (files == null || !Linq.any(files)))
         {
             NotificationProvider.ShowInfo("No files were analysed");
             return;
@@ -74,7 +59,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         switch (_ideType)
         {
             case IntelliJ:
-                RunIntelliJAnalysis(project, files);
+                IntelliJAnalysis.RunIntelliJAnalysis(project, files);
                 break;
             case AndroidStudio:
                 AndroidAnalysis.RunAndroidAnalysis(project, files);
@@ -82,25 +67,6 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             default:
                 NotificationProvider.ShowError("Could not run the Analysis on the current IDE platform");
                 break;
-        }
-    }
-
-    private void RunIntelliJAnalysis(Project project, Iterable<File> filesToAnalyze)
-    {
-        logger.info("Running IntelliJ Analysis");
-
-        List<String> classpath = new ArrayList<>();
-        for (Module module : ModuleManager.getInstance(project).getModules())
-        {
-            //Add classpath jars from Language, Android and Gradle to list
-            for (VirtualFile file : OrderEnumerator.orderEntries(module).recursively().getClassesRoots())
-            {
-                classpath.add(file.getPath());
-            }
-            String modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
-            logger.info("Module Output Path " + modulePath);
-            Task analysis = new JavaProjectAnalysisTask(modulePath, Joiner.on(":").join(classpath), _settings.getRulesDirectory());
-            ProgressManager.getInstance().run(analysis);
         }
     }
 
@@ -114,7 +80,8 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             case Unknown:
                 return Collections.EMPTY_LIST;
             case IntelliJ:
-                throw new NotImplementedException();
+                // TODO:
+                return new ArrayList<>();
             case AndroidStudio:
                 return AndroidAnalysis.GetFilesForAndroidStudio(outputFinder, options);
         }

@@ -10,6 +10,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
+import com.intellij.webcore.packaging.ManageRepoDialog;
 import crypto.analysis.errors.AbstractError;
 import crypto.analysis.errors.IncompleteOperationError;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;

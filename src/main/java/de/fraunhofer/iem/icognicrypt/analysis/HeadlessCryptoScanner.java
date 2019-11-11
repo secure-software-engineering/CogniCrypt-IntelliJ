@@ -220,7 +220,7 @@ abstract class HeadlessCryptoScanner {
         File[] listFiles = new File(getRulesDirectory()).listFiles();
         for (File file : listFiles) {
             if (file != null && file.getName().endsWith(".cryptslbin")) {
-                rules.add(CryptSLRuleReader.readFromFile(file));
+                rules.add(CryptSLRuleReader.readFromSourceFile(file));
             }
         }
         if (rules.isEmpty())

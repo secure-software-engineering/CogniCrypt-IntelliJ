@@ -118,4 +118,10 @@ class AnalysisListener extends CrySLAnalysisListener {
     public void onSecureObjectFound(IAnalysisSeed iAnalysisSeed) {
 
     }
+
+    @Override
+    public void addProgress(int i, int i1)
+    {
+
+    }
 }

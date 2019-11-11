@@ -16,6 +16,7 @@ version '0.2.5'
 sourceCompatibility = 1.8
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         url "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-snapshot/"
@@ -27,7 +28,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis-Android', version: '2.5'
+    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis-Android', version: '2.6-SNAPSHOT'
     compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.6-SNAPSHOT'
     compile group: 'ca.mcgill.sable', name: 'soot', version: '3.3.0'
     compile group: 'de.tud.sse', name: 'soot-infoflow', version: '2.7.1'

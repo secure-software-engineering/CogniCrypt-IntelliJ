@@ -16,9 +16,7 @@ import javaLinq.Linq;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 public class AndroidAnalysis
 {
@@ -34,7 +32,8 @@ public class AndroidAnalysis
         logger.info("Evaluating compile path " + projectBasePath);
 
         File projectDir = new File(projectBasePath);
-        if (!projectDir.exists()) return;
+        if (!projectDir.exists())
+            return;
 
         LinkedList<CogniCryptAndroidAnalysis> queue = Lists.newLinkedList();
 
@@ -44,7 +43,7 @@ public class AndroidAnalysis
             logger.info("APK found in " + apkPath);
 
             IPersistableCogniCryptSettings settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
-            CogniCryptAndroidAnalysis analysis = new CogniCryptAndroidAnalysis(apkPath, androidPlatformPath.toString(), settings.getRulesDirectory(), Lists.newArrayList());
+            CogniCryptAndroidAnalysis analysis = new CogniCryptAndroidAnalysis(apkPath, androidPlatformPath.toString(), settings.getRulesDirectory());
             queue.add(analysis);
         }
         if (queue.isEmpty())

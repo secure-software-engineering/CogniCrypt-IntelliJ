@@ -89,6 +89,175 @@
     <orderEntry type="library" name="Gradle: heros:heros:1.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: de.fraunhofer.iem:idealPDS:2.4-SNAPSHOT" level="project" />
     <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Gradle: unzipped.com.jetbrains.plugins:java:unzipped.com.jetbrains.plugins:ideaIC-IC-193.5233.12-withSources">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-api-1.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-connector-basic-1.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-dependency-resolver.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-impl-1.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-spi-1.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-transport-file-1.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-transport-http-1.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-util-1.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/commons-lang3-3.4.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/completion-ranking-java-0.0.7.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/debugger-memory-agent-0.0.11.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/ecj-4.10.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/java-api.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/java-impl.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/javac2.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/java_resources_en.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jdkAnnotations.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jgoodies-common-1.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jps-builders-6.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jps-builders.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jps-launcher.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jshell-protocol.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-aether-provider-3.3.9.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-artifact-3.3.9.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-builder-support-3.3.9.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-model-3.3.9.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-model-builder-3.3.9.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-repository-metadata-3.3.9.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/plexus-component-annotations-1.6.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/plexus-interpolation-1.21.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/plexus-utils-3.0.22.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/resources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/resources_en.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/f26dc5d2018c567cba1d68f1c25fff9b3bf8f81/ideaIC-LATEST-EAP-SNAPSHOT-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Gradle: unzipped.com.jetbrains.plugins:maven:unzipped.com.jetbrains.plugins:ideaIC-IC-193.5233.12-withSources">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/artifact-resolver-m2.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/artifact-resolver-m3.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/artifact-resolver-m31.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/lucene-core-2.4.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven-errorProne-compiler.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven-event-listener.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven-jps-plugin.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven-server-api.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven2-server-impl.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven3-server-common.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven3-server-impl.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven30-server-impl.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven36-server-impl.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/plexus-archiver-3.0.3.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/resources_en.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/f26dc5d2018c567cba1d68f1c25fff9b3bf8f81/ideaIC-LATEST-EAP-SNAPSHOT-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Gradle: unzipped.com.jetbrains.plugins:gradle:unzipped.com.jetbrains.plugins:ideaIC-IC-193.5233.12-withSources">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-api-5.2.1-sp1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-api-impldep-5.2.1-sp1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-common.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-launcher-5.2.1-sp1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-tooling-extension-api.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-tooling-extension-impl.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-toolingLoaderRt.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-wrapper-5.2.1-sp1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/f26dc5d2018c567cba1d68f1c25fff9b3bf8f81/ideaIC-LATEST-EAP-SNAPSHOT-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Gradle: unzipped.com.jetbrains.plugins:android:unzipped.com.jetbrains.plugins:ideaIC-IC-193.5233.12-withSources">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/adt-ui.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/android-common.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/android-profilers.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/android-rt.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/android.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/androidAnnotations.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/annotations-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/apkanalyzer-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/artwork.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/asm-5.0.3.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/asm-analysis-5.0.3.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/asm-tree-5.0.3.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/baseLibrary-3.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/binary-resources-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/build-common.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/builder-model-3.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/builder-test-api-3.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/common-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/commons-compress-1.8.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/crash-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/databinding-common-3.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/databinding-compiler-3.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/databinding-compiler-common-3.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/ddmlib-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/deploy-java-proto-26.5.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/deploy-java-version-26.5.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/deployer-26.5.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/draw9patch-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/dvlib-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/flags-26.5.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/freemarker-2.3.20.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/instantapps-api-1.5.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/intellij.android.kotlin.extensions.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/intellij.android.kotlin.idea.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/intellij.android.kotlin.output.parser.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/jarutils.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/java-lib-model-3.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/java-lib-model-builder-3.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/javawriter-2.2.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/jgraphx-3.4.1.3.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/kxml2-2.3.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/layoutinspector-26.5.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/layoutlib-26.5.0.2.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/layoutlib-api-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/layoutlib-loader.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/libwebp.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/lint-api-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/lint-checks-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/manifest-merger-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/moshi-1.6.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/ninepatch-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/okio-1.14.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.elk.alg.layered-0.3.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.elk.core-0.3.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.elk.graph-0.3.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.emf.common-2.12.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.emf.ecore-2.12.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/pepk.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/perflib-26.5.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/pixelprobe-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/r8-master-26.5.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/repository-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/resources_en.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/sdk-common-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/sdklib-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/shared-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/spantable.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/studio-profiler-grpc-26.5.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/tracer-26.5.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/tracker-26.5.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/usb-devices-26.5.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/f26dc5d2018c567cba1d68f1c25fff9b3bf8f81/ideaIC-LATEST-EAP-SNAPSHOT-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
       <library name="Gradle: com.jetbrains:ideaIC:LATEST-EAP-SNAPSHOT">
         <ANNOTATIONS>
           <root url="jar://$MAVEN_REPOSITORY$/com/jetbrains/intellij/idea/ideaIU/LATEST-EAP-SNAPSHOT/ideaIU-LATEST-EAP-SNAPSHOT-annotations.zip!/" />
@@ -293,175 +462,6 @@
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/lib/xpp3_min-1.1.4c.jar!/" />
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/lib/xstream-1.4.11.1.jar!/" />
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/lib/xz-1.8.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/f26dc5d2018c567cba1d68f1c25fff9b3bf8f81/ideaIC-LATEST-EAP-SNAPSHOT-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library name="Gradle: unzipped.com.jetbrains.plugins:maven:unzipped.com.jetbrains.plugins:ideaIC-IC-193.5233.12-withSources">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/artifact-resolver-m2.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/artifact-resolver-m3.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/artifact-resolver-m31.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/lucene-core-2.4.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven-errorProne-compiler.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven-event-listener.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven-jps-plugin.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven-server-api.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven2-server-impl.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven3-server-common.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven3-server-impl.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven30-server-impl.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/maven36-server-impl.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/plexus-archiver-3.0.3.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/maven/lib/resources_en.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/f26dc5d2018c567cba1d68f1c25fff9b3bf8f81/ideaIC-LATEST-EAP-SNAPSHOT-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library name="Gradle: unzipped.com.jetbrains.plugins:java:unzipped.com.jetbrains.plugins:ideaIC-IC-193.5233.12-withSources">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-api-1.1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-connector-basic-1.1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-dependency-resolver.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-impl-1.1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-spi-1.1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-transport-file-1.1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-transport-http-1.1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/aether-util-1.1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/commons-lang3-3.4.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/completion-ranking-java-0.0.7.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/debugger-memory-agent-0.0.11.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/ecj-4.10.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/java-api.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/java-impl.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/javac2.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/java_resources_en.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jdkAnnotations.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jgoodies-common-1.4.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jps-builders-6.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jps-builders.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jps-launcher.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/jshell-protocol.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-aether-provider-3.3.9.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-artifact-3.3.9.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-builder-support-3.3.9.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-model-3.3.9.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-model-builder-3.3.9.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/maven-repository-metadata-3.3.9.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/plexus-component-annotations-1.6.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/plexus-interpolation-1.21.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/plexus-utils-3.0.22.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/resources.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/java/lib/resources_en.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/f26dc5d2018c567cba1d68f1c25fff9b3bf8f81/ideaIC-LATEST-EAP-SNAPSHOT-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library name="Gradle: unzipped.com.jetbrains.plugins:android:unzipped.com.jetbrains.plugins:ideaIC-IC-193.5233.12-withSources">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/adt-ui.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/android-common.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/android-profilers.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/android-rt.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/android.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/androidAnnotations.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/annotations-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/apkanalyzer-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/artwork.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/asm-5.0.3.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/asm-analysis-5.0.3.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/asm-tree-5.0.3.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/baseLibrary-3.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/binary-resources-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/build-common.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/builder-model-3.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/builder-test-api-3.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/common-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/commons-compress-1.8.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/crash-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/databinding-common-3.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/databinding-compiler-3.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/databinding-compiler-common-3.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/ddmlib-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/deploy-java-proto-26.5.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/deploy-java-version-26.5.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/deployer-26.5.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/draw9patch-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/dvlib-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/flags-26.5.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/freemarker-2.3.20.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/instantapps-api-1.5.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/intellij.android.kotlin.extensions.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/intellij.android.kotlin.idea.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/intellij.android.kotlin.output.parser.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/jarutils.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/java-lib-model-3.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/java-lib-model-builder-3.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/javawriter-2.2.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/jgraphx-3.4.1.3.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/kxml2-2.3.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/layoutinspector-26.5.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/layoutlib-26.5.0.2.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/layoutlib-api-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/layoutlib-loader.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/libwebp.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/lint-api-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/lint-checks-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/manifest-merger-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/moshi-1.6.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/ninepatch-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/okio-1.14.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.elk.alg.layered-0.3.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.elk.core-0.3.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.elk.graph-0.3.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.emf.common-2.12.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/org.eclipse.emf.ecore-2.12.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/pepk.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/perflib-26.5.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/pixelprobe-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/r8-master-26.5.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/repository-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/resources_en.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/sdk-common-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/sdklib-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/shared-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/spantable.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/studio-profiler-grpc-26.5.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/tracer-26.5.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/tracker-26.5.0.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/android/lib/usb-devices-26.5.0.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/f26dc5d2018c567cba1d68f1c25fff9b3bf8f81/ideaIC-LATEST-EAP-SNAPSHOT-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library name="Gradle: unzipped.com.jetbrains.plugins:gradle:unzipped.com.jetbrains.plugins:ideaIC-IC-193.5233.12-withSources">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-api-5.2.1-sp1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-api-impldep-5.2.1-sp1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-common.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-launcher-5.2.1-sp1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-tooling-extension-api.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-tooling-extension-impl.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-toolingLoaderRt.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle-wrapper-5.2.1-sp1.jar!/" />
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/LATEST-EAP-SNAPSHOT/ed46a4ceb4308fbd1a87631bae388ef7330bf5a3/ideaIC-LATEST-EAP-SNAPSHOT/plugins/gradle/lib/gradle.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>

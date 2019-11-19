@@ -47,7 +47,7 @@ intellij {
         alternativeIdePath '/Applications/Android Studio 3.5 Beta.app/'
     }
     else if (Os.isFamily(Os.FAMILY_WINDOWS)){
-        alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
+        // alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
     }
 }
 

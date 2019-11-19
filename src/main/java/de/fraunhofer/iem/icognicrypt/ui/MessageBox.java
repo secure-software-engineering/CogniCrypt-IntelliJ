@@ -1,5 +1,10 @@
 package de.fraunhofer.iem.icognicrypt.ui;
 
+import com.intellij.openapi.application.Application;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.wm.WindowManager;
+import com.intellij.openapi.wm.ex.WindowManagerEx;
+import com.intellij.util.ui.AppleBoldDottedPainter;
 import org.jdesktop.swingx.plaf.UIManagerExt;
 
 import javax.swing.*;
@@ -21,6 +26,11 @@ public class MessageBox
     public static MessageBoxResult Show(String text, MessageBoxButton button)
     {
         return ShowInternal(null, text, button, MessageBoxType.None, MessageBoxResult.YesOK);
+    }
+
+    public static MessageBoxResult Show(String text, MessageBoxButton button, MessageBoxType type)
+    {
+        return ShowInternal(null, text, button, type,  MessageBoxResult.YesOK);
     }
 
     public static MessageBoxResult Show(String text)
@@ -52,6 +62,10 @@ public class MessageBox
     static MessageBoxResult ShowInternal(Component owner, String text, MessageBoxButton button, MessageBoxType type, MessageBoxResult defaultResult)
     {
         JOptionPane pane = new JOptionPane(text, type.GetValue(), button.GetValue(), null, null, defaultResult);
+
+        if (owner == null)
+            owner = WindowManagerEx.getInstanceEx().getMostRecentFocusedWindow();
+
         JDialog dialog = pane.createDialog(owner, DefaultCaption);
 
         Set forwardTraversalKeys = new HashSet(dialog.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));

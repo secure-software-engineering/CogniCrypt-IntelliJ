@@ -6,6 +6,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.util.IconLoader;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdeType;
@@ -16,6 +17,7 @@ import de.fraunhofer.iem.icognicrypt.analysis.IntelliJAnalysis;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
+import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
 import javaLinq.Linq;
 import org.apache.commons.lang.NotImplementedException;
@@ -58,24 +60,18 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         }
          */
 
-        try
-        {
-            switch (_ideType)
-            {
-                case IntelliJ:
-                    IntelliJAnalysis.RunIntelliJAnalysis(project, files);
-                    break;
-                case AndroidStudio:
-                    AndroidAnalysis.RunAndroidAnalysis(project, files);
-                    break;
-                default:
-                    NotificationProvider.ShowError("Could not run the Analysis on the current IDE platform");
-                    break;
-            }
-        }
-        catch (CogniCryptException ex)
-        {
 
+        switch (_ideType)
+        {
+            case IntelliJ:
+                IntelliJAnalysis.RunIntelliJAnalysis(project, files);
+                break;
+            case AndroidStudio:
+                AndroidAnalysis.RunAndroidAnalysis(project, files);
+                break;
+            default:
+                NotificationProvider.ShowError("Could not run the Analysis on the current IDE platform");
+                break;
         }
     }
 

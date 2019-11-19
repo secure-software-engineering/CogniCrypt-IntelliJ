@@ -15,6 +15,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputF
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
+import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
 
 import javax.naming.OperationNotSupportedException;
 import java.io.File;
@@ -27,12 +28,22 @@ public class IntelliJAnalysis
 {
     private static final Logger logger = Logger.getInstance(IntelliJAnalysis.class);
 
-    public static void RunIntelliJAnalysis(Project project, Iterable<File> filesToAnalyze) throws CogniCryptException
+    public static void RunIntelliJAnalysis(Project project, Iterable<File> filesToAnalyze)
     {
         logger.info("Running IntelliJ Analysis");
 
-        if (!analysisSupported())
-            throw new CogniCryptException("");
+        int runningVersion = getRunningVersion();
+        int targetVersion = 11;
+        if (!analysisSupported(runningVersion, targetVersion))
+        {
+            MessageBox.Show("Unfortunately, running the analysis with your current environment and program code is not possible.\r\n" +
+                                    "Your IDE is running Java " + runningVersion + " but your application targets Java " + targetVersion + ". " +
+                    "Imagine a boundary between Java 8 and Java 9. For successfully running an analysis, both version numbers must be on the same side of the boundary.\r\n\r\n " +
+                                    "We are working for adding compatibility to this setting.\r\n\r\n" +
+                                    "To temporarily avoid the issue, you could adapt the application target runtime or download IntelliJ with JBR 8:\r\n" +
+                    "https://www.jetbrains.com/idea/download/other.html", MessageBox.MessageBoxButton.OK, MessageBox.MessageBoxType.Information);
+            return;
+        }
 
 
         for (Module module : ModuleManager.getInstance(project).getModules())
@@ -59,12 +70,14 @@ public class IntelliJAnalysis
         }
     }
 
-    private static boolean analysisSupported()
+    private static boolean analysisSupported(int runningVersion, int targetVersion)
     {
+        if (runningVersion < 9 && targetVersion < 9 || runningVersion > 8 && targetVersion > 8)
+            return true;
         return false;
     }
 
-    private static int getVersion() {
+    private static int getRunningVersion() {
         String version = System.getProperty("java.version");
         if(version.startsWith("1.")) {
             version = version.substring(2, 3);

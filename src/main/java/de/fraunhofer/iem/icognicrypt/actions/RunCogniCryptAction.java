@@ -6,7 +6,6 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.util.IconLoader;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdeType;
@@ -15,12 +14,8 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOpt
 import de.fraunhofer.iem.icognicrypt.analysis.AndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.analysis.IntelliJAnalysis;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
-import de.fraunhofer.iem.icognicrypt.exceptions.CogniCryptException;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
-import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
-import javaLinq.Linq;
-import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -52,6 +47,8 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         }
 
         Iterable<File> files = GetFilesToAnalyze(project);
+
+        // TODO: Re-Enable
         /*
         if (files == null || !Linq.any(files))
         {
@@ -59,7 +56,6 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             return;
         }
          */
-
 
         switch (_ideType)
         {

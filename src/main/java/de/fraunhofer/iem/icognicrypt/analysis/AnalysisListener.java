@@ -81,7 +81,8 @@ class AnalysisListener extends CrySLAnalysisListener {
 
     @Override
     public void reportError(AbstractError abstractError) {
-
+        int i = 0;
+        i++;
     }
 
     @Override

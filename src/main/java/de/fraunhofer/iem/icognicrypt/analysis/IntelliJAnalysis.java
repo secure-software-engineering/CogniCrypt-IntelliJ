@@ -1,15 +1,20 @@
 package de.fraunhofer.iem.icognicrypt.analysis;
 
-import com.intellij.openapi.compiler.ex.CompilerPathsEx;
+import com.google.common.base.Joiner;
+import com.intellij.openapi.compiler.CompilerPaths;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.module.LanguageLevelUtil;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
+import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.pom.java.LanguageLevel;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
+import org.eclipse.jdt.internal.compiler.ProcessTaskManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,8 +43,15 @@ public class IntelliJAnalysis
         }
 
 
+        // RunConfiguration rc = RunManager.getInstance(project).getSelectedConfiguration().getConfiguration();
+        // ApplicationConfiguration apc = (ApplicationConfiguration) rc;
+
         for (Module module : ModuleManager.getInstance(project).getModules())
         {
+            LanguageLevel lang = LanguageLevelUtil.getEffectiveLanguageLevel(module);
+            lang = null;
+
+
             List<String> classpath = new ArrayList<>();
 
             //Add classpath jars from Language, Android and Gradle to list
@@ -47,8 +59,21 @@ public class IntelliJAnalysis
             {
                 classpath.add(file.getPath());
             }
-            String modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
+
+            String fullClasspath = OrderEnumerator.orderEntries(module).recursively().getPathsList().getPathsString();
+            fullClasspath = null;
+            //String modulePath = CompilerPathsEx.getModuleOutputPath(module, false);
+            String modulePath = CompilerPaths.getModuleOutputPath(module, false);
+
             logger.info("Module Output Path " + modulePath);
+
+            String fullCp = Joiner.on(File.pathSeparator).join(classpath);
+            logger.info(fullCp);
+
+            ProgressManager.getInstance().run(new JavaProjectAnalysisTask("C:\\Users\\lrs\\IdeaProjects\\helloworld\\out\\production\\helloworld",
+                                                                          "D:\\Java\\java-1.8.0-openjdk-1.8.0.212-1.b04.ojdkbuild.windows.x86_64\\jre\\lib\\rt.jar;C:\\Users\\lrs\\IdeaProjects\\helloworld\\out\\production\\helloworld"));
+
+            return;
 
             /*
 

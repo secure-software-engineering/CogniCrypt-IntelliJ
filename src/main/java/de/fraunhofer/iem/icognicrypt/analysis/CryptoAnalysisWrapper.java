@@ -7,8 +7,8 @@ import com.google.common.collect.Lists;
 import com.intellij.openapi.components.ServiceManager;
 import crypto.analysis.CrySLAnalysisListener;
 import crypto.analysis.CryptoScanner;
-import crypto.rules.CryptSLRule;
-import crypto.rules.CryptSLRuleReader;
+import crypto.rules.CrySLRule;
+import crypto.rules.CrySLRuleReader;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import soot.*;
 import soot.options.Options;
@@ -132,9 +132,9 @@ public class CryptoAnalysisWrapper
         };
     }
 
-    private List<CryptSLRule> getRules()
+    private List<CrySLRule> getRules()
     {
-        return CryptSLRuleReader.readFromDirectory(new File(_rulesDirectory));
+        return CrySLRuleReader.readFromDirectory(new File(_rulesDirectory));
     }
 
     private static List<String> getIncludeList() {
@@ -154,7 +154,7 @@ public class CryptoAnalysisWrapper
 
     private List<String> getExcludeList() {
         final List<String> excludeList = new LinkedList<String>();
-        for (final CryptSLRule r : getRules()) {
+        for (final CrySLRule r : getRules()) {
             excludeList.add(crypto.Utils.getFullyQualifiedName(r));
         }
         return excludeList;

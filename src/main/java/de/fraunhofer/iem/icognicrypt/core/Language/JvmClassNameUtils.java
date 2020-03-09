@@ -8,6 +8,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.PathUtil;
+import de.fraunhofer.iem.icognicrypt.core.Helpers.StringTrimming;
+import de.fraunhofer.iem.icognicrypt.core.java.Lazy;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.SystemUtils;
 
@@ -21,6 +23,13 @@ import java.util.stream.Collectors;
 // TODO: Optimize, optimize, optimize!!!
 public class JvmClassNameUtils
 {
+    //private static SupportedLanguagesUtils _languagesUtils;
+
+    private static Lazy<SupportedLanguagesUtils> _languagesUtils = new Lazy<>(() -> ServiceManager.getService(SupportedLanguagesUtils.class));
+
+    private static SupportedLanguagesUtils LanguagesUtils = _languagesUtils.GetValue();
+
+
 
     //TODO: Currently we cannot find private classes or package-private classes which are in the same file and the public class.
     /*TODO: We cannot find distinguish between modules. Result: if the same Fully Qualified Name exists in two different modules we always pick the first.
@@ -35,8 +44,7 @@ public class JvmClassNameUtils
         String relativePath = relativeContainerPath.replace('.',separator);
         List<VirtualFile> sourceRoots = getSourceRoots(project);
 
-        SupportedLanguagesUtils languagesUtils = ServiceManager.getService(SupportedLanguagesUtils.class);
-        Iterable<SupportedLanguage> supportedLanguages = languagesUtils.SupportedLanguages;
+        Iterable<SupportedLanguage> supportedLanguages = LanguagesUtils.SupportedLanguages;
 
         for(VirtualFile m : sourceRoots)
         {
@@ -44,20 +52,69 @@ public class JvmClassNameUtils
 
             for (SupportedLanguage language : supportedLanguages)
             {
-                String absolutePath = PathUtil.makeFileName(absolutePathWithoutFileName, languagesUtils.GetFileExtension(language));
-                File sourceFile = new File(absolutePath);
-                if (sourceFile.exists())
-                    return sourceFile.getAbsolutePath();
+                String possibleAbsolutePath = PathUtil.makeFileName(absolutePathWithoutFileName, LanguagesUtils.GetFileExtension(language));
+                String sourceFilePath = FindSourceFileForLanguage(possibleAbsolutePath, language);
+                if (sourceFilePath != null)
+                    return sourceFilePath;
             }
         }
         return null;
     }
+
+    private static String FindSourceFileForLanguage(String absolutePath, SupportedLanguage language)
+    {
+        File sourceFile = new File(absolutePath);
+        if (sourceFile.exists())
+            return sourceFile.getAbsolutePath();
+        if (SupportedLanguagesUtils.RequiresSourceFileNameModification(language))
+        {
+            File modifiedFile = ModifySourceFileName(sourceFile, language);
+            if (modifiedFile.exists())
+                return modifiedFile.getAbsolutePath();
+        }
+        return null;
+    }
+
+    private static File ModifySourceFileName(File file, SupportedLanguage language) {
+        // TODO
+        String parentPath = file.getParent();
+        String fileName = FilenameUtils.removeExtension(file.toPath().getFileName().toString());
+        String newFileNameWithoutExtension = ModifySourceFileName(fileName, language);
+        String newFileName = PathUtil.makeFileName(newFileNameWithoutExtension, LanguagesUtils.GetFileExtension(language));
+        return new File(parentPath, newFileName);
+    }
+
+    private static String ModifySourceFileName(String fileName, SupportedLanguage language) {
+        switch (language)
+        {
+            case Kotlin:
+                return StringTrimming.TrimEnd(fileName, "Kt");
+            default:
+                return fileName;
+        }
+    }
+
 
     //TODO: Currently we cannot find private classes not package-private classes which are in the same file and the public class.
     public static List<String> findFullyQualifiedClassNames(Project project)
     {
         List<String> results = Lists.newArrayList();
         List<VirtualFile> sourceRoots = getSourceRoots(project);
+        SupportedLanguagesUtils languagesUtils = ServiceManager.getService(SupportedLanguagesUtils.class);
+
+        for (VirtualFile root : sourceRoots)
+        {
+            String path = root.getPath();
+            Collection<File> supportedFiles = languagesUtils.GetSupportedSourceFiles(root);
+            results.addAll(supportedFiles.stream().map(f -> convertToFullyQualifiedClassName(f, path)).distinct().collect(Collectors.toList()));
+        }
+        return results;
+    }
+
+    public static List<String> findFullyQualifiedClassNames(Module module)
+    {
+        List<String> results = Lists.newArrayList();
+        List<VirtualFile> sourceRoots = getSourceRoots(module);
         SupportedLanguagesUtils languagesUtils = ServiceManager.getService(SupportedLanguagesUtils.class);
 
         for (VirtualFile root : sourceRoots)
@@ -85,19 +142,30 @@ public class JvmClassNameUtils
         return getSourceRoots(project, false, false);
     }
 
+    private static List<VirtualFile> getSourceRoots(Module module) {
+        return getSourceRoots(module, false, false);
+    }
+
     private static List<VirtualFile> getSourceRoots(Project project, boolean includeTests, boolean includeGeneratedCode)
     {
         List<VirtualFile> res = Lists.newArrayList();
         for (Module m : ModuleManager.getInstance(project).getModules())
         {
-            ModuleRootManager mgr = ModuleRootManager.getInstance(m);
-            for (VirtualFile file : mgr.getSourceRoots(includeTests))
-            {
-                boolean pathFromGenerated = file.getPath().contains("build/generated");
+            res.addAll(getSourceRoots(m, includeTests, includeGeneratedCode));
+        }
+        return res;
+    }
 
-                if (!pathFromGenerated || (pathFromGenerated && includeGeneratedCode))
-                    res.add(file);
-            }
+    private static List<VirtualFile> getSourceRoots(Module module, boolean includeTests, boolean includeGeneratedCode)
+    {
+        List<VirtualFile> res = Lists.newArrayList();
+        ModuleRootManager mgr = ModuleRootManager.getInstance(module);
+        for (VirtualFile file : mgr.getSourceRoots(includeTests))
+        {
+            boolean pathFromGenerated = file.getPath().contains("build/generated");
+
+            if (!pathFromGenerated || (pathFromGenerated && includeGeneratedCode))
+                res.add(file);
         }
         return res;
     }

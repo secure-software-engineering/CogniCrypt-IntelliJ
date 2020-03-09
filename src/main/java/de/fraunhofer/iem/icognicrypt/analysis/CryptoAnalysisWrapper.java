@@ -5,6 +5,7 @@ import boomerang.callgraph.ObservableICFG;
 import boomerang.preanalysis.BoomerangPretransformer;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.project.Project;
 import crypto.analysis.CrySLAnalysisListener;
 import crypto.analysis.CryptoScanner;
 import crypto.rules.CrySLRule;
@@ -14,6 +15,7 @@ import soot.*;
 import soot.options.Options;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +35,9 @@ public class CryptoAnalysisWrapper
         _rulesDirectory = settings.getRulesDirectory();
     }
 
-    public static void RunAnalysis(String applicationPath, String fullClassPath)
-    {
-        RunAnalysis(applicationPath, fullClassPath, new AnalysisListener());
+    public static void RunAnalysis(String applicationPath, String fullClassPath, Project project) {
+        AnalysisListenerService listener = ServiceManager.getService(project, AnalysisListenerService.class);
+        RunAnalysis(applicationPath, fullClassPath, listener);
     }
 
     public static void RunAnalysis(String applicationPath, String fullClassPath, CrySLAnalysisListener listener)
@@ -62,10 +64,11 @@ public class CryptoAnalysisWrapper
     private void setSootOptions()
     {
         Options.v().set_soot_classpath(_fullClassPath);
-        Options.v().set_process_dir(Lists.newArrayList(_applicationPath));
+        Options.v().set_process_dir(Arrays.asList(this._applicationPath.split(File.pathSeparator)));
         Options.v().set_keep_line_number(true);
         Options.v().set_allow_phantom_refs(true);
         Options.v().set_whole_program(true);
+        Options.v().set_prepend_classpath(true);
         Options.v().set_no_bodies_for_excluded(true);
         Options.v().set_include(getIncludeList());
         Options.v().set_exclude(getExcludeList());

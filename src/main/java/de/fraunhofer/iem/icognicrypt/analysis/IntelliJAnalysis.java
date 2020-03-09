@@ -2,15 +2,18 @@ package de.fraunhofer.iem.icognicrypt.analysis;
 
 import com.google.common.base.Joiner;
 import com.intellij.openapi.compiler.CompilerPaths;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.LanguageLevelUtil;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderEnumerator;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.pom.java.LanguageLevel;
+import crypto.analysis.CrySLAnalysisListener;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
@@ -18,8 +21,10 @@ import org.eclipse.jdt.internal.compiler.ProcessTaskManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class IntelliJAnalysis
 {
@@ -46,6 +51,7 @@ public class IntelliJAnalysis
         // RunConfiguration rc = RunManager.getInstance(project).getSelectedConfiguration().getConfiguration();
         // ApplicationConfiguration apc = (ApplicationConfiguration) rc;
 
+        Collection<String> modulePaths = new ArrayList<>();
         for (Module module : ModuleManager.getInstance(project).getModules())
         {
             LanguageLevel lang = LanguageLevelUtil.getEffectiveLanguageLevel(module);
@@ -70,10 +76,8 @@ public class IntelliJAnalysis
             String fullCp = Joiner.on(File.pathSeparator).join(classpath);
             logger.info(fullCp);
 
-            ProgressManager.getInstance().run(new JavaProjectAnalysisTask("C:\\Users\\lrs\\IdeaProjects\\helloworld\\out\\production\\helloworld",
-                                                                          "D:\\Java\\java-1.8.0-openjdk-1.8.0.212-1.b04.ojdkbuild.windows.x86_64\\jre\\lib\\rt.jar;C:\\Users\\lrs\\IdeaProjects\\helloworld\\out\\production\\helloworld"));
-
-            return;
+            if (modulePath != null && (new File(modulePath)).exists())
+                modulePaths.add(modulePath);
 
             /*
 
@@ -85,6 +89,9 @@ public class IntelliJAnalysis
 
              */
         }
+
+        ProgressManager.getInstance().run(new JavaProjectAnalysisTask(project, modulePaths
+                .stream().collect(Collectors.joining(File.pathSeparator)), modulePaths.stream().collect(Collectors.joining(File.pathSeparator))));
     }
 
     private static boolean analysisSupported(int runningVersion, int targetVersion)

@@ -40,6 +40,8 @@
         <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IntelliJPlatformOutputFinderWrapper"
                             serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder"/>
 
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.analysis.AnalysisListenerService" />
+
     </extensions>
 
     <!-- Other Extensions -->

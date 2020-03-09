@@ -19,6 +19,7 @@ import java.util.Set;
 
 public class CogniCryptErrorLineMarker implements LineMarkerProvider
 {
+    // TODO: Somehow this code is not executed with Kotlin files.
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement)

@@ -27,6 +27,17 @@ public class SupportedLanguagesUtils
         }
     }
 
+    public static boolean RequiresSourceFileNameModification(SupportedLanguage supportedLanguage){
+        switch (supportedLanguage){
+            case Java:
+                return false;
+            case Kotlin:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public boolean IsSupported(Language language)
     {
         if (language == null)

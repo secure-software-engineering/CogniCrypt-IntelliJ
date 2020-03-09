@@ -12,13 +12,13 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import crypto.analysis.AnalysisSeedWithSpecification;
 import crypto.analysis.CrySLAnalysisListener;
-import crypto.analysis.EnsuredCryptSLPredicate;
+import crypto.analysis.EnsuredCrySLPredicate;
 import crypto.analysis.IAnalysisSeed;
 import crypto.analysis.errors.AbstractError;
 import crypto.extractparameter.CallSiteWithParamIndex;
 import crypto.extractparameter.ExtractedValue;
 import crypto.interfaces.ISLConstraint;
-import crypto.rules.CryptSLPredicate;
+import crypto.rules.CrySLPredicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sync.pds.solver.nodes.Node;
@@ -81,11 +81,12 @@ class AnalysisListener extends CrySLAnalysisListener {
 
     @Override
     public void reportError(AbstractError abstractError) {
-
+        int i = 0;
+        i++;
     }
 
     @Override
-    public void ensuredPredicates(Table<Statement, Val, Set<EnsuredCryptSLPredicate>> table, Table<Statement, IAnalysisSeed, Set<CryptSLPredicate>> table1, Table<Statement, IAnalysisSeed, Set<CryptSLPredicate>> table2) {
+    public void ensuredPredicates(Table<Statement, Val, Set<EnsuredCrySLPredicate>> table, Table<Statement, IAnalysisSeed, Set<CrySLPredicate>> table1, Table<Statement, IAnalysisSeed, Set<CrySLPredicate>> table2) {
 
     }
 
@@ -116,6 +117,12 @@ class AnalysisListener extends CrySLAnalysisListener {
 
     @Override
     public void onSecureObjectFound(IAnalysisSeed iAnalysisSeed) {
+
+    }
+
+    @Override
+    public void addProgress(int i, int i1)
+    {
 
     }
 }

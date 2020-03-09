@@ -16,11 +16,9 @@ import de.fraunhofer.iem.icognicrypt.analysis.IntelliJAnalysis;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
-import javaLinq.Linq;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 
@@ -49,12 +47,15 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         }
 
         Iterable<File> files = GetFilesToAnalyze(project);
-        // TODO: Remove ide type
-        if (_ideType == IdeType.AndroidStudio && (files == null || !Linq.any(files)))
+
+        // TODO: Re-Enable
+        /*
+        if (files == null || !Linq.any(files))
         {
             NotificationProvider.ShowInfo("No files were analysed");
             return;
         }
+         */
 
         switch (_ideType)
         {
@@ -80,8 +81,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
             case Unknown:
                 return Collections.EMPTY_LIST;
             case IntelliJ:
-                // TODO:
-                return new ArrayList<>();
+                return IntelliJAnalysis.GetFilesForIntelliJ(outputFinder, options);
             case AndroidStudio:
                 return AndroidAnalysis.GetFilesForAndroidStudio(outputFinder, options);
         }

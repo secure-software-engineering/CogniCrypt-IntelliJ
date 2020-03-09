@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="de.fraunhofer.icognicrypt.main" target="1.8" />
       <module name="de.fraunhofer.icognicrypt.test" target="1.8" />
+      <module name="icognicrypt.main" target="1.8" />
+      <module name="icognicrypt.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

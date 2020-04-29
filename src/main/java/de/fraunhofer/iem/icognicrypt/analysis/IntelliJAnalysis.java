@@ -86,7 +86,6 @@ public class IntelliJAnalysis
             Task analysis = new JavaProjectAnalysisTask(modulePath, Joiner.on(File.pathSeparator).join(classpath),
                                                         settings.getRulesDirectory());
             ProgressManager.getInstance().run(analysis);
-
              */
 
         }
@@ -116,6 +115,4 @@ public class IntelliJAnalysis
     {
         return null;
     }
-
-
 }

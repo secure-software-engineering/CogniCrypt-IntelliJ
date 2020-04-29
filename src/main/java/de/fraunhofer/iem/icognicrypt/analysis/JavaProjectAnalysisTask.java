@@ -16,7 +16,6 @@ public class JavaProjectAnalysisTask extends Task.Backgroundable {
         _wholeClassPath = classPath;
     }
 
-
     @Override
     public void run(@NotNull ProgressIndicator indicator) {
         CryptoAnalysisWrapper.RunAnalysis(_applicationClassPath, _wholeClassPath, myProject);

@@ -34,11 +34,7 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         super("Run CogniCrypt Analysis...", "Run CogniCrypt Analysis", IconLoader.getIcon("/icons/cognicrypt.png"));
         _settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
         _ideType = ServiceManager.getService(IIdePlatformProvider.class).GetRunningPlatform();
-
     }
-
-
-
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e)

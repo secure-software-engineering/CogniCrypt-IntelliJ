@@ -27,13 +27,18 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
     private static final Logger logger = Logger.getInstance(RunCogniCryptAction.class);
     private final IPersistableCogniCryptSettings _settings;
     private final IdeType _ideType;
+    public static boolean EnabledFlag= true;
 
     public RunCogniCryptAction()
     {
         super("Run CogniCrypt Analysis...", "Run CogniCrypt Analysis", IconLoader.getIcon("/icons/cognicrypt.png"));
         _settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
         _ideType = ServiceManager.getService(IIdePlatformProvider.class).GetRunningPlatform();
+
     }
+
+
+
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e)
@@ -49,6 +54,12 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         Iterable<File> files = GetFilesToAnalyze(project);
 
         // TODO: Re-Enable
+        if(e.getPresentation().isEnabled()){
+            e.getPresentation().setEnabled(false);
+            EnabledFlag=false;
+            update(e);
+        }
+
         /*
         if (files == null || !Linq.any(files))
         {
@@ -87,6 +98,14 @@ public class RunCogniCryptAction extends CogniCryptAction implements DumbAware
         }
         return Collections.EMPTY_LIST;
     }
+    public static void SetFlag(boolean b){
+        EnabledFlag=b;
+    }
+    @Override
+    public void update(AnActionEvent e) {
+        e.getPresentation().setEnabled(EnabledFlag);
+    }
+
 }
 
 

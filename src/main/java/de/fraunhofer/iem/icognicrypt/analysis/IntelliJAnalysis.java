@@ -88,6 +88,7 @@ public class IntelliJAnalysis
             ProgressManager.getInstance().run(analysis);
 
              */
+
         }
 
         ProgressManager.getInstance().run(new JavaProjectAnalysisTask(project, modulePaths
@@ -115,4 +116,6 @@ public class IntelliJAnalysis
     {
         return null;
     }
+
+
 }

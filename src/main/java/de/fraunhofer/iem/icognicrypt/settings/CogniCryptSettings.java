@@ -15,6 +15,8 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
     protected boolean IncludeSigned = false;
     protected boolean SignedOnly = false;
     protected SupportedLanguage OptimizedLanguage = SupportedLanguage.Java;
+    public boolean IDEVersionNotUpdated=true;
+    public String updatedpath;
 
     protected int FinderBuildType = OutputFinderOptions.Flags.Debug.getStatusFlagValue();
 
@@ -39,8 +41,21 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
 
     public void setRulesDirectory(String rulesDirectory)
     {
-        RulesDirectory = rulesDirectory;
+        IDEVersionNotUpdated=checkversion(rulesDirectory);
+        if (IDEVersionNotUpdated) {
+            RulesDirectory = rulesDirectory;
+        }
+        else{
+            RulesDirectory=updatedpath;
+        }
     }
+    public boolean checkversion(String rulesDirectory){
+        //just experimenting
+        //Have to check android version here
+        updatedpath ="C:\\Users\\proju\\.AndroidStudioX.Y\\config\\plugins\\icognicrypt\\lib\\CrySLRules\\JCA";
+        return false;
+    }
+
 
     @Override
     public boolean getFindAutomatically()

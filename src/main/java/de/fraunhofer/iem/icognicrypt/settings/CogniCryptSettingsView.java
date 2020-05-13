@@ -20,6 +20,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import static de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettings.SetIDEVersionFlag;
+
 class CogniCryptSettingsView implements Configurable
 {
     private JPanel _rootPanel;
@@ -160,8 +162,10 @@ class CogniCryptSettingsView implements Configurable
         });
         if (_cryslRulesDirectory == null)
             return;
+        SetIDEVersionFlag(false);
         _cryslRulesDirectory.setText(selectedDirectory.getPath());
         _currentState.setRulesDirectory(selectedDirectory.getPath());
+
     }
 
     private void SetupUi()

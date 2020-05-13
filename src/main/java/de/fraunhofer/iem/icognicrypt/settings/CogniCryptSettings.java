@@ -1,5 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.settings;
 
+import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.components.ServiceManager;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
@@ -10,12 +11,13 @@ import java.util.EnumSet;
 
 abstract class CogniCryptSettings implements ICogniCryptSettings
 {
-    protected String RulesDirectory = Constants.DummyCrySLPath;
+    //protected String RulesDirectory = Constants.DummyCrySLPath;
+    protected String RulesDirectory;
     protected boolean FindAutomatically = true;
     protected boolean IncludeSigned = false;
     protected boolean SignedOnly = false;
     protected SupportedLanguage OptimizedLanguage = SupportedLanguage.Java;
-    public boolean IDEVersionNotUpdated=true;
+    public static boolean IDEVersionNotUpdated=true;
     public String updatedpath;
 
     protected int FinderBuildType = OutputFinderOptions.Flags.Debug.getStatusFlagValue();
@@ -41,21 +43,18 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
 
     public void setRulesDirectory(String rulesDirectory)
     {
-        IDEVersionNotUpdated=checkversion(rulesDirectory);
+        String current_version=ApplicationInfo.getInstance().getFullVersion();
+        updatedpath ="C:\\Users\\proju\\.AndroidStudio"+current_version+"\\config\\plugins\\icognicrypt\\lib\\CrySLRules\\JCA";
         if (IDEVersionNotUpdated) {
-            RulesDirectory = rulesDirectory;
-        }
-        else{
             RulesDirectory=updatedpath;
         }
+        else{
+            RulesDirectory = rulesDirectory;
+        }
     }
-    public boolean checkversion(String rulesDirectory){
-        //just experimenting
-        //Have to check android version here
-        updatedpath ="C:\\Users\\proju\\.AndroidStudioX.Y\\config\\plugins\\icognicrypt\\lib\\CrySLRules\\JCA";
-        return false;
+    public static void SetIDEVersionFlag(boolean b){
+        IDEVersionNotUpdated=b;
     }
-
 
     @Override
     public boolean getFindAutomatically()

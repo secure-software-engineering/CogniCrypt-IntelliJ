@@ -9,16 +9,15 @@ import de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguagesUtils;
 
 import java.util.EnumSet;
 
+
 abstract class CogniCryptSettings implements ICogniCryptSettings
 {
-    //protected String RulesDirectory = Constants.DummyCrySLPath;
-    protected String RulesDirectory;
+    protected String RulesDirectory = Constants.DummyCrySLPath;
     protected boolean FindAutomatically = true;
     protected boolean IncludeSigned = false;
     protected boolean SignedOnly = false;
     protected SupportedLanguage OptimizedLanguage = SupportedLanguage.Java;
-    public static boolean IDEVersionNotUpdated=true;
-    public String updatedpath;
+
 
     protected int FinderBuildType = OutputFinderOptions.Flags.Debug.getStatusFlagValue();
 
@@ -43,17 +42,7 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
 
     public void setRulesDirectory(String rulesDirectory)
     {
-        String current_version=ApplicationInfo.getInstance().getFullVersion();
-        updatedpath ="C:\\Users\\proju\\.AndroidStudio"+current_version+"\\config\\plugins\\icognicrypt\\lib\\CrySLRules\\JCA";
-        if (IDEVersionNotUpdated) {
-            RulesDirectory=updatedpath;
-        }
-        else{
-            RulesDirectory = rulesDirectory;
-        }
-    }
-    public static void SetIDEVersionFlag(boolean b){
-        IDEVersionNotUpdated=b;
+        RulesDirectory = rulesDirectory;
     }
 
     @Override

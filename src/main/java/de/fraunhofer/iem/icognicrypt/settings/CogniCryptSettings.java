@@ -1,7 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.settings;
 
-import com.intellij.openapi.application.ApplicationInfo;
-import com.intellij.openapi.components.ServiceManager;
+
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguage;

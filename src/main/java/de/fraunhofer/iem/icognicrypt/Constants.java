@@ -2,6 +2,7 @@ package de.fraunhofer.iem.icognicrypt;
 
 import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.application.ApplicationNamesInfo;
+import com.intellij.openapi.application.PathManager;
 import crypto.cryslhandler.CrySLModelReader;
 
 
@@ -13,7 +14,8 @@ public class Constants {
     private static final ApplicationNamesInfo nameInfo = ApplicationNamesInfo.getInstance();
     static String productName = nameInfo.getFullProductName();
     static String current_version= ApplicationInfo.getInstance().getMajorVersion()+"."+ ApplicationInfo.getInstance().getMinorVersionMainPart();
-    public static final String DummyCrySLPath=System.getProperty("user.home")+"\\."+productName+current_version+"\\config\\plugins\\icognicrypt\\lib\\CrySLRules\\JCA";
+    //public static final String DummyCrySLPath=System.getProperty("user.home")+"\\."+productName+current_version+"\\config\\plugins\\icognicrypt\\lib\\CrySLRules\\JCA";
+    public static final String DummyCrySLPath= PathManager.getPluginsPath()+"\\icognicrypt\\lib\\CrySLRules\\JCA";;
 
     // TODO: This constant is not final in CryptoAnalysis
     public static final String CRYSL_BIN_EXTENSION = CrySLModelReader.cryslFileEnding;

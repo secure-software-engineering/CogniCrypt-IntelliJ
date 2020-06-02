@@ -43,7 +43,7 @@ public class AndroidAnalysis
             logger.info("APK found in " + apkPath);
 
             IPersistableCogniCryptSettings settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
-            CogniCryptAndroidAnalysis analysis = new CogniCryptAndroidAnalysis(apkPath, androidPlatformPath.toString(), settings.getRulesDirectory());
+            CogniCryptAndroidAnalysis analysis = new CogniCryptAndroidAnalysis(apkPath, androidPlatformPath.toString(), settings.getRulesDirectory(), Collections.EMPTY_LIST);
             queue.add(analysis);
         }
         if (queue.isEmpty())

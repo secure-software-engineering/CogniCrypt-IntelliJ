@@ -90,7 +90,6 @@ class CogniCryptSettingsView implements Configurable
         SetupUi();
     }
 
-    @Nls(capitalization = Nls.Capitalization.Title)
     @Override
     public String getDisplayName()
     {

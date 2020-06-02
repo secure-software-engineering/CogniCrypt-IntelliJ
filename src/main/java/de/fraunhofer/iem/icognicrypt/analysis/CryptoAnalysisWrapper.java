@@ -3,7 +3,6 @@ package de.fraunhofer.iem.icognicrypt.analysis;
 import boomerang.callgraph.ObservableDynamicICFG;
 import boomerang.callgraph.ObservableICFG;
 import boomerang.preanalysis.BoomerangPretransformer;
-import com.google.common.collect.Lists;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import crypto.analysis.CrySLAnalysisListener;
@@ -19,6 +18,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CryptoAnalysisWrapper
 {
@@ -137,7 +137,13 @@ public class CryptoAnalysisWrapper
 
     private List<CrySLRule> getRules()
     {
-        return CrySLRuleReader.readFromDirectory(new File(_rulesDirectory));
+        File rulesDirectory = new File(_rulesDirectory);
+
+        return Arrays.stream(rulesDirectory.listFiles()).
+                map(x -> CrySLRuleReader.readFromSourceFile(x)).collect(Collectors.toList());
+
+        // TODO:
+        // return CrySLRuleReader.readFromDirectory(new File(_rulesDirectory));
     }
 
     private static List<String> getIncludeList() {
@@ -158,7 +164,7 @@ public class CryptoAnalysisWrapper
     private List<String> getExcludeList() {
         final List<String> excludeList = new LinkedList<String>();
         for (final CrySLRule r : getRules()) {
-            excludeList.add(crypto.Utils.getFullyQualifiedName(r));
+            excludeList.add(r.getClassName());
         }
         return excludeList;
     }

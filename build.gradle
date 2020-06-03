@@ -37,10 +37,15 @@ dependencies {
     compile group: 'org.swinglabs.swingx', name: 'swingx-all', version: '1.6.4'
 }
 
+
+patchPluginXml {
+    sinceBuild '191'
+    untilBuild '202.*'
+}
+
 // See https://github.com/JetBrains/gradle-intellij-plugin/gradle
 intellij {
     plugins 'android', 'java', 'maven', 'gradle'
-    version '2020.1'
     updateSinceUntilBuild true
 
     if (Os.isFamily(Os.FAMILY_MAC)){
@@ -60,12 +65,4 @@ runIde {
         // For some strange reason debugging without this causes Menu items not to work
         jvmArgs '-Dapple.laf.useScreenMenuBar=false'
     }
-}
-
-patchPluginXml {
-    sinceBuild '191'
-    untilBuild '201.*'
-    changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
 }

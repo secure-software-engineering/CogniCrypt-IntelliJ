@@ -13,6 +13,20 @@
     <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.android</depends>
 
+    <change-notes>
+        <![CDATA[
+        <ul>
+            <li>Added Support for IntelliJ 2020.2 and Android Studio 4</li>
+            <li>Updated CrySL rules for JCA library to 1.5.1</li>
+        </ul>
+        <p>
+        <b>If you are updating from a previous version you might need to change the CrySL rules path in Settings!</b>
+        A valid path should look like this:
+        <em>%USERPROFILE%\.AndroidStudio4.0\config\plugins\icognicrypt\lib\CrySLRules\JavaCryptographicArchitecture</em>
+        </p>
+        ]]>
+    </change-notes>
+
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="191.*"/>
 

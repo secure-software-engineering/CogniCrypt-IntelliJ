@@ -81,6 +81,11 @@ class CogniCryptSettingsView implements Configurable
         _currentState.setOptimizedLanguage(newValue);
     };
 
+    private final Runnable _onOnRulesPathChanges = () ->
+    {
+        String newValue = OnTextChanged(_cryslRulesDirectory);
+        _currentState.setRulesDirectory(newValue);
+    };
 
     CogniCryptSettingsView()
     {
@@ -141,6 +146,16 @@ class CogniCryptSettingsView implements Configurable
         return currentValue;
     }
 
+    private String OnTextChanged(JTextField cryslRulesDirectory) {
+        String newText = cryslRulesDirectory.getText();
+        if (CrySLHelper.isValidCrySLRuleDirectory(newText)) {
+            return newText;
+        } else {
+            showDownloadCrySLRulesDialog(newText);
+        }
+        return _oldState.getRulesDirectory();
+    }
+
     protected void OnBrowseCrySlDirectoryPressed(ActionEvent e)
     {
         File defaultPath = Paths.get(_cryslRulesDirectory.getText()).toFile();
@@ -157,7 +172,7 @@ class CogniCryptSettingsView implements Configurable
                 return null;
             }
         });
-        if (_cryslRulesDirectory == null)
+        if (_cryslRulesDirectory == null || selectedDirectory == null)
             return;
         _cryslRulesDirectory.setText(selectedDirectory.getPath());
         _currentState.setRulesDirectory(selectedDirectory.getPath());
@@ -175,6 +190,7 @@ class CogniCryptSettingsView implements Configurable
 
     private void RegisterEvents()
     {
+        _cryslRulesDirectory.addActionListener(e -> _onOnRulesPathChanges.run());
         _browseRules.addActionListener(e -> OnBrowseCrySlDirectoryPressed(e));
         _findAutomaticallyBox.addActionListener(e -> _onFindAutomaticallyChanged.run());
         _includeSignedBuildsBox.addActionListener(e -> _onIncludeSignedChanged.run());

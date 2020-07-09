@@ -9,7 +9,7 @@ public class Constants {
     public static final String DummyCrySLPath = "./CrySLRules/JavaCryptographicArchitecture";
 
     // TODO: This constant is not final in CryptoAnalysis
-    public static final String CRYSL_BIN_EXTENSION = CrySLModelReader.cryslFileEnding;
+    public static final String CRYSL_EXTENSION = CrySLModelReader.cryslFileEnding;
     public static final String CRYSL_RULES_DOWNLOADLINK = "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-release/de/darmstadt/tu/crossing/JavaCryptographicArchitecture/1.5.1/JavaCryptographicArchitecture-1.5.1-ruleset.zip";
     public static final boolean WARNINGS_IN_SOURCECODECLASSES_ONLY = true;
 

@@ -4,12 +4,11 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.Configurable;
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
-import javaLinq.Linq;
 import de.fraunhofer.iem.icognicrypt.core.Dialogs.DialogHelper;
 import de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguage;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLHelper;
 import de.fraunhofer.iem.icognicrypt.ui.MessageBox;
-import org.jetbrains.annotations.Nls;
+import javaLinq.Linq;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -223,7 +222,8 @@ class CogniCryptSettingsView implements Configurable
 
     private void showDownloadCrySLRulesDialog(String newPath)
     {
-        MessageBox.Show(_rootPanel, "No .cryptslbin files found in " + newPath + " \nYou can download them here:\n" + Constants.CRYSL_RULES_DOWNLOADLINK,
+        MessageBox.Show(_rootPanel, "No .crysl files found in " + newPath +
+                        "\nYou can download them here:\n" + Constants.CRYSL_RULES_DOWNLOADLINK,
                         MessageBox.MessageBoxButton.OK, MessageBox.MessageBoxType.Error);
     }
 

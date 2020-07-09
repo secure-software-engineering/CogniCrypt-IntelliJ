@@ -12,6 +12,6 @@ public class CrySLHelper
             return false;
         if(!rulesDir.isDirectory())
             return false;
-        return rulesDir.listFiles((dir, filename) -> filename.endsWith(Constants.CRYSL_BIN_EXTENSION)).length != 0;
+        return rulesDir.listFiles((dir, filename) -> filename.endsWith(Constants.CRYSL_EXTENSION)).length != 0;
     }
 }

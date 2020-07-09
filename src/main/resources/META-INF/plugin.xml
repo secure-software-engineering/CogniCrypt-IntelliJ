@@ -10,8 +10,11 @@
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.android</depends>
+    <depends>org.jetbrains.kotlin</depends>
+    <depends optional="true" config-file="withKotlin.xml">org.jetbrains.kotlin</depends>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="191.*"/>
@@ -46,8 +49,9 @@
 
     <!-- Other Extensions -->
     <extensions defaultExtensionNs="com.intellij">
+
         <codeInsight.lineMarkerProvider language="JVM"
-                                        implementationClass="de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorLineMarker"/>
+                                    implementationClass="de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorLineMarker"/>
 
         <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsView" groupId="root"/>
 

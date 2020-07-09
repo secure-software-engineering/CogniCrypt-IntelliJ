@@ -27,7 +27,7 @@ class CogniCryptSettingsPersistentComponent extends CogniCryptSettings implement
     }
 
     @Override
-    public void setOptimizedLanguage(SupportedLanguage optimizedLanguage)
+    public void setOptimizedLanguage(@NotNull SupportedLanguage optimizedLanguage)
     {
         super.setOptimizedLanguage(optimizedLanguage);
         ServiceManager.getService(SupportedLanguagesUtils.class).SupportedLanguages.Promote(optimizedLanguage);

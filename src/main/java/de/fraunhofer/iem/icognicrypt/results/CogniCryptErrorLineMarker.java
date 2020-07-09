@@ -26,15 +26,7 @@ public class CogniCryptErrorLineMarker implements LineMarkerProvider
     {
         if (psiElement instanceof PsiStatement)
         {
-            PsiStatement statement = (PsiStatement) psiElement;
-
-            PsiClass clazz = FindClass(statement);
-
-            boolean equals = clazz.equals("Test");
-
             IResultProvider resultProvider = ServiceManager.getService(psiElement.getProject(), IResultProvider.class);
-
-            String qualifiedName = clazz.getQualifiedName();
 
             int lineNumber = getLineNumber(psiElement) + 1;
             //Check if an error exists for the line number that the element is located

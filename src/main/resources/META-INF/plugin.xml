@@ -60,6 +60,7 @@
 
     <!-- Other Extensions -->
     <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="de.fraunhofer.iem.icognicrypt.core.crySL.CrySLUpdateChecker" />
         <codeInsight.lineMarkerProvider language="JVM"
                                         implementationClass="de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorLineMarker"/>
 

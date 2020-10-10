@@ -44,8 +44,8 @@ public final class CrySLExtractor extends ResourceExtractor
         switch (ruleSet)
         {
 
-            case JCA:
-                rulesPath = "JCA";
+            case JavaCryptographicArchitecture:
+                rulesPath = "JavaCryptographicArchitecture";
                 break;
             case BoucyCastle:
                 rulesPath = "BouncyCastle";
@@ -82,7 +82,7 @@ public final class CrySLExtractor extends ResourceExtractor
     }
 
     public enum RulesTarget{
-        JCA,
+        JavaCryptographicArchitecture,
         BoucyCastle,
         Tink
     }

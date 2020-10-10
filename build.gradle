@@ -1,4 +1,4 @@
-import org.apache.tools.ant.taskdefs.condition.Os;
+import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     id 'java'
@@ -29,8 +29,8 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'ca.mcgill.sable', name: 'soot', version: '4.0.0'
-    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis-Android', version: '2.7.2'
-    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.7.2'
+    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis-Android', version: '2.7.3-SNAPSHOT'
+    compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.7.3-SNAPSHOT'
     compile group: 'de.tud.sse', name: 'soot-infoflow', version: '2.7.1'
     compile group: 'de.tud.sse', name: 'soot-infoflow-android', version: '2.7.1'
     compile group: 'de.tud.sse', name: 'soot-infoflow-cmd', version: '2.7.1'
@@ -40,7 +40,7 @@ dependencies {
 
 patchPluginXml {
     sinceBuild '191'
-    untilBuild '202.*'
+    untilBuild '203.*'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/gradle

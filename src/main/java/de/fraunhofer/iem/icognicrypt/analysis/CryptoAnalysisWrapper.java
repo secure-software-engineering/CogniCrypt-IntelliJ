@@ -7,6 +7,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import crypto.analysis.CrySLAnalysisListener;
 import crypto.analysis.CryptoScanner;
+import crypto.exceptions.CryptoAnalysisException;
 import crypto.rules.CrySLRule;
 import crypto.rules.CrySLRuleReader;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
@@ -140,14 +141,21 @@ public class CryptoAnalysisWrapper
         File rulesDirectory = new File(_rulesDirectory);
 
         return Arrays.stream(rulesDirectory.listFiles()).
-                map(x -> CrySLRuleReader.readFromSourceFile(x)).collect(Collectors.toList());
+                map(x -> {
+                    try {
+                        return CrySLRuleReader.readFromSourceFile(x);
+                    } catch (CryptoAnalysisException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }).collect(Collectors.toList());
 
         // TODO:
         // return CrySLRuleReader.readFromDirectory(new File(_rulesDirectory));
     }
 
     private static List<String> getIncludeList() {
-        final List<String> includeList = new LinkedList<String>();
+        final List<String> includeList = new LinkedList<>();
         includeList.add("java.lang.AbstractStringBuilder");
         includeList.add("java.lang.Boolean");
         includeList.add("java.lang.Byte");
@@ -162,7 +170,7 @@ public class CryptoAnalysisWrapper
     }
 
     private List<String> getExcludeList() {
-        final List<String> excludeList = new LinkedList<String>();
+        final List<String> excludeList = new LinkedList<>();
         for (final CrySLRule r : getRules()) {
             excludeList.add(r.getClassName());
         }

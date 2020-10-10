@@ -22,7 +22,7 @@ public class CogniCryptPlugin extends BackgroundComponent
     protected void InitializeInBackground(ProgressIndicator indicator)
     {
         _extractor.ExtractIfRequired();
-        String path = _extractor.GetDefaultCrySLPath(CrySLExtractor.RulesTarget.JCA);
+        String path = _extractor.GetDefaultCrySLPath(CrySLExtractor.RulesTarget.JavaCryptographicArchitecture);
         if (_settings.getRulesDirectory().equals(Constants.DummyCrySLPath) &&
                 !path.equals(Constants.DummyCrySLPath))
             _settings.setRulesDirectory(path);

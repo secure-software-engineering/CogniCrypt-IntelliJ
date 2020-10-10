@@ -74,6 +74,7 @@ public final class CrySLExtractor extends ResourceExtractor
         try
         {
             return Paths.get(pluginsDirectory.toString(), Constants.DefaultExtractLocation).toFile().getCanonicalPath();
+
         }
         catch (IOException e)
         {

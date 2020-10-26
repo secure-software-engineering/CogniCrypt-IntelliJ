@@ -5,26 +5,34 @@ import de.fraunhofer.iem.icognicrypt.core.BackgroundComponent;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLExtractor;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
 
-import java.io.Console;
-
-public class CogniCryptPlugin extends BackgroundComponent
-{
+public class CogniCryptPlugin extends BackgroundComponent {
     private final CrySLExtractor _extractor;
     private final IPersistableCogniCryptSettings _settings;
+    String version;
 
-    private CogniCryptPlugin(CrySLExtractor extractor, IPersistableCogniCryptSettings settings)
-    {
+    private CogniCryptPlugin(CrySLExtractor extractor, IPersistableCogniCryptSettings settings) {
         _extractor = extractor;
         _settings = settings;
     }
 
     @Override
-    protected void InitializeInBackground(ProgressIndicator indicator)
-    {
+    protected void InitializeInBackground(ProgressIndicator indicator) {
         _extractor.ExtractIfRequired();
         String path = _extractor.GetDefaultCrySLPath(CrySLExtractor.RulesTarget.JavaCryptographicArchitecture);
+//        try {
+//            version = CrySLUpdateChecker.current_version;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         if (_settings.getRulesDirectory().equals(Constants.DummyCrySLPath) &&
                 !path.equals(Constants.DummyCrySLPath))
             _settings.setRulesDirectory(path);
+//        if (_settings.getCurrentVersion().equals(Constants.CrySL_Version) &&
+//                !version.equals(Constants.CrySL_Version))
+//            _settings.setCurrentVersion(version);
     }
 }
+
+
+
+

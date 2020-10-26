@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 public class BackgroundComponent implements BaseComponent
 {
     protected final Logger Logger = com.intellij.openapi.diagnostic.Logger.getInstance(this.getClass());
-    protected String Title = "";
+    protected String Title = "Running CogniCrypt";
     protected boolean CanCancelInit = true;
 
 

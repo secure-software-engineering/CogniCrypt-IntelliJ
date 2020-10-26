@@ -23,7 +23,7 @@ class CogniCryptSettingsPersistentComponent extends CogniCryptSettings implement
     @Override
     public void loadState(@NotNull CogniCryptSettingsPersistentComponent icognicryptSettings)
     {
-        XmlSerializerUtil.copyBean(icognicryptSettings, this);
+       XmlSerializerUtil.copyBean(icognicryptSettings, this);
     }
 
     @Override

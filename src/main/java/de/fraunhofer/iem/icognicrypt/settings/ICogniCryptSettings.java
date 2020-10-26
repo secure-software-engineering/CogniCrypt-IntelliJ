@@ -11,6 +11,10 @@ interface ICogniCryptSettings
 
     void setRulesDirectory(String rulesDirectory);
 
+    String getCurrentVersion();
+
+    void setCurrentVersion(String current_version);
+
 
     boolean getFindAutomatically();
 

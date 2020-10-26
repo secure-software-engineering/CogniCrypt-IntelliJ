@@ -118,6 +118,7 @@ class CogniCryptSettingsView implements Configurable
     {
         IPersistableCogniCryptSettings settings = ServiceManager.getService(IPersistableCogniCryptSettings.class);
         settings.setRulesDirectory(_currentState.getRulesDirectory());
+        settings.setCurrentVersion(_currentState.getCurrentVersion());
         settings.setFindAutomatically(_currentState.getFindAutomatically());
         settings.setFinderBuildType(_currentState.getFinderBuildType());
         settings.setIncludeSigned(_currentState.getIncludeSigned());

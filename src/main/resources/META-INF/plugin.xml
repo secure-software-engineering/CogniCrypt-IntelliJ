@@ -98,7 +98,6 @@
     </actions>
 
     <application-components>
-
         <component>
             <implementation-class>de.fraunhofer.iem.icognicrypt.CogniCryptPlugin</implementation-class>
         </component>

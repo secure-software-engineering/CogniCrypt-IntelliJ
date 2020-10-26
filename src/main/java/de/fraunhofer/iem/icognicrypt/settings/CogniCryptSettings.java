@@ -11,6 +11,7 @@ import java.util.EnumSet;
 abstract class CogniCryptSettings implements ICogniCryptSettings
 {
     protected String RulesDirectory = Constants.DummyCrySLPath;
+    protected String current_version = Constants.CrySL_Version;
     protected boolean FindAutomatically = true;
     protected boolean IncludeSigned = false;
     protected boolean SignedOnly = false;
@@ -22,9 +23,9 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
 
     }
 
-    public CogniCryptSettings(ICogniCryptSettings other)
-    {
+    public CogniCryptSettings(ICogniCryptSettings other) {
         setRulesDirectory(other.getRulesDirectory());
+        setCurrentVersion(other.getCurrentVersion());
         setFindAutomatically(other.getFindAutomatically());
         setFinderBuildType(other.getFinderBuildType());
         setIncludeSigned(other.getIncludeSigned());
@@ -41,6 +42,16 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
     {
         RulesDirectory = rulesDirectory;
     }
+
+    public String getCurrentVersion() {
+        return current_version;
+    }
+
+    public void setCurrentVersion(String currentVersion)
+    {
+        current_version = currentVersion;
+    }
+
 
     @Override
     public boolean getFindAutomatically()
@@ -126,13 +137,15 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
         if (!(obj instanceof ICogniCryptSettings))
             return false;
         ICogniCryptSettings other = (ICogniCryptSettings) obj;
-        return equals(other);
+            return equals(other);
     }
 
-    public boolean equals(ICogniCryptSettings other){
+    public boolean equals(ICogniCryptSettings other) {
         if (other == null)
             return false;
         if (!RulesDirectory.equals(other.getRulesDirectory()))
+            return false;
+        if (!current_version.equals(other.getCurrentVersion()))
             return false;
         if (FindAutomatically != other.getFindAutomatically())
             return false;

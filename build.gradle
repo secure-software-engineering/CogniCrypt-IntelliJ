@@ -2,7 +2,7 @@ import org.apache.tools.ant.taskdefs.condition.Os;
 
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.21'
+    id 'org.jetbrains.intellij' version '0.6.1'
     id 'maven'
 }
 
@@ -11,7 +11,7 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 
 group 'de.fraunhofer'
-version '0.2.5.2'
+version '0.2.5.3'
 
 sourceCompatibility = 1.8
 
@@ -31,28 +31,29 @@ dependencies {
     compile group: 'ca.mcgill.sable', name: 'soot', version: '4.0.0'
     compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis-Android', version: '2.7.2'
     compile group: 'de.fraunhofer.iem', name: 'CryptoAnalysis', version: '2.7.2'
-    compile group: 'de.tud.sse', name: 'soot-infoflow', version: '2.7.1'
-    compile group: 'de.tud.sse', name: 'soot-infoflow-android', version: '2.7.1'
-    compile group: 'de.tud.sse', name: 'soot-infoflow-cmd', version: '2.7.1'
+    compile group: 'de.tud.sse', name: 'soot-infoflow', version: '2.8'
+    compile group: 'de.tud.sse', name: 'soot-infoflow-android', version: '2.8'
+    compile group: 'de.tud.sse', name: 'soot-infoflow-cmd', version: '2.8'
     compile group: 'org.swinglabs.swingx', name: 'swingx-all', version: '1.6.4'
 }
 
 
 patchPluginXml {
-    sinceBuild '191'
-    untilBuild '202.*'
+    sinceBuild '193'
+    untilBuild '203.*'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/gradle
 intellij {
     plugins 'android', 'java', 'maven', 'gradle'
-    updateSinceUntilBuild true
+
+    // updateSinceUntilBuild true
 
     if (Os.isFamily(Os.FAMILY_MAC)){
         alternativeIdePath '/Applications/Android Studio 3.5 Beta.app/'
     }
     else if (Os.isFamily(Os.FAMILY_WINDOWS)){
-         //alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
+         alternativeIdePath 'C:\\Program Files\\Android\\Android Studio'
     }
 }
 

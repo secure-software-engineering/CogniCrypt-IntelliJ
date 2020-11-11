@@ -3,16 +3,17 @@ package de.fraunhofer.iem.icognicrypt;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinderCache;
+import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder;
 
 class CogniCryptComponent implements ProjectComponent, ICogniCryptComponent
 {
-    private IOutputFinderCache _outputFinderCache;
     private Project _project;
+    private IProjectOutputFinder _outputFinder;
 
-    public CogniCryptComponent(Project project, IOutputFinderCache outputFinderCache)
+    public CogniCryptComponent(Project project, IProjectOutputFinder outputFinder)
     {
         _project = project;
-        _outputFinderCache = outputFinderCache;
+        _outputFinder = outputFinder;
     }
 
     @Override
@@ -29,13 +30,7 @@ class CogniCryptComponent implements ProjectComponent, ICogniCryptComponent
     public void disposeComponent()
     {
         _project = null;
-        _outputFinderCache = null;
-    }
-
-    @Override
-    protected void finalize() throws Throwable
-    {
-        super.finalize();
+        _outputFinder = null;
     }
 }
 

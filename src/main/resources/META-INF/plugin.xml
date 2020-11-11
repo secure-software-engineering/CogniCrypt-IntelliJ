@@ -13,8 +13,23 @@
     <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.android</depends>
 
+    <change-notes>
+        <![CDATA[
+        <ul>
+            <li>Fixes default CrySL path</li>
+            <li>Added Support for IntelliJ 2020.3 and Android Studio 4.1</li>
+            <li>Updated CrySL rules for JCA library to 1.5.2</li>
+        </ul>
+        <p>
+        <b>If you are updating from a previous version you might need to change the CrySL rules path in Settings!</b>
+        A valid path should look like this:
+        <em>%USERPROFILE%\.AndroidStudio4.1\config\plugins\icognicrypt\lib\CrySLRules\JCA</em>
+        </p>
+        ]]>
+    </change-notes>
+
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="183"/>
+    <idea-version since-build="193.*"/>
 
     <extensionPoints>
         <extensionPoint name="resultListener" interface="de.fraunhofer.iem.icognicrypt.results.IResultsProviderListener"
@@ -32,20 +47,21 @@
         <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IdePlatformProvider"
             serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider"/>
 
+        <applicationService serviceImplementation="de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguagesUtils"/>
+
         <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.results.ResultsProviderService"
                         serviceInterface="de.fraunhofer.iem.icognicrypt.results.IResultProvider"/>
 
         <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IntelliJPlatformOutputFinderWrapper"
                             serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IProjectOutputFinder"/>
 
-        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderCache"
-            serviceInterface="de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IOutputFinderCache"/>
+        <projectService serviceImplementation="de.fraunhofer.iem.icognicrypt.analysis.AnalysisListenerService" />
 
     </extensions>
 
     <!-- Other Extensions -->
     <extensions defaultExtensionNs="com.intellij">
-        <codeInsight.lineMarkerProvider language="JAVA"
+        <codeInsight.lineMarkerProvider language="JVM"
                                         implementationClass="de.fraunhofer.iem.icognicrypt.results.CogniCryptErrorLineMarker"/>
 
         <applicationConfigurable instance="de.fraunhofer.iem.icognicrypt.settings.CogniCryptSettingsView" groupId="root"/>
@@ -57,13 +73,7 @@
     </extensions>
 
 
-    <!-- Testing purpose extensions -->
-    <extensions defaultExtensionNs="de.fraunhofer.iem.icognicrypt">
-        <resultListener implementation="de.fraunhofer.iem.icognicrypt.TestImpl"/>
-    </extensions>
-
     <actions>
-
         <!-- Add your actions here -->
         <action id="ICognicrypt.ExecuteAnalysis"
                 class="de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction"
@@ -96,6 +106,10 @@
         <component>
             <implementation-class>de.fraunhofer.iem.icognicrypt.IdeSupport.projects.CogniCryptProjectManager</implementation-class>
             <interface-class>de.fraunhofer.iem.icognicrypt.IdeSupport.projects.ICogniCryptProjectManager</interface-class>
+        </component>
+
+        <component>
+            <implementation-class>de.fraunhofer.iem.icognicrypt.ui.LookAndFeel</implementation-class>
         </component>
 
     </application-components>

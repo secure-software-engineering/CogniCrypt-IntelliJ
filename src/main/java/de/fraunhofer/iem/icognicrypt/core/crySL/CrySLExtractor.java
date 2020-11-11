@@ -10,9 +10,6 @@ import java.nio.file.Paths;
 
 public final class CrySLExtractor extends ResourceExtractor
 {
-    private static final String ResourceZipPath = "/CrySLRules/CrySL-rulesets.zip";
-    private static final String DefaultExtractLocation = "./CrySLRules/";
-
     @Override
     protected boolean CheckExtractRequired()
     {
@@ -29,7 +26,7 @@ public final class CrySLExtractor extends ResourceExtractor
         String extractPath = GetExtractPath();
         try
         {
-            unzip(ResourceZipPath, new File(extractPath));
+            unzip(Constants.ResourceZipPath, new File(extractPath));
         }
         catch (IOException e)
         {
@@ -48,7 +45,7 @@ public final class CrySLExtractor extends ResourceExtractor
         {
 
             case JCA:
-                rulesPath = "JavaCryptographicArchitecture";
+                rulesPath = "JCA";
                 break;
             case BoucyCastle:
                 rulesPath = "BouncyCastle";
@@ -62,7 +59,7 @@ public final class CrySLExtractor extends ResourceExtractor
 
         try
         {
-            return Paths.get(rootPath, "rulessets", rulesPath).toFile().getCanonicalPath();
+            return Paths.get(rootPath, rulesPath).toFile().getCanonicalPath();
         }
         catch (IOException e)
         {
@@ -76,7 +73,7 @@ public final class CrySLExtractor extends ResourceExtractor
         Path pluginsDirectory = jarPath.getParent().toAbsolutePath();
         try
         {
-            return Paths.get(pluginsDirectory.toString(), DefaultExtractLocation).toFile().getCanonicalPath();
+            return Paths.get(pluginsDirectory.toString(), Constants.DefaultExtractLocation).toFile().getCanonicalPath();
         }
         catch (IOException e)
         {

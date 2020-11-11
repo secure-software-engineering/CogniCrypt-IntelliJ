@@ -49,7 +49,7 @@ public class OutputFinderOptions
         return true;
     }
 
-    public static boolean containsAny(EnumSet<OutputFinderOptions.Flags> set, OutputFinderOptions.Flags... flags)
+    public static boolean containsAny(Set<OutputFinderOptions.Flags> set, OutputFinderOptions.Flags... flags)
     {
         int maskValue = getStatusValue(set);
         for (OutputFinderOptions.Flags flag: flags)
@@ -60,7 +60,7 @@ public class OutputFinderOptions
         return false;
     }
 
-    public static boolean contains(EnumSet<OutputFinderOptions.Flags> set, OutputFinderOptions.Flags flag)
+    public static boolean contains(Set<OutputFinderOptions.Flags> set, OutputFinderOptions.Flags flag)
     {
         int maskValue = getStatusValue(set);
         return contains(maskValue, flag);

@@ -1,6 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.core.android;
 
-import com.android.tools.idea.sdk.AndroidSdks;
+import com.android.tools.idea.sdk.IdeSdks;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 
@@ -15,7 +15,7 @@ public class AndroidPlatformLocator
     private static final String AndroidSkd = "ANDROID_SDK";
 
     public static Path getAndroidPlatformsLocation(Project project) {
-        File androidSdkPath = AndroidSdks.getInstance().findPathOfSdkWithoutAddonsFolder(project);
+        File androidSdkPath = IdeSdks.getInstance().getAndroidSdkPath();
         String android_sdk_root;
 
         if (androidSdkPath != null) {

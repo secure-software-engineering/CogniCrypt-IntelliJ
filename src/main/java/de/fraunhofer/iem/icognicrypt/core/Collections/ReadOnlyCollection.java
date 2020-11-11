@@ -11,10 +11,12 @@ import java.util.List;
 public class ReadOnlyCollection<T> implements IReadOnlyCollection<T>
 {
     private final Collection<T> _inner;
+    private final Iterator<T> _iterator;
 
     public ReadOnlyCollection(Collection<T> collection)
     {
         _inner = collection;
+        _iterator = collection.iterator();
     }
 
     public int size()

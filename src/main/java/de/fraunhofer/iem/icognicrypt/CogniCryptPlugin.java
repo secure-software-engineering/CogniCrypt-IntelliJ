@@ -1,11 +1,11 @@
 package de.fraunhofer.iem.icognicrypt;
 
-import com.intellij.openapi.application.Application;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.progress.ProgressIndicator;
 import de.fraunhofer.iem.icognicrypt.core.BackgroundComponent;
 import de.fraunhofer.iem.icognicrypt.core.crySL.CrySLExtractor;
 import de.fraunhofer.iem.icognicrypt.settings.IPersistableCogniCryptSettings;
+
+import java.io.Console;
 
 public class CogniCryptPlugin extends BackgroundComponent
 {

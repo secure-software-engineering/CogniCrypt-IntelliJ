@@ -6,6 +6,7 @@ import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IHasOutputManag
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.IHasOutputs;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputManager;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -13,7 +14,7 @@ import java.nio.file.Paths;
 public class JavaModule implements IHasOutputManager
 {
     // TODO: Apparently libraries are build in a folder called aar. We need to decide if we want to check for the too, or just support apk files.
-    private static final String RelativeBuildPath = "build\\outputs\\apk\\";
+    private static final String RelativeBuildPath = Paths.get("build", "outputs", "apk").toString();
     private static final Logger logger = Logger.getInstance(JavaModule.class);
 
     private Path _path;
@@ -45,9 +46,16 @@ public class JavaModule implements IHasOutputManager
         @Override
         public void InvalidateOutput()
         {
-            _owner.logger.info("Invalidating Java Module " + _path);
-            DebugJson = OutputJson.Deserialize(Paths.get(_path.toString(), _owner.RelativeBuildPath, "debug\\output.json").toString());
-            ReleaseJson = OutputJson.Deserialize(Paths.get(_path.toString(), _owner.RelativeBuildPath, "release\\output.json").toString());
+            _owner.logger.info("Invalidating Language Module " + _path);
+            String debugPath = CreateOutputFilePath("debug");
+            String releasePath = CreateOutputFilePath("release");
+            DebugJson = OutputJson.Deserialize(debugPath);
+            ReleaseJson = OutputJson.Deserialize(releasePath);
+        }
+
+        private String CreateOutputFilePath(String buildType)
+        {
+            return Paths.get(_path.toString(), _owner.RelativeBuildPath, buildType, "output.json").toString();
         }
     }
 }

@@ -1,7 +1,6 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.build;
 
-import com.android.tools.idea.gradle.project.build.GradleBuildContext;
-import com.android.tools.idea.gradle.run.DefaultGradleBuilder;
+import com.android.tools.idea.gradle.project.build.*;
 import com.android.tools.idea.project.AndroidProjectBuildNotifications;
 import com.intellij.compiler.server.BuildManagerListener;
 import com.intellij.openapi.components.ProjectComponent;
@@ -9,7 +8,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.util.messages.MessageBus;
 import com.intellij.util.messages.MessageBusConnection;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.platform.IIdePlatformProvider;
-import de.fraunhofer.iem.icognicrypt.core.Collections.Linq;
+import javaLinq.Linq;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -21,8 +20,6 @@ class IntelliJPlatformBuildBroker implements ProjectComponent {
     private IIdePlatformProvider _platformProvider;
     private MessageBus _messageBus;
     private MessageBusConnection _connection;
-
-    private int _gradleCount;
 
     public IntelliJPlatformBuildBroker(Project project, IIdePlatformProvider platformProvider)
     {
@@ -56,15 +53,11 @@ class IntelliJPlatformBuildBroker implements ProjectComponent {
                         GradleBuildContext gradleBuildContext = (GradleBuildContext) context;
 
                         if (Linq.any(gradleBuildContext.getBuildResult().getTasks(), task -> {
-                            if(task.contains(":assemble"))
+                            if(task.contains(":assemble") || task.equals("clean"))
                                 return true;
                             return false;
                         }))
-                        {
-                            // TODO: Remove if statement once update to newer AS version. The fire bug twice if fixed in newer builds
-                            if (++_gradleCount % 2 == 0)
-                                Publish();
-                        }
+                            Publish();
                     }
                 });
                 break;

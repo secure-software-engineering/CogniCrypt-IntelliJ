@@ -1,7 +1,5 @@
 package de.fraunhofer.iem.icognicrypt.results.ui;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.sun.java.help.impl.SwingWorker;
 import de.fraunhofer.iem.icognicrypt.core.threading.ThreadHelper;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.ICogniCryptResultTableModel;
@@ -144,7 +142,7 @@ class ResultTableModel extends AbstractTableModel implements ICogniCryptResultTa
 //        Severity(SeverityColumnIndex),
         Id(IdColumnIndex),
         Description(DescriptionColumnIndex),
-        File(FileColumnIndex),
+        Class(FileColumnIndex),
         Line(LineColumnIndex);
 
         private int value;

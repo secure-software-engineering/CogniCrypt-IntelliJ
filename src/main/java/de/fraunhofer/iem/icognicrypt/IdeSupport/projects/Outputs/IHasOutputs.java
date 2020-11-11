@@ -1,12 +1,12 @@
 package de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 public interface IHasOutputs
 {
     void InvalidateOutput();
 
-    Iterable<String> GetOutputs(EnumSet<OutputFinderOptions.Flags> options);
+    Iterable<String> GetOutputs(Set<OutputFinderOptions.Flags> options);
 
     String GetDebugOutputPath();
 

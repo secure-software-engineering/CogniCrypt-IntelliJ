@@ -10,11 +10,12 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
+import com.intellij.webcore.packaging.ManageRepoDialog;
 import crypto.analysis.errors.AbstractError;
 import crypto.analysis.errors.IncompleteOperationError;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.Constants;
-import de.fraunhofer.iem.icognicrypt.core.Java.JavaFileToClassNameResolver;
+import de.fraunhofer.iem.icognicrypt.core.Language.JvmClassNameUtils;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
 import de.fraunhofer.iem.icognicrypt.ui.NotificationProvider;
@@ -45,7 +46,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
         _resultProvider = ServiceManager.getService(p, IResultProvider.class);
 
         if(Constants.WARNINGS_IN_SOURCECODECLASSES_ONLY) {
-            sourceCodeJavaFiles = JavaFileToClassNameResolver.findFullyQualifiedJavaClassNames(getProject());
+            sourceCodeJavaFiles = JvmClassNameUtils.findFullyQualifiedClassNames(getProject());
         } else {
             sourceCodeJavaFiles = Lists.newArrayList();
         }
@@ -88,7 +89,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
                     }
                 }
             } catch (Throwable e){
-                Notification notification = new Notification("CogniCrypt", "CogniCrypt", String.format("Crashed on %s", curr), NotificationType.INFORMATION);
+                Notification notification = new Notification("CogniCrypt", "CogniCrypt", String.format("Crashed on %s", curr), NotificationType.ERROR);
                 logger.error(e);
                 Notifications.Bus.notify(notification);
             }

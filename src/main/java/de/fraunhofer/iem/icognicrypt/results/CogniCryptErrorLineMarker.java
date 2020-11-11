@@ -19,22 +19,14 @@ import java.util.Set;
 
 public class CogniCryptErrorLineMarker implements LineMarkerProvider
 {
+    // TODO: Somehow this code is not executed with Kotlin files.
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement)
     {
-
         if (psiElement instanceof PsiStatement)
         {
-            PsiStatement statement = (PsiStatement) psiElement;
-
-            PsiClass clazz = FindClass(statement);
-
-            boolean equals = clazz.equals("Test");
-
             IResultProvider resultProvider = ServiceManager.getService(psiElement.getProject(), IResultProvider.class);
-
-            String qualifiedName = clazz.getQualifiedName();
 
             int lineNumber = getLineNumber(psiElement) + 1;
             //Check if an error exists for the line number that the element is located
@@ -48,13 +40,8 @@ public class CogniCryptErrorLineMarker implements LineMarkerProvider
         return null;
     }
 
-    @Override
-    public void collectSlowLineMarkers(@NotNull List<PsiElement> list, @NotNull Collection<LineMarkerInfo> collection) {
-        int i = 0;
-    }
-
     private LineMarkerInfo CreateNewMarker(PsiElement psiElement, Iterable<CogniCryptError> errors){
-        return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), PluginIcons.ERROR, Pass.EXTERNAL_TOOLS,
+        return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), PluginIcons.ERROR, Pass.LINE_MARKERS,
                 new TooltipProvider(getErrorsMessage(errors)), null, GutterIconRenderer.Alignment.LEFT);
     }
 

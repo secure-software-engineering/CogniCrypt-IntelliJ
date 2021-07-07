@@ -15,6 +15,7 @@ import crypto.analysis.errors.AbstractError;
 import crypto.analysis.errors.IncompleteOperationError;
 import de.fraunhofer.iem.crypto.CogniCryptAndroidAnalysis;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction;
 import de.fraunhofer.iem.icognicrypt.core.Language.JvmClassNameUtils;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
@@ -111,6 +112,7 @@ public class CogniCryptAndroidStudioAnalysisTask extends Task.Backgroundable{
         _analysisQueue = null;
         _stopWatch = null;
         _resultProvider = null;
+        RunCogniCryptAction.SetFlag(true);
     }
 
     @Override

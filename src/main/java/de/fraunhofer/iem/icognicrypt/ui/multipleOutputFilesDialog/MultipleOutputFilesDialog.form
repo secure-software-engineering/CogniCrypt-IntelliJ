@@ -91,7 +91,9 @@
         <children>
           <component id="1c0ef" class="javax.swing.JList" binding="_filesListBox">
             <constraints/>
-            <properties/>
+            <properties>
+              <model/>
+            </properties>
           </component>
         </children>
       </scrollpane>

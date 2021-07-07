@@ -21,6 +21,7 @@ import crypto.extractparameter.ExtractedValue;
 import crypto.interfaces.ISLConstraint;
 import crypto.rules.CrySLPredicate;
 import de.fraunhofer.iem.icognicrypt.Constants;
+import de.fraunhofer.iem.icognicrypt.actions.RunCogniCryptAction;
 import de.fraunhofer.iem.icognicrypt.core.Language.JvmClassNameUtils;
 import de.fraunhofer.iem.icognicrypt.results.CogniCryptError;
 import de.fraunhofer.iem.icognicrypt.results.IResultProvider;
@@ -29,7 +30,6 @@ import org.slf4j.LoggerFactory;
 import soot.SootClass;
 import sync.pds.solver.nodes.Node;
 import typestate.TransitionFunction;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -43,6 +43,7 @@ class AnalysisListenerService extends CrySLAnalysisListener implements Disposabl
     private static final Logger logger = LoggerFactory.getLogger(AnalysisListenerService.class);
     private final Project _project;
     private IResultProvider _resultProvider;
+    public static boolean EnabledFlag;
 
     private final List<String> _sourceCodeFiles;
 
@@ -54,6 +55,7 @@ class AnalysisListenerService extends CrySLAnalysisListener implements Disposabl
 
     @Override
     public void beforeAnalysis() {
+        EnabledFlag= false;
         _resultProvider.RemoveAllResults();
         _sourceCodeFiles.clear();
 
@@ -66,6 +68,7 @@ class AnalysisListenerService extends CrySLAnalysisListener implements Disposabl
         //After analysis completes, restart code analyzer so that error markers can be updated
         //for (Project project : ProjectManager.getInstance().getOpenProjects())
             DaemonCodeAnalyzer.getInstance(_project).restart();
+            RunCogniCryptAction.SetFlag(true);
     }
 
     @Override

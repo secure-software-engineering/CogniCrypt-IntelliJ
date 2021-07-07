@@ -19,6 +19,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
+
 class CogniCryptSettingsView implements Configurable
 {
     private JPanel _rootPanel;
@@ -173,8 +174,10 @@ class CogniCryptSettingsView implements Configurable
         });
         if (_cryslRulesDirectory == null || selectedDirectory == null)
             return;
+        //SetIDEVersionFlag(false);
         _cryslRulesDirectory.setText(selectedDirectory.getPath());
         _currentState.setRulesDirectory(selectedDirectory.getPath());
+
     }
 
     private void SetupUi()

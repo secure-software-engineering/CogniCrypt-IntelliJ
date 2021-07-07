@@ -1,12 +1,13 @@
 package de.fraunhofer.iem.icognicrypt.settings;
 
-import com.intellij.openapi.components.ServiceManager;
+
 import de.fraunhofer.iem.icognicrypt.Constants;
 import de.fraunhofer.iem.icognicrypt.IdeSupport.projects.Outputs.OutputFinderOptions;
 import de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguage;
 import de.fraunhofer.iem.icognicrypt.core.Language.SupportedLanguagesUtils;
 
 import java.util.EnumSet;
+
 
 abstract class CogniCryptSettings implements ICogniCryptSettings
 {
@@ -15,6 +16,7 @@ abstract class CogniCryptSettings implements ICogniCryptSettings
     protected boolean IncludeSigned = false;
     protected boolean SignedOnly = false;
     protected SupportedLanguage OptimizedLanguage = SupportedLanguage.Java;
+
 
     protected int FinderBuildType = OutputFinderOptions.Flags.Debug.getStatusFlagValue();
 

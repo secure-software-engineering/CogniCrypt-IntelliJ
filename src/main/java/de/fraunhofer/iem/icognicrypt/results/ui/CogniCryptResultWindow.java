@@ -39,14 +39,14 @@ class CogniCryptResultWindow implements ICogniCryptResultWindow
         IResultProvider service = ServiceManager.getService(project, IResultProvider.class);
         service.Subscribe(_tableModel);
 
-
-        for (Set<CogniCryptError> errorSet : service.GetErrors().values())
-        {
-            for (CogniCryptError error : errorSet)
-            {
-                _tableModel.AddError(error);
-            }
-        }
+//         ToolWindow clearing when starting IDE
+//        for (Set<CogniCryptError> errorSet : service.GetErrors().values())
+//        {
+//            for (CogniCryptError error : errorSet)
+//            {
+//                _tableModel.AddError(error);
+//            }
+//        }
     }
 
     @Override
